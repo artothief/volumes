@@ -1,6 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name Size -->
+      <column type="gchararray"/>
+      <!-- column-name vol -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">6 1/2"</col>
+        <col id="1">22.149999618530273</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">6"</col>
+        <col id="1">18.879999160766602</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore2">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name value -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">36"</col>
+        <col id="1" translatable="yes">1</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">26"</col>
+        <col id="1" translatable="yes">2</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">17 1/2"</col>
+        <col id="1" translatable="yes">3</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">12 1/4"</col>
+        <col id="1" translatable="yes">4</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">8 1/2"</col>
+        <col id="1" translatable="yes">5</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore3">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
+      <!-- column-name ce_cap -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">3 1/2"</col>
+        <col id="1">3.3529999256134033</col>
+        <col id="2">6.5199999809265137</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5"</col>
+        <col id="1">8.8199996948242188</col>
+        <col id="2">13.25</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5 1/2</col>
+        <col id="1">10.609999656677246</col>
+        <col id="2">16.049999237060547</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore4">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
+      <!-- column-name ce_cap -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">3 1/2"</col>
+        <col id="1">3.3529999256134033</col>
+        <col id="2">6.5199999809265137</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5"</col>
+        <col id="1">8.8199996948242188</col>
+        <col id="2">13.25</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5 1/2"</col>
+        <col id="1">10.609999656677246</col>
+        <col id="2">16.049999237060547</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore5">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
+      <!-- column-name ce_cap -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">5"</col>
+        <col id="1">4.559999942779541</col>
+        <col id="2">14</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5 1/2"</col>
+        <col id="1">5.3499999046325684</col>
+        <col id="2">16.899999618530273</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore6">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
+      <!-- column-name ce_cap -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">6 3/4"</col>
+        <col id="1">4.0100002288818359</col>
+        <col id="2">23.079999923706055</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">8 1/4"</col>
+        <col id="1">4.0100002288818359</col>
+        <col id="2">34.490001678466797</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">9 1/2"</col>
+        <col id="1">4.5</col>
+        <col id="2">45.700000762939453</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
     <signal name="delete-event" handler="on_window1_delete_event" swapped="no"/>
@@ -332,10 +483,19 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox1">
+                      <object class="GtkComboBox" id="liner_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
+                        <property name="model">liststore1</property>
+                        <property name="active">0</property>
+                        <property name="entry_text_column">1</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -345,10 +505,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox2">
+                      <object class="GtkComboBox" id="oh_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
+                        <property name="model">liststore2</property>
+                        <property name="active">0</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -386,7 +554,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry5">
+                      <object class="GtkEntry" id="bit_depth_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_bottom">7</property>
@@ -428,7 +596,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry4">
+                      <object class="GtkEntry" id="csg_cap_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_bottom">7</property>
@@ -442,7 +610,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry7">
+                      <object class="GtkEntry" id="p_length_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_bottom">7</property>
@@ -456,10 +624,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox3">
+                      <object class="GtkComboBox" id="p_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
+                        <property name="model">liststore3</property>
+                        <property name="active">0</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext3"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -557,6 +733,13 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
+                        <property name="model">liststore4</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext4"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -566,10 +749,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox5">
+                      <object class="GtkComboBox" id="hwdp_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
+                        <property name="model">liststore5</property>
+                        <property name="active">0</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext5"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -579,9 +770,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox6">
+                      <object class="GtkComboBox" id="dc_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="model">liststore6</property>
+                        <property name="active">0</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext6"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -605,7 +805,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry8">
+                      <object class="GtkEntry" id="hwdp_length_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_bottom">7</property>
@@ -619,9 +819,10 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry9">
+                      <object class="GtkEntry" id="dc_length_entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                       </object>
                       <packing>
@@ -630,6 +831,50 @@
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label17">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">String Volume:</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">12</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="string_volume">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">12</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="calc_button">
+                        <property name="label" translatable="yes">Calculate</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="receives_default">True</property>
+                        <signal name="pressed" handler="on_calc_button_pressed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">13</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
