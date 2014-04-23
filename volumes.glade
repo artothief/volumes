@@ -598,6 +598,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
+                        <property name="text" translatable="yes">77.25</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -613,7 +614,7 @@
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="model">liststore3</property>
-                        <property name="active">0</property>
+                        <property name="active">2</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext3"/>
                           <attributes>
@@ -663,7 +664,7 @@
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="model">liststore5</property>
-                        <property name="active">0</property>
+                        <property name="active">1</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext5"/>
                           <attributes>
@@ -685,7 +686,7 @@
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="model">liststore6</property>
-                        <property name="active">0</property>
+                        <property name="active">1</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext6"/>
                           <attributes>
@@ -778,7 +779,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">16</property>
+                        <property name="top_attach">18</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -866,7 +867,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">14</property>
+                        <property name="top_attach">16</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -881,7 +882,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">15</property>
+                        <property name="top_attach">17</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -894,7 +895,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">14</property>
+                        <property name="top_attach">16</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -907,7 +908,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">15</property>
+                        <property name="top_attach">17</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -967,9 +968,6 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="dp_length_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -981,6 +979,63 @@
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label21">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Csg Shoe Btms up :</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">14</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label22">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Csg Shoe Strokes :</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">15</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="shoe_btms_up_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">14</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="shoe_strokes_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">15</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
