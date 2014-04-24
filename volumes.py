@@ -253,19 +253,19 @@ class Volumes:
         self.str_strokes = self.string / self.liner_cap
         self.stroke_label.set_text(str(int(self.str_strokes)) + ' Strokes')
         self.riser_volume = Volumes.dp_riser_vol(self) + Volumes.hwdp_riser_vol(self) + Volumes.dc_riser_vol(self)
-        self.riser_vol_label.set_text(str(round(self.riser_volume)) + ' Litres' )
+        self.riser_vol_label.set_text(str(round(self.riser_volume, 1)) + ' Litres' )
         self.riser_strokes = self.riser_volume / self.liner_cap
         self.riser_stroke_label.set_text(str(int(self.riser_strokes)) + ' Strokes')
         self.csg_vol = Volumes.pipe_csg_vol(self) + Volumes.hwdp_csg_volu(self) + Volumes.dc_csg_vol(self)
-        self.shoe_btms_up_label.set_text(str(int(self.csg_vol)) + ' Litres')
+        self.shoe_btms_up_label.set_text(str(round(self.csg_vol, 1)) + ' Litres')
         self.csg_strokes = self.csg_vol / self.liner_cap
         self.shoe_strokes_label.set_text(str(int(self.csg_strokes)) + ' Strokes')
         self.oh_volume = Volumes.dp_oh_volume(self) + Volumes.hwdp_oh_volume(self) + Volumes.dc_oh_volume(self)
-        self.oh_vol_label.set_text(str(round(self.oh_volume)) + ' Litres' )
+        self.oh_vol_label.set_text(str(round(self.oh_volume, 1)) + ' Litres' )
         self.oh_strokes = self.oh_volume / self.liner_cap
         self.oh_strokes_label.set_text(str(int(self.oh_strokes)) + ' Strokes')
         self.btms_up_vol = self.riser_volume + self.csg_vol + self.oh_volume
-        self.btms_up_vol_label.set_text(str(round(self.btms_up_vol)) + ' Litres')
+        self.btms_up_vol_label.set_text(str(round(self.btms_up_vol, 1)) + ' Litres')
         self.btms_up_strokes = self.btms_up_vol / self.liner_cap
         self.btms_up_strokes_label.set_text(str(int(self.btms_up_strokes)) + ' Strokes')
 main = Volumes()

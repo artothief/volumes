@@ -114,14 +114,19 @@
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">5"</col>
+        <col id="0" translatable="yes">5" HWDP</col>
         <col id="1">4.559999942779541</col>
         <col id="2">14</col>
       </row>
       <row>
-        <col id="0" translatable="yes">5 1/2"</col>
+        <col id="0" translatable="yes">5 1/2" HWDP</col>
         <col id="1">5.3499999046325684</col>
         <col id="2">16.899999618530273</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5" DP</col>
+        <col id="1">8.8199996948242188</col>
+        <col id="2">13.25</col>
       </row>
     </data>
   </object>
@@ -136,24 +141,30 @@
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">6 3/4"</col>
+        <col id="0" translatable="yes">6 3/4" DC</col>
         <col id="1">4.0100002288818359</col>
         <col id="2">23.079999923706055</col>
       </row>
       <row>
-        <col id="0" translatable="yes">8 1/4"</col>
+        <col id="0" translatable="yes">8 1/4" DC</col>
         <col id="1">4.0100002288818359</col>
         <col id="2">34.490001678466797</col>
       </row>
       <row>
-        <col id="0" translatable="yes">9 1/2"</col>
+        <col id="0" translatable="yes">9 1/2" DC</col>
         <col id="1">4.5</col>
         <col id="2">45.700000762939453</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">3 1/2" DP</col>
+        <col id="1">3.3499999046325684</col>
+        <col id="2">6.5199999809265137</col>
       </row>
     </data>
   </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Barents Volumes by Mullah</property>
     <signal name="delete-event" handler="on_window1_delete_event" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
@@ -364,7 +375,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">300</property>
+                    <property name="text" translatable="yes">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -392,7 +403,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">700</property>
+                    <property name="text" translatable="yes">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -420,7 +431,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">1000</property>
+                    <property name="text" translatable="yes">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -598,7 +609,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">77.25</property>
+                        <property name="text" translatable="yes">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -634,7 +645,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">DC</property>
+                        <property name="label" translatable="yes">DC / DP</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -710,7 +721,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">200</property>
+                        <property name="text" translatable="yes">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -728,7 +739,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">60</property>
+                        <property name="text" translatable="yes">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -790,7 +801,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">HWDP</property>
+                        <property name="label" translatable="yes">HWDP / DP</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1041,9 +1052,6 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label23">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -1098,6 +1106,9 @@
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
