@@ -2,19 +2,24 @@ __author__ = 'martin'
 
 from gi.repository import Gtk
 
-pipelist = [1]
-dclist = [1]
-hwdplist = [1]
-
 class Volumes:
 
     def __init__(self):
-
         self.builder = Gtk.Builder()
         self.builder.add_from_file('volumes.glade')
         self.builder.connect_signals(self)
         self.window = self.builder.get_object('window1')
         self.window.show_all()
+
+        #making important labels bold
+        self.bold1 = self.builder.get_object('bold1')
+        self.bold1.set_markup('<b>String Volume :</b>')
+        self.bold2 = self.builder.get_object('bold2')
+        self.bold2.set_markup('<b>String Strokes :</b>')
+        self.bold3 = self.builder.get_object('bold3')
+        self.bold3.set_markup('<b>Btms Up Volume :</b>')
+        self.bold4 = self.builder.get_object('bold4')
+        self.bold4.set_markup('<b>Btms Up Strokes :</b>')
 
         #bit depth, casing, riser and open hole info
         self.seabed_entry = self.builder.get_object('seabed_entry')
@@ -49,6 +54,7 @@ class Volumes:
         self.riser_stroke_label = self.builder.get_object('riser_strokes_label')
         self.shoe_strokes_label = self.builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = self.builder.get_object('shoe_btms_up_label')
+
 
     #Calculated pipe length
     def pipe_length(self):
@@ -247,11 +253,11 @@ class Volumes:
     def on_calc_button_pressed(self, *args):
         self.dp_length_label.set_text(str(Volumes.pipe_length(self)))
         self.string = Volumes.pipe_vol(self) + Volumes.hwdp_vol(self) + Volumes.dc_vol(self)
-        self.vol_label.set_text(str(round(self.string, 2)) + ' Litres')
+        self.vol_label.set_markup('<b>' + str(round(self.string, 2)) + ' Litres</b>')
         self.liner_act = self.liner_box.get_active()
         self.liner_cap = self.linerstore[self.liner_act] [1]
         self.str_strokes = self.string / self.liner_cap
-        self.stroke_label.set_text(str(int(self.str_strokes)) + ' Strokes')
+        self.stroke_label.set_markup('<b>' + str(int(self.str_strokes)) + ' Strokes</b>')
         self.riser_volume = Volumes.dp_riser_vol(self) + Volumes.hwdp_riser_vol(self) + Volumes.dc_riser_vol(self)
         self.riser_vol_label.set_text(str(round(self.riser_volume, 1)) + ' Litres' )
         self.riser_strokes = self.riser_volume / self.liner_cap
@@ -265,8 +271,8 @@ class Volumes:
         self.oh_strokes = self.oh_volume / self.liner_cap
         self.oh_strokes_label.set_text(str(int(self.oh_strokes)) + ' Strokes')
         self.btms_up_vol = self.riser_volume + self.csg_vol + self.oh_volume
-        self.btms_up_vol_label.set_text(str(round(self.btms_up_vol, 1)) + ' Litres')
+        self.btms_up_vol_label.set_markup('<b>' + str(round(self.btms_up_vol, 1)) + ' Litres</b>')
         self.btms_up_strokes = self.btms_up_vol / self.liner_cap
-        self.btms_up_strokes_label.set_text(str(int(self.btms_up_strokes)) + ' Strokes')
+        self.btms_up_strokes_label.set_markup('<b>' + str(int(self.btms_up_strokes)) + ' Strokes</b>')
 main = Volumes()
 Gtk.main()
