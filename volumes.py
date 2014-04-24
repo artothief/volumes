@@ -16,7 +16,7 @@ class Volumes:
         self.window = self.builder.get_object('window1')
         self.window.show_all()
 
-        #Seabed, bit depth, casing shoe + casing and riser capacity
+        #bit depth, casing, riser and open hole info
         self.seabed_entry = self.builder.get_object('seabed_entry')
         self.riser_cap_label = self.builder.get_object('riser_cap_label')
         self.riser_cap = float(self.riser_cap_label.get_text())
@@ -24,6 +24,12 @@ class Volumes:
         self.bit_depth_entry = self.builder.get_object('bit_depth_entry')
         self.csg_shoe_entry = self.builder.get_object('csg_shoe_entry')
         self.csg_cap_entry = self.builder.get_object('csg_cap_entry')
+        self.oh_box = self.builder.get_object('oh_box')
+        self.oh_store = self.builder.get_object('liststore2')
+        self.oh_vol_label = self.builder.get_object('oh_vol_label')
+        self.oh_strokes_label = self.builder.get_object('oh_stroke_label')
+        self.btms_up_vol_label = self.builder.get_object('btms_up_vol_label')
+        self.btms_up_strokes_label = self.builder.get_object('btms_up_strokes_label')
 
         #tubular info
         self.p_box = self.builder.get_object('p_box')
@@ -87,6 +93,8 @@ class Volumes:
         self.bit_depth = float(self.bit_depth_entry.get_text())
         self.csg_cap = float(self.csg_cap_entry.get_text())
         self.csg_shoe = float(self.csg_shoe_entry.get_text())
+        self.oh_act = self.oh_box.get_active()
+        self.oh_cap = self.oh_store[self.oh_act] [1]
 
 
         if self.dp_length >= self.seabed:
@@ -152,17 +160,21 @@ class Volumes:
         
         if self.dp_length > self.seabed and self.dp_length + self.hwdp_length < self.csg_shoe:
             self.hwdp_csg_vol = (self.csg_cap - self.hwdp_ce_cap) * self.hwdp_length
-            res = 1
-        elif self.dp_length < self.seabed and self.dp_length + self.hwdp_length > self.seabed and self.dp_length + self.hwdp_length < self.csg_shoe:
+
+        elif (self.dp_length < self.seabed and self.dp_length + self.hwdp_length > self.seabed and
+    self.dp_length + self.hwdp_length < self.csg_shoe):
             self.hwdp_csg_vol = (self.csg_cap - self.hwdp_ce_cap) * ((self.dp_length + self.hwdp_length) - self.seabed)
-            res = 2
-        elif self.dp_length > self.seabed and self.dp_length < self.csg_shoe and self.dp_length + self.hwdp_length > self.csg_shoe:
+
+        elif (self.dp_length > self.seabed and self.dp_length < self.csg_shoe and
+    self.dp_length + self.hwdp_length > self.csg_shoe):
             self.hwdp_csg_vol = (self.csg_cap - self.hwdp_ce_cap) * (self.csg_shoe - self.dp_length)
-            res = 3
+
+        elif self.hwdp_length >= self.seabed and self.hwdp_length >= self.csg_shoe:
+            self.hwdp_csg_vol = (self.csg_cap - self.hwdp_ce_cap) * self.hwdp_length
+
         else:
             self.hwdp_csg_vol = 0
-            res = 4
-        print res
+
         print 'Csg/HWDP vol = ' + str(self.hwdp_csg_vol)
         return self.hwdp_csg_vol
             
@@ -172,7 +184,8 @@ class Volumes:
         if self.dp_length + self.hwdp_length < self.seabed and self.bit_depth > self.seabed:
             self.dc_csg_vol = (self.csg_cap - self.dc_ce_cap) * (self.bit_depth - self.seabed)
         
-        elif self.dp_length + self.hwdp_length > self.seabed and self.dp_length + self.hwdp_length < self.csg_shoe and self.bit_depth < self.csg_shoe:
+        elif (self.dp_length + self.hwdp_length > self.seabed and self.dp_length + self.hwdp_length < self.csg_shoe and
+    self.bit_depth < self.csg_shoe):
             self.dc_csg_vol = (self.csg_cap - self.dc_ce_cap) * self.dc_length
             
         elif self.dp_length + self.hwdp_length < self.csg_shoe and self.bit_depth > self.csg_shoe:
@@ -183,6 +196,50 @@ class Volumes:
 
         print 'Csg/DC vol = ' + str(self.dc_csg_vol)
         return self.dc_csg_vol
+
+    def dp_oh_volume(self):
+            
+        #Pipe / OH
+        if self.dp_length > self.csg_shoe:
+            self.dp_oh_vol = (self.oh_cap - self.dp_ce_cap) * (self.dp_length - self.csg_shoe)
+            
+        else:
+            self.dp_oh_vol = 0
+
+        print 'Dp/OH = ' + str(self.dp_oh_vol)
+        return self.dp_oh_vol
+
+
+    def hwdp_oh_volume(self):
+        #HWDP / OH
+        if self.dp_length < self.csg_shoe and self.dp_length + self.hwdp_length > self.csg_shoe:
+            self.hwdp_oh_vol = (self.oh_cap - self.hwdp_ce_cap) * ((self.dp_length + self.hwdp_length) - self.csg_shoe)
+            
+        elif self.dp_length > self.csg_shoe:
+            self.hwdp_oh_vol = (self.oh_cap - self.hwdp_ce_cap) * self.hwdp_length
+            
+        else:
+            self.hwdp_oh_vol = 0
+
+        print 'HWDP/OH = ' + str(self.hwdp_oh_vol)
+        return self.hwdp_oh_vol
+
+    def dc_oh_volume(self):
+        #DC / OH
+        if self.dp_length + self.hwdp_length < self.csg_shoe and self.bit_depth > self.csg_shoe:
+            self.dc_oh_vol = (self.oh_cap - self.dc_ce_cap) * (self.bit_depth - self.csg_shoe)
+            
+        elif self.dp_length + self.hwdp_length > self.csg_shoe and self.bit_depth > self.dp_length + self.hwdp_length:
+            self.dc_oh_vol = (self.oh_cap - self.dc_ce_cap) * self.dc_length
+            
+        elif self.dc_length > self.csg_shoe:
+            self.dc_oh_vol = (self.oh_cap - self.dc_ce_cap) * self.dc_length
+             
+        else:
+            self.dc_oh_vol = 0
+        
+        print 'DC/OH = ' + str(self.dc_oh_vol)
+        return self.dc_oh_vol
 
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
@@ -203,6 +260,13 @@ class Volumes:
         self.shoe_btms_up_label.set_text(str(int(self.csg_vol)) + ' Litres')
         self.csg_strokes = self.csg_vol / self.liner_cap
         self.shoe_strokes_label.set_text(str(int(self.csg_strokes)) + ' Strokes')
-
+        self.oh_volume = Volumes.dp_oh_volume(self) + Volumes.hwdp_oh_volume(self) + Volumes.dc_oh_volume(self)
+        self.oh_vol_label.set_text(str(round(self.oh_volume)) + ' Litres' )
+        self.oh_strokes = self.oh_volume / self.liner_cap
+        self.oh_strokes_label.set_text(str(int(self.oh_strokes)) + ' Strokes')
+        self.btms_up_vol = self.riser_volume + self.csg_vol + self.oh_volume
+        self.btms_up_vol_label.set_text(str(round(self.btms_up_vol)) + ' Litres')
+        self.btms_up_strokes = self.btms_up_vol / self.liner_cap
+        self.btms_up_strokes_label.set_text(str(int(self.btms_up_strokes)) + ' Strokes')
 main = Volumes()
 Gtk.main()

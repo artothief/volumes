@@ -23,29 +23,29 @@
     <columns>
       <!-- column-name size -->
       <column type="gchararray"/>
-      <!-- column-name value -->
-      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
     </columns>
     <data>
       <row>
         <col id="0" translatable="yes">36"</col>
-        <col id="1" translatable="yes">1</col>
+        <col id="1">656.3599853515625</col>
       </row>
       <row>
         <col id="0" translatable="yes">26"</col>
-        <col id="1" translatable="yes">2</col>
+        <col id="1">342.3599853515625</col>
       </row>
       <row>
         <col id="0" translatable="yes">17 1/2"</col>
-        <col id="1" translatable="yes">3</col>
+        <col id="1">155.10000610351562</col>
       </row>
       <row>
         <col id="0" translatable="yes">12 1/4"</col>
-        <col id="1" translatable="yes">4</col>
+        <col id="1">76</col>
       </row>
       <row>
         <col id="0" translatable="yes">8 1/2"</col>
-        <col id="1" translatable="yes">5</col>
+        <col id="1">36.590000152587891</col>
       </row>
     </data>
   </object>
@@ -70,7 +70,7 @@
         <col id="2">13.25</col>
       </row>
       <row>
-        <col id="0" translatable="yes">5 1/2</col>
+        <col id="0" translatable="yes">5 1/2"</col>
         <col id="1">10.609999656677246</col>
         <col id="2">16.049999237060547</col>
       </row>
@@ -448,7 +448,7 @@
                     <property name="can_focus">False</property>
                     <property name="halign">center</property>
                     <property name="margin_bottom">10</property>
-                    <property name="label" translatable="yes">Well volumes calculator</property>
+                    <property name="label" translatable="yes">Barents Well Volumes Calculator</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -518,7 +518,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
                         <property name="model">liststore2</property>
-                        <property name="active">0</property>
+                        <property name="active">3</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext2"/>
                           <attributes>
@@ -779,7 +779,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">18</property>
+                        <property name="top_attach">20</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -863,7 +863,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Btms Up Volume :</property>
+                        <property name="label" translatable="yes">OH/String Volume :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -878,7 +878,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Btms Up Strokes :</property>
+                        <property name="label" translatable="yes">OH/String Strokes :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -888,7 +888,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="btms_up_vol_label">
+                      <object class="GtkLabel" id="oh_vol_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
@@ -901,7 +901,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="btms_up_stroke_label">
+                      <object class="GtkLabel" id="oh_stroke_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
@@ -917,8 +917,10 @@
                       <object class="GtkLabel" id="label11">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Riser Btms Up:</property>
+                        <property name="label" translatable="yes">Riser/String Volume :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -931,8 +933,10 @@
                       <object class="GtkLabel" id="label20">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Riser Strokes :</property>
+                        <property name="label" translatable="yes">Riser/String Strokes :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -984,8 +988,9 @@
                       <object class="GtkLabel" id="label21">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Csg Shoe Btms up :</property>
+                        <property name="label" translatable="yes">Csg/String Volume:</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -998,8 +1003,9 @@
                       <object class="GtkLabel" id="label22">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">Csg Shoe Strokes :</property>
+                        <property name="label" translatable="yes">Csg/String Strokes :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1037,6 +1043,62 @@
                     <child>
                       <placeholder/>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="label23">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_right">7</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Btms Up Volume :</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">18</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label24">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_right">7</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Btms Up Strokes :</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">19</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="btms_up_vol_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">18</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="btms_up_strokes_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">19</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1058,9 +1120,6 @@
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
         </child>
         <child>
           <object class="GtkStatusbar" id="statusbar1">
