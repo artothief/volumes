@@ -76,6 +76,33 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="liststore4">
+    <columns>
+      <!-- column-name size -->
+      <column type="gchararray"/>
+      <!-- column-name cap -->
+      <column type="gfloat"/>
+      <!-- column-name ce_cap -->
+      <column type="gfloat"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">3 1/2"</col>
+        <col id="1">3.3529999256134033</col>
+        <col id="2">6.5199999809265137</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5"</col>
+        <col id="1">8.8199996948242188</col>
+        <col id="2">13.25</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">5 1/2"</col>
+        <col id="1">10.609999656677246</col>
+        <col id="2">16.049999237060547</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkListStore" id="liststore5">
     <columns>
       <!-- column-name size -->
@@ -132,33 +159,6 @@
         <col id="0" translatable="yes">3 1/2" DP</col>
         <col id="1">3.3499999046325684</col>
         <col id="2">6.5199999809265137</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore4">
-    <columns>
-      <!-- column-name size -->
-      <column type="gchararray"/>
-      <!-- column-name cap -->
-      <column type="gfloat"/>
-      <!-- column-name ce_cap -->
-      <column type="gfloat"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">3 1/2"</col>
-        <col id="1">3.3529999256134033</col>
-        <col id="2">6.5199999809265137</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5"</col>
-        <col id="1">8.8199996948242188</col>
-        <col id="2">13.25</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5 1/2"</col>
-        <col id="1">10.609999656677246</col>
-        <col id="2">16.049999237060547</col>
       </row>
     </data>
   </object>
@@ -359,7 +359,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">273</property>
-                    <property name="yalign">0</property>
                     <property name="label" translatable="yes">Seabed</property>
                   </object>
                   <packing>

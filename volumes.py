@@ -133,7 +133,7 @@ class Volumes:
     # DC / Riser volume
     def dc_riser_vol(self):
 
-        if self.dp_length + self.hwdp_length + self.dc_length < self.seabed:
+        if self.bit_depth <= self.seabed:
             self.riser_dc_vol = (self.riser_cap - self.dc_ce_cap) * (self.bit_depth - (self.hwdp_length + self.dp_length))
 
         elif self.dp_length + self.hwdp_length < self.seabed and self.bit_depth > self.seabed:
@@ -149,7 +149,7 @@ class Volumes:
     def pipe_csg_vol(self):
 
 
-        if self.dp_length > self.csg_shoe:
+        if self.dp_length >= self.csg_shoe:
             self.pipe_csg_vol = (self.csg_cap - self.dp_ce_cap) * (self.csg_shoe - self.seabed)
             
         elif self.dp_length > self.seabed and self.dp_length < self.csg_shoe:
