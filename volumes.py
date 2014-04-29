@@ -55,7 +55,6 @@ class Volumes:
         self.shoe_strokes_label = self.builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = self.builder.get_object('shoe_btms_up_label')
 
-
     #Calculated pipe length
     def pipe_length(self):
         self.bit_depth = float(self.bit_depth_entry.get_text())
@@ -101,7 +100,6 @@ class Volumes:
         self.csg_shoe = float(self.csg_shoe_entry.get_text())
         self.oh_act = self.oh_box.get_active()
         self.oh_cap = self.oh_store[self.oh_act] [1]
-
 
         if self.dp_length >= self.seabed:
             self.riser_dp_vol = (self.riser_cap - self.dp_ce_cap) * self.seabed
@@ -191,7 +189,7 @@ class Volumes:
             self.dc_csg_vol = (self.csg_cap - self.dc_ce_cap) * (self.bit_depth - self.seabed)
         
         elif (self.dp_length + self.hwdp_length > self.seabed and self.dp_length + self.hwdp_length < self.csg_shoe and
-    self.bit_depth < self.csg_shoe):
+    self.bit_depth <= self.csg_shoe):
             self.dc_csg_vol = (self.csg_cap - self.dc_ce_cap) * self.dc_length
             
         elif self.dp_length + self.hwdp_length < self.csg_shoe and self.bit_depth > self.csg_shoe:
