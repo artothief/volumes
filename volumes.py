@@ -66,40 +66,24 @@ class Volumes:
     #String volume calculations
     def pipe_vol(self):
         self.dp_length = Volumes.pipe_length(self)
-        self.p_act = self.p_box.get_active()
         self.p_cap = self.p_store[self.p_act] [1]
         self.p_vol = self.dp_length * self.p_cap
         return self.p_vol
 
     def hwdp_vol(self):
         self.hwdp_length = float(self.hwdp_entry.get_text())
-        self.hwdp_act = self.hwdp_box.get_active()
         self.hwdp_cap = self.hwdp_store[self.hwdp_act] [1]
         self.hwdp_volu = self.hwdp_length * self.hwdp_cap
         return self.hwdp_volu
 
     def dc_vol(self):
         self.dc_length = float(self.dc_entry.get_text())
-        self.dc_act = self.dc_box.get_active()
         self.dc_cap = self.dc_store[self.dc_act] [1]
         self.dc_volu = self.dc_length * self.dc_cap
         return self.dc_volu
 
     #Pipe / Riser volume
     def dp_riser_vol(self):
-        self.dc_act = self.dc_box.get_active()
-        self.dc_ce_cap = self.dc_store[self.dc_act] [2]
-        self.hwdp_act = self.hwdp_box.get_active()
-        self.hwdp_ce_cap = self.hwdp_store[self.hwdp_act] [2]
-        self.p_cap = self.p_store[self.p_act] [1]
-        self.dp_ce_cap = self.p_store[self.p_act] [2]
-        self.seabed = float(self.seabed_entry.get_text())
-        print 'Seabed = ' + str(self.seabed)
-        self.bit_depth = float(self.bit_depth_entry.get_text())
-        self.csg_cap = float(self.csg_cap_entry.get_text())
-        self.csg_shoe = float(self.csg_shoe_entry.get_text())
-        self.oh_act = self.oh_box.get_active()
-        self.oh_cap = self.oh_store[self.oh_act] [1]
 
         if self.dp_length >= self.seabed:
             self.riser_dp_vol = (self.riser_cap - self.dp_ce_cap) * self.seabed
@@ -249,11 +233,27 @@ class Volumes:
         Gtk.main_quit()
 
     def on_calc_button_pressed(self, *args):
+        #get active comboboxes and liststores
+        self.dc_act = self.dc_box.get_active()
+        self.dc_ce_cap = self.dc_store[self.dc_act] [2]
+        self.hwdp_act = self.hwdp_box.get_active()
+        self.hwdp_ce_cap = self.hwdp_store[self.hwdp_act] [2]
+        self.p_act = self.p_box.get_active()
+        self.p_cap = self.p_store[self.p_act] [1]
+        self.dp_ce_cap = self.p_store[self.p_act] [2]
+        self.seabed = float(self.seabed_entry.get_text())
+        print 'Seabed = ' + str(self.seabed)
+        self.bit_depth = float(self.bit_depth_entry.get_text())
+        self.csg_cap = float(self.csg_cap_entry.get_text())
+        self.csg_shoe = float(self.csg_shoe_entry.get_text())
+        self.oh_act = self.oh_box.get_active()
+        self.oh_cap = self.oh_store[self.oh_act] [1]
+        self.liner_act = self.liner_box.get_active()
+        self.liner_cap = self.linerstore[self.liner_act] [1]
+        #Calculate and set label text
         self.dp_length_label.set_text(str(Volumes.pipe_length(self)))
         self.string = Volumes.pipe_vol(self) + Volumes.hwdp_vol(self) + Volumes.dc_vol(self)
         self.vol_label.set_markup('<b>' + str(round(self.string, 2)) + ' Litres</b>')
-        self.liner_act = self.liner_box.get_active()
-        self.liner_cap = self.linerstore[self.liner_act] [1]
         self.str_strokes = self.string / self.liner_cap
         self.stroke_label.set_markup('<b>' + str(int(self.str_strokes)) + ' Strokes</b>')
         self.riser_volume = Volumes.dp_riser_vol(self) + Volumes.hwdp_riser_vol(self) + Volumes.dc_riser_vol(self)
