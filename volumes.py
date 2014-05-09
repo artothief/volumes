@@ -1,4 +1,4 @@
-__author__ = 'martin'
+__author__ = 'artothief'
 
 from gi.repository import Gtk
 
