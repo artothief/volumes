@@ -232,7 +232,7 @@ class Volumes:
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
 
-    def on_calc_button_pressed(self, *args):
+    def on_calc_button_clicked(self, *args):
         #get active comboboxes and liststores
         self.dc_act = self.dc_box.get_active()
         self.dc_ce_cap = self.dc_store[self.dc_act] [2]
