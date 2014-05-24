@@ -86,33 +86,43 @@ class Volumes:
         self.oh_cap = self.oh_store[self.oh_act] [1]
         self.liner_act = self.liner_box.get_active()
         self.liner_cap = self.linerstore[self.liner_act] [1]
-        #Calculate and set label text
+
+        # Drillstring length and volumes calculations
         self.dp_length_label.set_text(str(self.dp_length))
         self.string = self.dp_vol + self.hwdp_vol + self.dc_vol
         self.vol_label.set_markup('<b>' + str(round(self.string, 2)) + ' Litres</b>')
         self.str_strokes = self.string / self.liner_cap
         self.stroke_label.set_markup('<b>' + str(int(self.str_strokes)) + ' Strokes</b>')
+
+        # Riser volume calculation
         self.riser_volume = dp_riser(self.seabed, self.riser_cap, self.dp_length, self.dp_ce_cap) +\
                             hwdp_riser(self.seabed, self.riser_cap, self.dp_length, self.hwdp_length, self.hwdp_ce_cap) +\
                             dc_riser(self.seabed, self.riser_cap, self.dp_length, self.hwdp_length, self.dc_ce_cap, self.bit_depth)
         self.riser_vol_label.set_text(str(round(self.riser_volume, 1)) + ' Litres' )
         self.riser_strokes = self.riser_volume / self.liner_cap
         self.riser_stroke_label.set_text(str(int(self.riser_strokes)) + ' Strokes')
+
+        # Casing volume calculation
         self.csg_vol = dp_csg(self.seabed, self.csg_shoe, self.csg_cap, self.dp_length, self.dp_ce_cap) +\
                        hwdp_csg(self.seabed, self.csg_shoe, self.csg_cap, self.dp_length, self.hwdp_length, self.hwdp_ce_cap) +\
                        dc_csg(self.seabed, self.csg_shoe, self.csg_cap, self.dp_length, self.hwdp_length, self.dc_length, self.dc_ce_cap, self.bit_depth)
         self.shoe_btms_up_label.set_text(str(round(self.csg_vol, 1)) + ' Litres')
         self.csg_strokes = self.csg_vol / self.liner_cap
         self.shoe_strokes_label.set_text(str(int(self.csg_strokes)) + ' Strokes')
+
+        # Open hole volume calculation
         self.oh_volume = dp_oh(self.csg_shoe, self.oh_cap, self.dp_length, self.dp_ce_cap) +\
                          hwdp_oh(self.csg_shoe, self.oh_cap, self.dp_length, self.hwdp_length, self.hwdp_ce_cap) +\
                          dc_oh(self.csg_shoe, self.oh_cap, self.dp_length, self.hwdp_length, self.dc_length, self.dc_ce_cap, self.bit_depth)
         self.oh_vol_label.set_text(str(round(self.oh_volume, 1)) + ' Litres' )
         self.oh_strokes = self.oh_volume / self.liner_cap
         self.oh_strokes_label.set_text(str(int(self.oh_strokes)) + ' Strokes')
+
+        # Bottoms up calculation
         self.btms_up_vol = self.riser_volume + self.csg_vol + self.oh_volume
         self.btms_up_vol_label.set_markup('<b>' + str(round(self.btms_up_vol, 1)) + ' Litres</b>')
         self.btms_up_strokes = self.btms_up_vol / self.liner_cap
         self.btms_up_strokes_label.set_markup('<b>' + str(int(self.btms_up_strokes)) + ' Strokes</b>')
+
 main = Volumes()
 Gtk.main()
