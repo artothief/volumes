@@ -19,7 +19,7 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 #HWDP / Csg volume
 def hwdp_csg(seabed, csg_shoe, csg_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
-    if dp_length > seabed and dp_length + hwdp_length < csg_shoe:
+    if dp_length >= seabed and dp_length + hwdp_length <= csg_shoe:
         hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * hwdp_length
 
     elif (dp_length < seabed and dp_length + hwdp_length > seabed and

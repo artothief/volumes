@@ -17,7 +17,7 @@ def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
 
 def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
     #HWDP / OH
-    if dp_length < csg_shoe and dp_length + hwdp_length > csg_shoe:
+    if dp_length < csg_shoe and dp_length + hwdp_length >= csg_shoe:
         hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * ((dp_length + hwdp_length) - csg_shoe)
         
     elif dp_length > csg_shoe:
@@ -31,7 +31,7 @@ def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
 def dc_oh(csg_shoe, oh_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
     #DC / OH
-    if dp_length + hwdp_length < csg_shoe and bit_depth > csg_shoe:
+    if dp_length + hwdp_length <= csg_shoe and bit_depth > csg_shoe:
         dc_oh_vol = (oh_cap - dc_ce_cap) * (bit_depth - csg_shoe)
         
     elif dp_length + hwdp_length > csg_shoe and bit_depth > dp_length + hwdp_length:
