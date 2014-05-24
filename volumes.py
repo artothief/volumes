@@ -123,6 +123,7 @@ class Volumes:
         self.btms_up_vol_label.set_markup('<b>' + str(round(self.btms_up_vol, 1)) + ' Litres</b>')
         self.btms_up_strokes = self.btms_up_vol / self.liner_cap
         self.btms_up_strokes_label.set_markup('<b>' + str(int(self.btms_up_strokes)) + ' Strokes</b>')
+        print '------------------------------'
 
 main = Volumes()
 Gtk.main()

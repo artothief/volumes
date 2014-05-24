@@ -13,7 +13,7 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
     else:
         pipe_csg_vol = 0
 
-    print 'Csg/DP vol = ' + str(pipe_csg_vol)
+    print 'DP/Csg vol = ' + str(pipe_csg_vol)
     return pipe_csg_vol
 
 #HWDP / Csg volume
@@ -36,7 +36,7 @@ dp_length + hwdp_length > csg_shoe):
     else:
         hwdp_csg_vol = 0
 
-    print 'Csg/HWDP vol = ' + str(hwdp_csg_vol)
+    print 'HWDP/Csg vol = ' + str(hwdp_csg_vol)
     return hwdp_csg_vol
 
 #DC / Csg volume
@@ -55,5 +55,5 @@ bit_depth <= csg_shoe):
     else:
         dc_csg_vol = 0
 
-    print 'Csg/DC vol = ' + str(dc_csg_vol)
+    print 'DC/Csg vol = ' + str(dc_csg_vol)
     return dc_csg_vol

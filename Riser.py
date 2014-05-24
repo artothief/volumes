@@ -12,6 +12,7 @@ def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
     else:
         riser_dp_vol = 0
 
+    print 'DP/Riser = ' + str(riser_dp_vol)
     return riser_dp_vol
 
 # HWDP / Riser volume
@@ -26,6 +27,7 @@ def hwdp_riser(seabed, riser_cap, dp_length, hwdp_length, hwdp_ce_cap):
     else:
         riser_hwdp_vol = (riser_cap - hwdp_ce_cap) * hwdp_length
 
+    print 'HWDP/Riser = ' + str(riser_hwdp_vol)
     return riser_hwdp_vol
 
 # DC / Riser volume
@@ -40,4 +42,5 @@ def dc_riser(seabed, riser_cap, dp_length, hwdp_length, dc_ce_cap, bit_depth):
     else:
         riser_dc_vol = 0
 
+    print 'DC/Riser = ' + str(riser_dc_vol)
     return riser_dc_vol
