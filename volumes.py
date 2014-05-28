@@ -65,6 +65,7 @@ class Volumes:
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = builder.get_object('shoe_btms_up_label')
 
+        #Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
         self.image.set_from_file('rig_riser.png')
         self.pbr_label.hide()
@@ -80,6 +81,7 @@ class Volumes:
     def on_liner_chbutton_toggled(self, button):
         if button.get_active():
             self.csg_shoe_label.hide()
+            self.csg_shoe_entry.set_text('0')
             self.csg_shoe_entry.hide()
             self.bit_depth_label.set_margin_top(43)
             self.pbr_label.show()
