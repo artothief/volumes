@@ -27,11 +27,16 @@ class Volumes:
 
         #bit depth, casing, riser and open hole info
         self.seabed_entry = builder.get_object('seabed_entry')
-        riser_cap_label = builder.get_object('riser_cap_label')
-        self.riser_cap = float(riser_cap_label.get_text())
+        self.bit_depth_label = builder.get_object('bit_depth_label')
         self.bit_depth_entry = builder.get_object('bit_depth_entry')
+        self.csg_shoe_label = builder.get_object('csg_shoe_label')
         self.csg_shoe_entry = builder.get_object('csg_shoe_entry')
         self.csg_cap_entry = builder.get_object('csg_cap_entry')
+        self.liner_shoe_label = builder.get_object('liner_shoe_label')
+        self.liner_shoe_entry = builder.get_object('liner_shoe_entry')
+        self.liner_cap_entry = builder.get_object('liner_cap_entry')
+        self.pbr_label = builder.get_object('pbr_label')
+        self.pbr_entry = builder.get_object('pbr_entry')
         self.oh_box = builder.get_object('oh_box')
         self.oh_store = builder.get_object('liststore2')
         self.oh_vol_label = builder.get_object('oh_vol_label')
@@ -58,12 +63,43 @@ class Volumes:
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = builder.get_object('shoe_btms_up_label')
 
+        self.image = builder.get_object('image1')
+        self.image.set_from_file('rig_riser.png')
+        self.pbr_label.hide()
+        self.pbr_entry.hide()
+        self.liner_shoe_label.hide()
+        self.liner_shoe_entry.hide()
+        self.liner_cap_entry.hide()
+
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
+
+    def on_liner_chbutton_toggled(self, button):
+        if button.get_active():
+            self.csg_shoe_label.hide()
+            self.csg_shoe_entry.hide()
+            self.bit_depth_label.set_margin_top(43)
+            self.pbr_label.show()
+            self.pbr_entry.show()
+            self.liner_shoe_label.show()
+            self.liner_shoe_entry.show()
+            self.liner_cap_entry.show()
+            self.image.set_from_file('rig_liner.png')
+        else:
+            self.image.set_from_file('rig_riser.png')
+            self.csg_shoe_label.show()
+            self.csg_shoe_entry.show()
+            self.bit_depth_label.set_margin_top(115)
+            self.pbr_label.hide()
+            self.pbr_entry.hide()
+            self.liner_shoe_label.hide()
+            self.liner_shoe_entry.hide()
+            self.liner_cap_entry.hide()
 
     def on_calc_button_clicked(self, *args):
         #get active comboboxes and liststores, entry's first to meet dependencies
         seabed = float(self.seabed_entry.get_text())
+        riser_cap = 187.77
         csg_cap = float(self.csg_cap_entry.get_text())
         csg_shoe = float(self.csg_shoe_entry.get_text())
         bit_depth = float(self.bit_depth_entry.get_text())
@@ -95,9 +131,9 @@ class Volumes:
         self.stroke_label.set_markup('<b>' + str(int(str_strokes)) + ' Strokes</b>')
 
         # Riser volume calculation
-        riser_volume = dp_riser(seabed, self.riser_cap, dp_length, dp_ce_cap) +\
-                            hwdp_riser(seabed, self.riser_cap, dp_length, hwdp_length, hwdp_ce_cap) +\
-                            dc_riser(seabed, self.riser_cap, dp_length, hwdp_length, dc_ce_cap, bit_depth)
+        riser_volume = dp_riser(seabed, riser_cap, dp_length, dp_ce_cap) +\
+                            hwdp_riser(seabed, riser_cap, dp_length, hwdp_length, hwdp_ce_cap) +\
+                            dc_riser(seabed, riser_cap, dp_length, hwdp_length, dc_ce_cap, bit_depth)
         self.riser_vol_label.set_text(str(round(riser_volume, 1)) + ' Litres' )
         riser_strokes = riser_volume / liner_cap
         self.riser_stroke_label.set_text(str(int(riser_strokes)) + ' Strokes')
