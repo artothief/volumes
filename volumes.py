@@ -14,6 +14,7 @@ class Volumes:
         builder.connect_signals(self)
         window = builder.get_object('window1')
         window.show_all()
+        window.resize(1, 1)
 
         #making important labels bold
         bold1 = builder.get_object('bold1')
@@ -35,6 +36,7 @@ class Volumes:
         self.liner_shoe_label = builder.get_object('liner_shoe_label')
         self.liner_shoe_entry = builder.get_object('liner_shoe_entry')
         self.liner_cap_entry = builder.get_object('liner_cap_entry')
+        self.liner_cap_label = builder.get_object('liner_cap_label')
         self.pbr_label = builder.get_object('pbr_label')
         self.pbr_entry = builder.get_object('pbr_entry')
         self.oh_box = builder.get_object('oh_box')
@@ -70,6 +72,7 @@ class Volumes:
         self.liner_shoe_label.hide()
         self.liner_shoe_entry.hide()
         self.liner_cap_entry.hide()
+        self.liner_cap_label.hide()
 
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
@@ -84,6 +87,7 @@ class Volumes:
             self.liner_shoe_label.show()
             self.liner_shoe_entry.show()
             self.liner_cap_entry.show()
+            self.liner_cap_label.show()
             self.image.set_from_file('rig_liner.png')
         else:
             self.image.set_from_file('rig_riser.png')
@@ -95,6 +99,7 @@ class Volumes:
             self.liner_shoe_label.hide()
             self.liner_shoe_entry.hide()
             self.liner_cap_entry.hide()
+            self.liner_cap_label.hide()
 
     def on_calc_button_clicked(self, *args):
         #get active comboboxes and liststores, entry's first to meet dependencies
