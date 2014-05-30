@@ -1,10 +1,15 @@
 __author__ = 'artothief'
 
 from gi.repository import Gtk
+from decimal import *
 
 from Riser import *
 from Casing import *
 from OH import *
+
+def num(entry):
+    number = Decimal(0) if not entry else Decimal(entry)
+    return number
 
 class Volumes:
 
@@ -105,35 +110,35 @@ class Volumes:
 
     def on_calc_button_clicked(self, *args):
         #get active comboboxes and liststores, entry's first to meet dependencies
-        seabed = float(self.seabed_entry.get_text())
-        riser_cap = 187.77
-        csg_cap = float(self.csg_cap_entry.get_text())
-        csg_shoe = float(self.csg_shoe_entry.get_text())
-        bit_depth = float(self.bit_depth_entry.get_text())
-        dc_length = float(self.dc_entry.get_text())
+        seabed = num(self.seabed_entry.get_text())
+        riser_cap = Decimal('187.77')
+        csg_cap = num(self.csg_cap_entry.get_text())
+        csg_shoe = num(self.csg_shoe_entry.get_text())
+        bit_depth = num(self.bit_depth_entry.get_text())
+        dc_length = num(self.dc_entry.get_text())
         dc_act = self.dc_box.get_active()
-        dc_ce_cap = self.dc_store[dc_act] [2]
-        dc_cap = self.dc_store[dc_act] [1]
+        dc_ce_cap = Decimal(self.dc_store[dc_act] [2])
+        dc_cap = Decimal(self.dc_store[dc_act] [1])
         dc_vol = dc_length * dc_cap
-        hwdp_length = float(self.hwdp_entry.get_text())
+        hwdp_length = num(self.hwdp_entry.get_text())
         hwdp_act = self.hwdp_box.get_active()
-        hwdp_cap = self.hwdp_store[hwdp_act] [1]
-        hwdp_ce_cap = self.hwdp_store[hwdp_act] [2]
+        hwdp_cap = Decimal(self.hwdp_store[hwdp_act] [1])
+        hwdp_ce_cap = Decimal(self.hwdp_store[hwdp_act] [2])
         hwdp_vol = hwdp_length * hwdp_cap
-        dp_length = bit_depth - (hwdp_length + dc_length)
+        dp_length = Decimal(bit_depth - (hwdp_length + dc_length))
         p_act = self.p_box.get_active()
-        p_cap = self.p_store[p_act] [1]
-        dp_ce_cap = self.p_store[p_act] [2]
+        p_cap = Decimal(self.p_store[p_act] [1])
+        dp_ce_cap = Decimal(self.p_store[p_act] [2])
         dp_vol = dp_length * p_cap
         oh_act = self.oh_box.get_active()
-        oh_cap = self.oh_store[oh_act] [1]
+        oh_cap = Decimal(self.oh_store[oh_act] [1])
         liner_act = self.liner_box.get_active()
-        liner_cap = self.linerstore[liner_act] [1]
+        liner_cap = Decimal(self.linerstore[liner_act] [1])
 
         # Drillstring length and volumes calculations
         self.dp_length_label.set_text(str(dp_length))
         string = dp_vol + hwdp_vol + dc_vol
-        self.vol_label.set_markup('<b>' + str(round(string, 2)) + ' Litres</b>')
+        self.vol_label.set_markup('<b>' + str(round(string, 1)) + ' Litres</b>')
         str_strokes = string / liner_cap
         self.stroke_label.set_markup('<b>' + str(int(str_strokes)) + ' Strokes</b>')
 

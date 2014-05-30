@@ -6,17 +6,17 @@
     <columns>
       <!-- column-name Size -->
       <column type="gchararray"/>
-      <!-- column-name vol -->
-      <column type="gfloat"/>
+      <!-- column-name cap -->
+      <column type="gchararray"/>
     </columns>
     <data>
       <row>
         <col id="0" translatable="yes">6 1/2"</col>
-        <col id="1">22.149999618530273</col>
+        <col id="1" translatable="yes">22.15</col>
       </row>
       <row>
         <col id="0" translatable="yes">6"</col>
-        <col id="1">18.879999160766602</col>
+        <col id="1" translatable="yes">18.88</col>
       </row>
     </data>
   </object>
@@ -25,28 +25,28 @@
       <!-- column-name size -->
       <column type="gchararray"/>
       <!-- column-name cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
     </columns>
     <data>
       <row>
         <col id="0" translatable="yes">36"</col>
-        <col id="1">656.3599853515625</col>
+        <col id="1" translatable="yes">656.36</col>
       </row>
       <row>
         <col id="0" translatable="yes">26"</col>
-        <col id="1">342.3599853515625</col>
+        <col id="1" translatable="yes">342.36</col>
       </row>
       <row>
         <col id="0" translatable="yes">17 1/2"</col>
-        <col id="1">155.10000610351562</col>
+        <col id="1" translatable="yes">155.10</col>
       </row>
       <row>
         <col id="0" translatable="yes">12 1/4"</col>
-        <col id="1">76</col>
+        <col id="1" translatable="yes">76.00</col>
       </row>
       <row>
         <col id="0" translatable="yes">8 1/2"</col>
-        <col id="1">36.590000152587891</col>
+        <col id="1" translatable="yes">36.59</col>
       </row>
     </data>
   </object>
@@ -55,52 +55,25 @@
       <!-- column-name size -->
       <column type="gchararray"/>
       <!-- column-name cap -->
-      <column type="gfloat"/>
-      <!-- column-name ce_cap -->
-      <column type="gfloat"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">3 1/2"</col>
-        <col id="1">3.3529999256134033</col>
-        <col id="2">6.5199999809265137</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5"</col>
-        <col id="1">8.8199996948242188</col>
-        <col id="2">13.25</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5 1/2"</col>
-        <col id="1">10.609999656677246</col>
-        <col id="2">16.049999237060547</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore4">
-    <columns>
-      <!-- column-name size -->
       <column type="gchararray"/>
-      <!-- column-name cap -->
-      <column type="gfloat"/>
       <!-- column-name ce_cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
     </columns>
     <data>
       <row>
         <col id="0" translatable="yes">3 1/2"</col>
-        <col id="1">3.3529999256134033</col>
-        <col id="2">6.5199999809265137</col>
+        <col id="1" translatable="yes">3.35</col>
+        <col id="2" translatable="yes">6.52</col>
       </row>
       <row>
         <col id="0" translatable="yes">5"</col>
-        <col id="1">8.8199996948242188</col>
-        <col id="2">13.25</col>
+        <col id="1" translatable="yes">8.82</col>
+        <col id="2" translatable="yes">13.25</col>
       </row>
       <row>
         <col id="0" translatable="yes">5 1/2"</col>
-        <col id="1">10.609999656677246</col>
-        <col id="2">16.049999237060547</col>
+        <col id="1" translatable="yes">10.61</col>
+        <col id="2" translatable="yes">16.05</col>
       </row>
     </data>
   </object>
@@ -109,25 +82,20 @@
       <!-- column-name size -->
       <column type="gchararray"/>
       <!-- column-name cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
       <!-- column-name ce_cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">5" HWDP</col>
-        <col id="1">4.559999942779541</col>
-        <col id="2">14</col>
+        <col id="0" translatable="yes">5"</col>
+        <col id="1" translatable="yes">4.56</col>
+        <col id="2" translatable="yes">14.00</col>
       </row>
       <row>
-        <col id="0" translatable="yes">5 1/2" HWDP</col>
-        <col id="1">5.3499999046325684</col>
-        <col id="2">16.899999618530273</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5" DP</col>
-        <col id="1">8.8199996948242188</col>
-        <col id="2">13.25</col>
+        <col id="0" translatable="yes">5 1/2"</col>
+        <col id="1" translatable="yes">5.35</col>
+        <col id="2" translatable="yes">16.90</col>
       </row>
     </data>
   </object>
@@ -136,30 +104,25 @@
       <!-- column-name size -->
       <column type="gchararray"/>
       <!-- column-name cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
       <!-- column-name ce_cap -->
-      <column type="gfloat"/>
+      <column type="gchararray"/>
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">6 3/4" DC</col>
-        <col id="1">4.0100002288818359</col>
-        <col id="2">23.079999923706055</col>
+        <col id="0" translatable="yes">6 3/4"</col>
+        <col id="1" translatable="yes">4.01</col>
+        <col id="2" translatable="yes">23.09</col>
       </row>
       <row>
-        <col id="0" translatable="yes">8 1/4" DC</col>
-        <col id="1">4.0100002288818359</col>
-        <col id="2">34.490001678466797</col>
+        <col id="0" translatable="yes">8 1/4"</col>
+        <col id="1" translatable="yes">4.01</col>
+        <col id="2" translatable="yes">34.49</col>
       </row>
       <row>
-        <col id="0" translatable="yes">9 1/2" DC</col>
-        <col id="1">4.5</col>
-        <col id="2">45.700000762939453</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">3 1/2" DP</col>
-        <col id="1">3.3499999046325684</col>
-        <col id="2">6.5199999809265137</col>
+        <col id="0" translatable="yes">9 1/2"</col>
+        <col id="1" translatable="yes">4.50</col>
+        <col id="2" translatable="yes">45.70</col>
       </row>
     </data>
   </object>
@@ -359,7 +322,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">0</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -385,7 +348,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -414,7 +376,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">8</property>
-                    <property name="text" translatable="yes">0</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -441,7 +403,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="width_chars">8</property>
-                    <property name="text" translatable="yes">0</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -469,7 +431,7 @@
                     <property name="can_default">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">0</property>
+                    <property name="input_purpose">number</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -647,7 +609,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">0</property>
+                        <property name="input_purpose">number</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -683,7 +645,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">DC / DP</property>
+                        <property name="label" translatable="yes">DC</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -759,7 +721,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">0</property>
+                        <property name="input_purpose">number</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -777,7 +739,7 @@
                         <property name="margin_bottom">7</property>
                         <property name="invisible_char">●</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">0</property>
+                        <property name="input_purpose">number</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -838,7 +800,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="label" translatable="yes">HWDP / DP</property>
+                        <property name="label" translatable="yes">HWDP</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1133,7 +1095,7 @@
                         <property name="can_focus">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="width_chars">8</property>
-                        <property name="text" translatable="yes">0</property>
+                        <property name="input_purpose">number</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
