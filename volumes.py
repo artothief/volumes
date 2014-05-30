@@ -163,13 +163,10 @@ class Volumes:
         self.shoe_strokes_label.set_text(str(int(csg_strokes)) + ' Strokes')
 
         # Liner volume calculation
-        liner_volume = 0 if not self.liner_chbutton.get_active() else \
+        liner_volume = Decimal('0.00') if not self.liner_chbutton.get_active() else \
                        dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap) +\
                        hwdp_liner(pbr, liner_shoe, liner_cap, dp_length, hwdp_length, hwdp_ce_cap) +\
                        dc_liner(pbr, liner_shoe, liner_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
-
-
-
 
         # Open hole volume calculation
         oh_volume = dp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe, oh_cap, dp_length, dp_ce_cap) +\

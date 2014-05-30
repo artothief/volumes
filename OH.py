@@ -1,6 +1,6 @@
 __author__ = 'artothief'
 
-
+from decimal import *
 
 def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
         
@@ -9,7 +9,7 @@ def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
         dp_oh_vol = (oh_cap - dp_ce_cap) * (dp_length - csg_shoe)
         
     else:
-        dp_oh_vol = 0
+        dp_oh_vol = Decimal('0.00')
 
     print 'Dp/OH = ' + str(dp_oh_vol)
     return dp_oh_vol
@@ -24,7 +24,7 @@ def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
         hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * hwdp_length
         
     else:
-        hwdp_oh_vol = 0
+        hwdp_oh_vol = Decimal('0.00')
 
     print 'HWDP/OH = ' + str(hwdp_oh_vol)
     return hwdp_oh_vol
@@ -41,7 +41,7 @@ def dc_oh(csg_shoe, oh_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_de
         dc_oh_vol = (oh_cap - dc_ce_cap) * dc_length
          
     else:
-        dc_oh_vol = 0
+        dc_oh_vol = Decimal('0.00')
     
     print 'DC/OH = ' + str(dc_oh_vol)
     return dc_oh_vol
