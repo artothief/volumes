@@ -2,6 +2,5 @@
 
 This is a application for volume calculations in wellbores onboard one spesific rig.
 Under no circumstance must this be used on other sites without changing variables/values
-that are fixed in this application (capacities and such).
-
-checkout branches
+that are fixed in this application (capacities and such). I (the developer) take no
+responsibilities regarding the use of this application.
