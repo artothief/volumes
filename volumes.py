@@ -106,10 +106,13 @@ class Volumes:
         self.treeview1.append_column(column3)
         tree_selection = self.treeview1.get_selection()
         tree_selection.connect("changed", self.onSelectionChanged)
+
         window.resize(1, 1)
 
+
     def on_add_pipe_activate(self, *args):
-        self.add_pipe.show()
+        self.add_pipe.run()
+        self.add_pipe.hide()
 
     def on_add_pipe_btn_clicked(self, *args):
         pipe_name = self.dp_name_entry.get_text()
@@ -121,9 +124,6 @@ class Volumes:
         for row in c.execute('SELECT * FROM add_dp'):
             if not row in self.p_store:
                 self.p_store.append(row)
-        self.add_pipe.hide()
-
-    def on_add_dp_dialog_delete_event(self, *args):
         self.add_pipe.hide()
 
     def on_rem_pipe_btn_clicked(self, *args):
@@ -139,10 +139,6 @@ class Volumes:
         if treeiter is not None:
             pipe_rem = model[treeiter][0]
         return pipe_rem
-
-
-    def on_add_dp_dialog_close(self, *args):
-        self.add_pipe.hide()
 
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
