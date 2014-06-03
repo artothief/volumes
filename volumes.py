@@ -104,7 +104,8 @@ class Volumes:
         self.treeview1.append_column(column1)
         self.treeview1.append_column(column2)
         self.treeview1.append_column(column3)
-
+        tree_selection = self.treeview1.get_selection()
+        tree_selection.connect("changed", self.onSelectionChanged)
         window.resize(1, 1)
 
     def on_add_pipe_activate(self, *args):
@@ -117,13 +118,28 @@ class Volumes:
         c.execute('''INSERT INTO add_dp(Name, Capacity, CE_Capacity)
                           VALUES(?,?,?)''', (pipe_name, pipe_cap, pipe_ce_cap))
         conn.commit()
+        for row in c.execute('SELECT * FROM add_dp'):
+            if not row in self.p_store:
+                self.p_store.append(row)
         self.add_pipe.hide()
 
     def on_add_dp_dialog_delete_event(self, *args):
         self.add_pipe.hide()
 
     def on_rem_pipe_btn_clicked(self, *args):
+        c.execute("DELETE FROM add_dp WHERE Name=?", (pipe_rem,))
+        conn.commit()
+        self.p_store.remove(treeiter)
         self.add_pipe.hide()
+
+    def onSelectionChanged(self, selection):
+        global pipe_rem
+        global treeiter
+        model, treeiter = selection.get_selected()
+        if treeiter is not None:
+            pipe_rem = model[treeiter][0]
+        return pipe_rem
+
 
     def on_add_dp_dialog_close(self, *args):
         self.add_pipe.hide()
