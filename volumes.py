@@ -2,7 +2,7 @@ __author__ = 'artothief'
 
 from gi.repository import Gtk
 from decimal import *
-
+import sqlite3
 from Riser import *
 from Casing import *
 from Liner import *
@@ -11,6 +11,13 @@ from OH import *
 def num(entry):
     number = Decimal(0.00) if not entry else Decimal(entry)
     return number
+
+#Connect to database
+conn = sqlite3.connect('input.db')
+c = conn.cursor()
+c.execute('CREATE TABLE IF NOT EXISTS add_dp(Name text, Capacity text, CE_Capacity)')
+
+
 
 class Volumes:
 
@@ -56,6 +63,8 @@ class Volumes:
         #tubular info
         self.p_box = builder.get_object('p_box')
         self.p_store = builder.get_object('liststore3')
+        for row in c.execute('SELECT * FROM add_dp'):
+            self.p_store.append(row)
         self.hwdp_entry = builder.get_object('hwdp_length_entry')
         self.hwdp_box = builder.get_object('hwdp_box')
         self.hwdp_store = builder.get_object('liststore5')
@@ -81,7 +90,44 @@ class Volumes:
         self.liner_shoe_entry.hide()
         self.liner_cap_entry.hide()
         self.liner_cap_label.hide()
+
+        #Dialog box
+        self.add_pipe = builder.get_object('add_dp_dialog')
+        self.dp_name_entry = builder.get_object('dp_name_entry')
+        self.dp_cap_entry = builder.get_object('dp_cap_entry')
+        self.dp_ce_cap_entry = builder.get_object('dp_ce_cap_entry')
+        self.treeview1 = builder.get_object('treeview1')
+        renderer = Gtk.CellRendererText()
+        column1 = Gtk.TreeViewColumn("Name", renderer, text=0)
+        column2 = Gtk.TreeViewColumn("Capacity", renderer, text=1)
+        column3 = Gtk.TreeViewColumn("Closed End Capacity", renderer, text=2)
+        self.treeview1.append_column(column1)
+        self.treeview1.append_column(column2)
+        self.treeview1.append_column(column3)
+
         window.resize(1, 1)
+
+    def on_add_pipe_activate(self, *args):
+        self.add_pipe.show()
+
+    def on_add_pipe_btn_clicked(self, *args):
+        pipe_name = self.dp_name_entry.get_text()
+        pipe_cap = self.dp_cap_entry.get_text()
+        pipe_ce_cap = self.dp_ce_cap_entry.get_text()
+        c.execute('''INSERT INTO add_dp(Name, Capacity, CE_Capacity)
+                          VALUES(?,?,?)''', (pipe_name, pipe_cap, pipe_ce_cap))
+        conn.commit()
+        self.add_pipe.hide()
+
+    def on_add_dp_dialog_delete_event(self, *args):
+        self.add_pipe.hide()
+
+    def on_rem_pipe_btn_clicked(self, *args):
+        self.add_pipe.hide()
+
+    def on_add_dp_dialog_close(self, *args):
+        self.add_pipe.hide()
+
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
 
