@@ -2,21 +2,19 @@ __author__ = 'artothief'
 
 from gi.repository import Gtk
 from decimal import *
-import sqlite3
+
 from Riser import *
 from Casing import *
 from Liner import *
 from OH import *
+import Hwdp
+import Pipe
+import DC
+
 
 def num(entry):
     number = Decimal(0.00) if not entry else Decimal(entry)
     return number
-
-#Connect to database
-conn = sqlite3.connect('input.db')
-c = conn.cursor()
-c.execute('CREATE TABLE IF NOT EXISTS add_dp(Name text, Capacity text, CE_Capacity)')
-
 
 
 class Volumes:
@@ -26,8 +24,10 @@ class Volumes:
         builder.add_from_file('volumes.glade')
         builder.connect_signals(self)
         window = builder.get_object('window1')
-        window.show_all()
 
+        self.hwdp = Hwdp.Add_HWDP()
+        self.dp = Pipe.Add_DP()
+        self.dc = DC.Add_DC()
 
         #making important labels bold
         bold1 = builder.get_object('bold1')
@@ -61,16 +61,20 @@ class Volumes:
         self.btms_up_strokes_label = builder.get_object('btms_up_strokes_label')
 
         #tubular info
-        self.p_box = builder.get_object('p_box')
-        self.p_store = builder.get_object('liststore3')
-        for row in c.execute('SELECT * FROM add_dp'):
-            self.p_store.append(row)
+        self.dp_store = self.dp.dp_store
+        self.dp_box = builder.get_object('dp_box')
+        self.dp_box.set_model(self.dp_store)
+        self.dp_box.set_active(0)
         self.hwdp_entry = builder.get_object('hwdp_length_entry')
+        self.hwdp_store = self.hwdp.hwdp_store
         self.hwdp_box = builder.get_object('hwdp_box')
-        self.hwdp_store = builder.get_object('liststore5')
+        self.hwdp_box.set_model(self.hwdp_store)
+        self.hwdp_box.set_active(0)
         self.dc_entry = builder.get_object('dc_length_entry')
+        self.dc_store = self.dc.dc_store
         self.dc_box = builder.get_object('dc_box')
-        self.dc_store = builder.get_object('liststore6')
+        self.dc_box.set_model(self.dc_store)
+        self.dc_box.set_active(0)
         self.dp_length_label = builder.get_object('dp_length_label')
         self.vol_label = builder.get_object('str_vol_label')
         self.stroke_label = builder.get_object('str_stroke_label')
@@ -80,6 +84,8 @@ class Volumes:
         self.riser_stroke_label = builder.get_object('riser_strokes_label')
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = builder.get_object('shoe_btms_up_label')
+
+        window.show_all()
 
         #Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
@@ -91,54 +97,19 @@ class Volumes:
         self.liner_cap_entry.hide()
         self.liner_cap_label.hide()
 
-        #Dialog box
-        self.add_pipe = builder.get_object('add_dp_dialog')
-        self.dp_name_entry = builder.get_object('dp_name_entry')
-        self.dp_cap_entry = builder.get_object('dp_cap_entry')
-        self.dp_ce_cap_entry = builder.get_object('dp_ce_cap_entry')
-        self.treeview1 = builder.get_object('treeview1')
-        renderer = Gtk.CellRendererText()
-        column1 = Gtk.TreeViewColumn("Name", renderer, text=0)
-        column2 = Gtk.TreeViewColumn("Capacity", renderer, text=1)
-        column3 = Gtk.TreeViewColumn("Closed End Capacity", renderer, text=2)
-        self.treeview1.append_column(column1)
-        self.treeview1.append_column(column2)
-        self.treeview1.append_column(column3)
-        tree_selection = self.treeview1.get_selection()
-        tree_selection.connect("changed", self.onSelectionChanged)
-
         window.resize(1, 1)
 
-
     def on_add_pipe_activate(self, *args):
-        self.add_pipe.run()
-        self.add_pipe.hide()
+        self.dp.add_dp.run()
+        self.dp.add_dp.hide()
 
-    def on_add_pipe_btn_clicked(self, *args):
-        pipe_name = self.dp_name_entry.get_text()
-        pipe_cap = self.dp_cap_entry.get_text()
-        pipe_ce_cap = self.dp_ce_cap_entry.get_text()
-        c.execute('''INSERT INTO add_dp(Name, Capacity, CE_Capacity)
-                          VALUES(?,?,?)''', (pipe_name, pipe_cap, pipe_ce_cap))
-        conn.commit()
-        for row in c.execute('SELECT * FROM add_dp'):
-            if not row in self.p_store:
-                self.p_store.append(row)
-        self.add_pipe.hide()
+    def on_add_hwdp_activate(self, *args):
+        self.hwdp.add_hwdp.run()
+        self.hwdp.add_hwdp.hide()
 
-    def on_rem_pipe_btn_clicked(self, *args):
-        c.execute("DELETE FROM add_dp WHERE Name=?", (pipe_rem,))
-        conn.commit()
-        self.p_store.remove(treeiter)
-        self.add_pipe.hide()
-
-    def onSelectionChanged(self, selection):
-        global pipe_rem
-        global treeiter
-        model, treeiter = selection.get_selected()
-        if treeiter is not None:
-            pipe_rem = model[treeiter][0]
-        return pipe_rem
+    def on_add_dc_activate(self, *args):
+        self.dc.add_dc.run()
+        self.dc.add_dc.hide()
 
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
@@ -188,9 +159,9 @@ class Volumes:
         hwdp_ce_cap = Decimal(self.hwdp_store[hwdp_act] [2])
         hwdp_vol = hwdp_length * hwdp_cap
         dp_length = Decimal(bit_depth - (hwdp_length + dc_length))
-        p_act = self.p_box.get_active()
-        p_cap = Decimal(self.p_store[p_act] [1])
-        dp_ce_cap = Decimal(self.p_store[p_act] [2])
+        p_act = self.dp_box.get_active()
+        p_cap = Decimal(self.dp_store[p_act] [1])
+        dp_ce_cap = Decimal(self.dp_store[p_act] [2])
         dp_vol = dp_length * p_cap
         oh_act = self.oh_box.get_active()
         oh_cap = Decimal(self.oh_store[oh_act] [1])

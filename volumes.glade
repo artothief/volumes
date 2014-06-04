@@ -7,6 +7,16 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-missing-image</property>
   </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name Size -->
@@ -52,280 +62,6 @@
       <row>
         <col id="0" translatable="yes">8 1/2"</col>
         <col id="1" translatable="yes">36.59</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore3">
-    <columns>
-      <!-- column-name size -->
-      <column type="gchararray"/>
-      <!-- column-name cap -->
-      <column type="gchararray"/>
-      <!-- column-name ce_cap -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">3 1/2"</col>
-        <col id="1" translatable="yes">3.35</col>
-        <col id="2" translatable="yes">6.52</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5"</col>
-        <col id="1" translatable="yes">8.82</col>
-        <col id="2" translatable="yes">13.25</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5 1/2"</col>
-        <col id="1" translatable="yes">10.61</col>
-        <col id="2" translatable="yes">16.05</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkDialog" id="add_dp_dialog">
-    <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Add / Remove Drillpipe</property>
-    <property name="type_hint">menu</property>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox1">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="add_pipe_btn">
-                <property name="label">gtk-add</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_add_pipe_btn_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="rem_pipe_btn">
-                <property name="label">gtk-remove</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_rem_pipe_btn_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="box4">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkLabel" id="label3">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_bottom">8</property>
-                <property name="label" translatable="yes">Add Pipe</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkGrid" id="grid1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkLabel" id="label17">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Name</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label23">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Capacity</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label24">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">CE Capacity</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="dp_name_entry">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_bottom">8</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="dp_cap_entry">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_bottom">8</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="dp_ce_cap_entry">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_bottom">8</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="label8">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_bottom">8</property>
-                <property name="label" translatable="yes">Remove pipe</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkTreeView" id="treeview1">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="model">liststore3</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection" id="treeview-selection1"/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkListStore" id="liststore5">
-    <columns>
-      <!-- column-name size -->
-      <column type="gchararray"/>
-      <!-- column-name cap -->
-      <column type="gchararray"/>
-      <!-- column-name ce_cap -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">5"</col>
-        <col id="1" translatable="yes">4.56</col>
-        <col id="2" translatable="yes">14.00</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">5 1/2"</col>
-        <col id="1" translatable="yes">5.35</col>
-        <col id="2" translatable="yes">16.90</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore6">
-    <columns>
-      <!-- column-name size -->
-      <column type="gchararray"/>
-      <!-- column-name cap -->
-      <column type="gchararray"/>
-      <!-- column-name ce_cap -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">6 3/4"</col>
-        <col id="1" translatable="yes">4.01</col>
-        <col id="2" translatable="yes">23.09</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">8 1/4"</col>
-        <col id="1" translatable="yes">4.01</col>
-        <col id="2" translatable="yes">34.49</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">9 1/2"</col>
-        <col id="1" translatable="yes">4.50</col>
-        <col id="2" translatable="yes">45.70</col>
       </row>
     </data>
   </object>
@@ -469,7 +205,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="add_pipe">
-                        <property name="label" translatable="yes">Add Pipe</property>
+                        <property name="label" translatable="yes">Add/Remove Pipe</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="image">image2</property>
@@ -478,19 +214,23 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem12">
+                      <object class="GtkImageMenuItem" id="add_hwdp">
+                        <property name="label" translatable="yes">Add/Remove HWDP</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">image3</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_add_hwdp_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem13">
+                      <object class="GtkImageMenuItem" id="add_dc">
+                        <property name="label" translatable="yes">Add/Remove DC</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">image4</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_add_dc_activate" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -854,13 +594,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="p_box">
+                      <object class="GtkComboBox" id="dp_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="model">liststore3</property>
                         <property name="active">2</property>
+                        <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext3"/>
                           <attributes>
@@ -909,8 +649,8 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="model">liststore5</property>
                         <property name="active">1</property>
+                        <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext5"/>
                           <attributes>
@@ -931,8 +671,8 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="model">liststore6</property>
                         <property name="active">1</property>
+                        <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext6"/>
                           <attributes>
