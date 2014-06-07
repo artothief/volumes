@@ -20,12 +20,24 @@ import Pipe
 import DC
 
 
-def num(entry):
-    de_com = entry.replace(',', '.')
-    number = Decimal(0.00) if not entry else Decimal(de_com)
-    c.execute('INSERT INTO entries(ent) VALUES (?)', (number,))
-    conn.commit()
-    return number
+def num(entry, choice):
+    if choice == 1:
+        de_com = entry.replace(',', '.')
+        number = Decimal(0.00) if not entry else Decimal(de_com)
+        c.execute('INSERT INTO entries(ent) VALUES (?)', (number,))
+        conn.commit()
+        return number
+
+    elif choice == 2:
+        de_com = entry.replace(',', '.')
+        number = Decimal(0.00) if not entry else Decimal(de_com)
+        return number
+
+    elif choice == 3:
+        number = entry
+        c.execute('INSERT INTO combos(com) VALUES (?)', (number,))
+        conn.commit()
+        return number
 
 
 class Volumes:
@@ -47,7 +59,6 @@ class Volumes:
         except Exception as e:
             x = []
             print e
-
 
         def st(entry, dig):
             if x and x[dig] != '0':
@@ -175,37 +186,39 @@ class Volumes:
 
     def on_calc_button_clicked(self, *args):
         c.execute('DROP TABLE IF EXISTS entries')
-        c.execute('CREATE TABLE  entries(ent TEXT)')
+        c.execute('DROP TABLE IF EXISTS combos')
+        c.execute('CREATE TABLE IF NOT EXISTS  entries(ent TEXT)')
+        c.execute('CREATE TABLE IF NOT EXISTS combos(com INTEGER)')
         #get active comboboxes and liststores, entry's first to meet dependencies
-        seabed = num(self.seabed_entry.get_text())
+        seabed = num(self.seabed_entry.get_text(), 1)
         riser_cap = Decimal('187.77')
-        liner_cap = num(self.liner_cap_entry.get_text())
-        liner_shoe = num(self.liner_shoe_entry.get_text())
-        pbr = num(self.pbr_entry.get_text())
-        csg_cap = num(self.csg_cap_entry.get_text())
-        csg_shoe = num(self.csg_shoe_entry.get_text())
+        liner_cap = num(self.liner_cap_entry.get_text(), 1)
+        liner_shoe = num(self.liner_shoe_entry.get_text(), 1)
+        pbr = num(self.pbr_entry.get_text(), 1)
+        csg_cap = num(self.csg_cap_entry.get_text(), 1)
+        csg_shoe = num(self.csg_shoe_entry.get_text(), 1)
         if self.liner_chbutton.get_active():
             csg_shoe = pbr
-        bit_depth = num(self.bit_depth_entry.get_text())
-        dc_length = num(self.dc_entry.get_text())
-        dc_act = self.dc_box.get_active()
-        dc_ce_cap = Decimal(self.dc_store[dc_act][2])
-        dc_cap = Decimal(self.dc_store[dc_act][1])
+        bit_depth = num(self.bit_depth_entry.get_text(), 1)
+        dc_length = num(self.dc_entry.get_text(), 1)
+        dc_act = num(self.dc_box.get_active(), 3)
+        dc_ce_cap = num(self.dc_store[dc_act][2], 2)
+        dc_cap = num(self.dc_store[dc_act][1], 2)
         dc_vol = dc_length * dc_cap
-        hwdp_length = num(self.hwdp_entry.get_text())
-        hwdp_act = self.hwdp_box.get_active()
-        hwdp_cap = Decimal(self.hwdp_store[hwdp_act][1])
-        hwdp_ce_cap = Decimal(self.hwdp_store[hwdp_act][2])
+        hwdp_length = num(self.hwdp_entry.get_text(), 1)
+        hwdp_act = num(self.hwdp_box.get_active(), 3)
+        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2)
+        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2)
         hwdp_vol = hwdp_length * hwdp_cap
         dp_length = Decimal(bit_depth - (hwdp_length + dc_length))
-        dp_act = self.dp_box.get_active()
-        dp_cap = Decimal(self.dp_store[dp_act][1])
-        dp_ce_cap = Decimal(self.dp_store[dp_act][2])
+        dp_act = num(self.dp_box.get_active(), 3)
+        dp_cap = num(self.dp_store[dp_act][1], 2)
+        dp_ce_cap = num(self.dp_store[dp_act][2], 2)
         dp_vol = dp_length * dp_cap
-        oh_act = self.oh_box.get_active()
-        oh_cap = Decimal(self.oh_store[oh_act][1])
-        mp_liner_act = self.mp_liner_box.get_active()
-        mp_liner_cap = Decimal(self.mp_linerstore[mp_liner_act][1])
+        oh_act = num(self.oh_box.get_active(), 3)
+        oh_cap = num(self.oh_store[oh_act][1], 2)
+        mp_liner_act = num(self.mp_liner_box.get_active(), 3)
+        mp_liner_cap = num(self.mp_linerstore[mp_liner_act][1], 2)
 
         # Drillstring length and volumes calculations
         self.dp_length_label.set_text(str(dp_length))
