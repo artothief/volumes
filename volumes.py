@@ -11,7 +11,6 @@ conn = sqlite3.connect("input.db",
     detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
 c = conn.cursor()
 
-
 from Riser import *
 from Casing import *
 from Liner import *
@@ -24,7 +23,7 @@ import DC
 def num(entry):
     de_com = entry.replace(',', '.')
     number = Decimal(0.00) if not entry else Decimal(de_com)
-    c.execute('INSERT INTO entries(val) VALUES (?)', (number,))
+    c.execute('INSERT INTO entries(ent) VALUES (?)', (number,))
     conn.commit()
     return number
 
@@ -42,12 +41,13 @@ class Volumes:
         self.dc = DC.Add_DC()
 
         try:
-            c.execute('SELECT val FROM entries')
+            c.execute('SELECT ent FROM entries')
             x = [record[0] for record in c.fetchall()]
             print x
         except Exception as e:
-            print 'error'
-            raise e
+            x = []
+            print e
+
 
         def st(entry, dig):
             if x and x[dig] != '0':
@@ -74,7 +74,9 @@ class Volumes:
         self.liner_chbutton = builder.get_object('liner_chbutton')
         self.csg_shoe_label = builder.get_object('csg_shoe_label')
         self.csg_shoe_entry = builder.get_object('csg_shoe_entry')
+        st(self.csg_shoe_entry, 5)
         self.csg_cap_entry = builder.get_object('csg_cap_entry')
+        st(self.csg_cap_entry, 4)
         self.liner_shoe_label = builder.get_object('liner_shoe_label')
         self.liner_shoe_entry = builder.get_object('liner_shoe_entry')
         st(self.liner_shoe_entry, 2)
@@ -97,11 +99,13 @@ class Volumes:
         self.dp_box.set_model(self.dp_store)
         self.dp_box.set_active(0)
         self.hwdp_entry = builder.get_object('hwdp_length_entry')
+        st(self.hwdp_entry, 8)
         self.hwdp_store = self.hwdp.hwdp_store
         self.hwdp_box = builder.get_object('hwdp_box')
         self.hwdp_box.set_model(self.hwdp_store)
         self.hwdp_box.set_active(0)
         self.dc_entry = builder.get_object('dc_length_entry')
+        st(self.dc_entry, 7)
         self.dc_store = self.dc.dc_store
         self.dc_box = builder.get_object('dc_box')
         self.dc_box.set_model(self.dc_store)
@@ -171,7 +175,7 @@ class Volumes:
 
     def on_calc_button_clicked(self, *args):
         c.execute('DROP TABLE IF EXISTS entries')
-        c.execute('CREATE TABLE  entries(val TEXT)')
+        c.execute('CREATE TABLE  entries(ent TEXT)')
         #get active comboboxes and liststores, entry's first to meet dependencies
         seabed = num(self.seabed_entry.get_text())
         riser_cap = Decimal('187.77')
