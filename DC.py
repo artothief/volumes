@@ -10,6 +10,7 @@ c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS add_dc(Name text, Capacity text, CE_Capacity)')
 
 
+# noinspection PyUnusedLocal
 class Add_DC:
     
     def __init__(self):
@@ -54,6 +55,7 @@ class Add_DC:
         self.dc_store.remove(treeiter)
         self.add_dc.hide()
 
+    # noinspection PyMethodMayBeStatic
     def on_dc_selection_changed(self, selection):
         global pipe_rem
         global treeiter

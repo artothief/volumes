@@ -2,6 +2,7 @@ __author__ = 'artothief'
 
 from decimal import *
 
+
 #Pipe / Csg volume
 def dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap):
 
@@ -16,6 +17,7 @@ def dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap):
 
     print 'DP/Liner = ' + str(pipe_liner_vol)
     return pipe_liner_vol
+
 
 #HWDP / Csg volume
 def hwdp_liner(pbr, liner_shoe, liner_cap, dp_length, hwdp_length, hwdp_ce_cap):
@@ -39,6 +41,7 @@ def hwdp_liner(pbr, liner_shoe, liner_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
     print 'HWDP/Liner = ' + str(hwdp_liner_vol)
     return hwdp_liner_vol
+
 
 #DC / Csg volume
 def dc_liner(pbr, liner_shoe, liner_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):

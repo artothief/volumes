@@ -2,6 +2,7 @@ __author__ = 'artothief'
 
 from decimal import *
 
+
 #Pipe / Csg volume
 def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 
@@ -16,6 +17,7 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 
     print 'DP/Csg = ' + str(pipe_csg_vol)
     return pipe_csg_vol
+
 
 #HWDP / Csg volume
 def hwdp_csg(seabed, csg_shoe, csg_cap, dp_length, hwdp_length, hwdp_ce_cap):
@@ -39,6 +41,7 @@ dp_length + hwdp_length > csg_shoe):
 
     print 'HWDP/Csg = ' + str(hwdp_csg_vol)
     return hwdp_csg_vol
+
 
 #DC / Csg volume
 def dc_csg(seabed, csg_shoe, csg_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):

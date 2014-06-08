@@ -9,6 +9,7 @@ c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS add_hwdp(Name text, Capacity text, CE_Capacity)')
 
 
+# noinspection PyUnusedLocal,PyUnusedLocal
 class Add_HWDP:
 
     def __init__(self):
@@ -53,6 +54,7 @@ class Add_HWDP:
         self.hwdp_store.remove(treeiter)
         self.add_hwdp.hide()
 
+    # noinspection PyMethodMayBeStatic
     def on_hwdp_selection_changed(self, selection):
         global pipe_rem
         global treeiter

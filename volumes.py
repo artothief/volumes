@@ -7,8 +7,7 @@ import sqlite3
 sqlite3.register_adapter(Decimal, lambda x: str(x))
 sqlite3.register_converter('decimal', Decimal)
 
-conn = sqlite3.connect("input.db",
-    detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+conn = sqlite3.connect("input.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
 c = conn.cursor()
 
 from Riser import *
@@ -40,13 +39,14 @@ def num(entry, choice):
         return number
 
 
+# noinspection PyUnusedLocal,PyUnusedLocal,PyUnusedLocal,PyUnusedLocal,PyUnusedLocal
 class Volumes:
 
     def __init__(self):
         builder = Gtk.Builder()
         builder.add_from_file('volumes.glade')
         builder.connect_signals(self)
-        window = builder.get_object('window1')
+        self.window = builder.get_object('window1')
 
         self.hwdp = Hwdp.Add_HWDP()
         self.dp = Pipe.Add_DP()
@@ -60,9 +60,23 @@ class Volumes:
             x = []
             print e
 
+        try:
+            c.execute('SELECT com FROM combos')
+            y = [record[0] for record in c.fetchall()]
+            print y
+        except Exception as e:
+            y = []
+            print e
+
         def st(entry, dig):
             if x and x[dig] != '0':
                 entry.set_text(x[dig])
+            else:
+                pass
+
+        def sd(combo, dig):
+            if y and y[dig] != '0':
+                combo.set_active(y[dig])
             else:
                 pass
 
@@ -98,6 +112,7 @@ class Volumes:
         self.pbr_entry = builder.get_object('pbr_entry')
         st(self.pbr_entry, 3)
         self.oh_box = builder.get_object('oh_box')
+        sd(self.oh_box, 3)
         self.oh_store = builder.get_object('liststore2')
         self.oh_vol_label = builder.get_object('oh_vol_label')
         self.oh_strokes_label = builder.get_object('oh_stroke_label')
@@ -108,30 +123,31 @@ class Volumes:
         self.dp_store = self.dp.dp_store
         self.dp_box = builder.get_object('dp_box')
         self.dp_box.set_model(self.dp_store)
-        self.dp_box.set_active(0)
+        sd(self.dp_box, 2)
         self.hwdp_entry = builder.get_object('hwdp_length_entry')
         st(self.hwdp_entry, 8)
         self.hwdp_store = self.hwdp.hwdp_store
         self.hwdp_box = builder.get_object('hwdp_box')
         self.hwdp_box.set_model(self.hwdp_store)
-        self.hwdp_box.set_active(0)
+        sd(self.hwdp_box, 1)
         self.dc_entry = builder.get_object('dc_length_entry')
         st(self.dc_entry, 7)
         self.dc_store = self.dc.dc_store
         self.dc_box = builder.get_object('dc_box')
         self.dc_box.set_model(self.dc_store)
-        self.dc_box.set_active(0)
+        sd(self.dc_box, 0)
         self.dp_length_label = builder.get_object('dp_length_label')
         self.vol_label = builder.get_object('str_vol_label')
         self.stroke_label = builder.get_object('str_stroke_label')
         self.mp_liner_box = builder.get_object('liner_box')
+        sd(self.mp_liner_box, 4)
         self.mp_linerstore = builder.get_object('liststore1')
         self.riser_vol_label = builder.get_object('riser_btms_up_label')
         self.riser_stroke_label = builder.get_object('riser_strokes_label')
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = builder.get_object('shoe_btms_up_label')
 
-        window.show_all()
+        self.window.show_all()
 
         #Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
@@ -143,7 +159,7 @@ class Volumes:
         self.liner_cap_entry.hide()
         self.liner_cap_label.hide()
 
-        window.resize(1, 1)
+
 
     def on_add_pipe_activate(self, *args):
         self.dp.add_dp.run()
@@ -157,6 +173,7 @@ class Volumes:
         self.dc.add_dc.run()
         self.dc.add_dc.hide()
 
+    # noinspection PyMethodMayBeStatic
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
 
@@ -253,7 +270,7 @@ class Volumes:
         oh_volume = dp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe, oh_cap, dp_length, dp_ce_cap) +\
                     hwdp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap) +\
                     dc_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe, oh_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
-        self.oh_vol_label.set_text(str(round(oh_volume, 1)) + ' Litres' )
+        self.oh_vol_label.set_text(str(round(oh_volume, 1)) + ' Litres')
         oh_strokes = oh_volume / mp_liner_cap
         self.oh_strokes_label.set_text(str(int(oh_strokes)) + ' Strokes')
 
@@ -264,5 +281,7 @@ class Volumes:
         self.btms_up_strokes_label.set_markup('<b>' + str(int(btms_up_strokes)) + ' Strokes</b>')
         print '------------------------------'
 
+
 main = Volumes()
+main.window.resize(1, 1)
 Gtk.main()

@@ -2,6 +2,7 @@ __author__ = 'artothief'
 
 from decimal import *
 
+
 #Pipe / Riser volume
 def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
 
@@ -17,6 +18,7 @@ def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
     print 'DP/Riser = ' + str(riser_dp_vol)
     return riser_dp_vol
 
+
 # HWDP / Riser volume
 def hwdp_riser(seabed, riser_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
@@ -31,6 +33,7 @@ def hwdp_riser(seabed, riser_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
     print 'HWDP/Riser = ' + str(riser_hwdp_vol)
     return riser_hwdp_vol
+
 
 # DC / Riser volume
 def dc_riser(seabed, riser_cap, dp_length, hwdp_length, dc_ce_cap, bit_depth):
