@@ -2,6 +2,7 @@ __author__ = 'artothief'
 
 from decimal import *
 
+
 def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
         
     #Pipe / OH
@@ -28,6 +29,7 @@ def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
 
     print 'HWDP/OH = ' + str(hwdp_oh_vol)
     return hwdp_oh_vol
+
 
 def dc_oh(csg_shoe, oh_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
     #DC / OH
