@@ -86,7 +86,6 @@ class Volumes:
             except Exception as er:
                 print er
 
-
         #making important labels bold
         bold1 = builder.get_object('bold1')
         bold1.set_markup('<b>String Volume :</b>')
@@ -263,7 +262,7 @@ class Volumes:
         hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if hwdp_act else num('0.00', 2)
         hwdp_vol = hwdp_length * hwdp_cap
 
-        if self.tap_chbutton.get_active():
+        if self.tap_chbutton.get_active() and self.dp2_box.get_active() >= 0:
             dp2_length = num(self.dp2_entry.get_text(), 1)
             dp2_act = num(self.dp2_box.get_active(), 3)
             dp2_cap = num(self.dp2_store[dp2_act][1], 2)
