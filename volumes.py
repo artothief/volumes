@@ -34,8 +34,12 @@ def num(entry, choice):
         return number
 
     elif choice == 3:
-        number = entry
-        c.execute('INSERT INTO combos(com) VALUES (?)', (number,))
+        if entry >= 0:
+            number = entry
+            c.execute('INSERT INTO combos(com) VALUES (?)', (number,))
+        else:
+            number = 0
+            c.execute('INSERT INTO combos(com) VALUES (?)', (number,))
         conn.commit()
         return number
 
@@ -71,16 +75,17 @@ class Volumes:
             print e
 
         def st(entry, dig):
-            if x and x[dig] != '0':
+            if x and x[dig] != '0.00':
                 entry.set_text(x[dig])
             else:
                 pass
 
         def sd(combo, dig):
-            if y and y[dig] != '0':
+            try:
                 combo.set_active(y[dig])
-            else:
-                pass
+            except Exception as er:
+                print er
+
 
         #making important labels bold
         bold1 = builder.get_object('bold1')
@@ -257,12 +262,20 @@ class Volumes:
         hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2)
         hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2)
         hwdp_vol = hwdp_length * hwdp_cap
-        dp2_length = num(self.dp2_entry.get_text(), 1) if self.tap_chbutton.get_active() else Decimal('0.00')
-        dp2_act = num(self.dp2_box.get_active(), 3)
-        dp_length = Decimal(bit_depth - (dp2_length + hwdp_length + dc_length))
-        dp2_cap = num(self.dp2_store[dp2_act][1], 2)
-        dp2_ce_cap = num(self.dp2_store[dp2_act][2], 2)
+
+        if self.tap_chbutton.get_active():
+            dp2_length = num(self.dp2_entry.get_text(), 1)
+            dp2_act = num(self.dp2_box.get_active(), 3)
+            dp2_cap = num(self.dp2_store[dp2_act][1], 2)
+            dp2_ce_cap = num(self.dp2_store[dp2_act][2], 2)
+        else:
+            dp2_length = num('0.00', 1)
+            dp2_act = num('0.00', 3)
+            dp2_cap = num('0.00', 2)
+            dp2_ce_cap = num('0.00', 2)
+
         dp2_vol = dp2_length * dp2_cap
+        dp_length = Decimal(bit_depth - (dp2_length + hwdp_length + dc_length))
         dp_act = num(self.dp_box.get_active(), 3)
         dp_cap = num(self.dp_store[dp_act][1], 2)
         dp_ce_cap = num(self.dp_store[dp_act][2], 2)

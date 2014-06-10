@@ -81,8 +81,8 @@ def hwdp_csg(seabed, csg_shoe, csg_cap, pipe_length, hwdp_length, hwdp_ce_cap):
 def dc_csg(seabed, csg_shoe, csg_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
 
     if pipe_length + hwdp_length < seabed and bit_depth > seabed and dc_length > 0:
-        dc_csg_vol = (csg_cap - dc_ce_cap) * (bit_depth - seabed)
-        print bit_depth - seabed
+        dc_csg_vol = (csg_cap - dc_ce_cap) * (bit_depth - csg_shoe)
+        print bit_depth - csg_shoe
 
     elif (pipe_length + hwdp_length > seabed and pipe_length + hwdp_length < csg_shoe and
         bit_depth <= csg_shoe):

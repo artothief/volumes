@@ -24,8 +24,10 @@ def dp2_oh(csg_shoe, oh_cap, dp_length, dp2_length, dp2_ce_cap):
 
     elif dp_length > csg_shoe:
         dp2_oh_vol = (oh_cap - dp2_ce_cap) * dp2_length
-        print dp2_length
-
+        if dp2_length != Decimal('0.00'):
+            print dp2_length
+        else:
+            pass
     else:
         dp2_oh_vol = Decimal('0.00')
 
@@ -41,8 +43,10 @@ def hwdp_oh(csg_shoe, oh_cap, pipe_length, hwdp_length, hwdp_ce_cap):
         
     elif pipe_length > csg_shoe:
         hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * hwdp_length
-        print hwdp_length
-        
+        if hwdp_length != Decimal('0.00'):
+            print hwdp_length
+        else:
+            pass
     else:
         hwdp_oh_vol = Decimal('0.00')
 

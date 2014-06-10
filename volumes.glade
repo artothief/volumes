@@ -68,6 +68,10 @@
         <col id="0" translatable="yes">8 1/2"</col>
         <col id="1" translatable="yes">36.59</col>
       </row>
+      <row>
+        <col id="0" translatable="yes">6"</col>
+        <col id="1" translatable="yes">18.23</col>
+      </row>
     </data>
   </object>
   <object class="GtkWindow" id="window1">
