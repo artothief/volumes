@@ -254,13 +254,13 @@ class Volumes:
         bit_depth = num(self.bit_depth_entry.get_text(), 1)
         dc_length = num(self.dc_entry.get_text(), 1)
         dc_act = num(self.dc_box.get_active(), 3)
-        dc_ce_cap = num(self.dc_store[dc_act][2], 2)
-        dc_cap = num(self.dc_store[dc_act][1], 2)
+        dc_ce_cap = num(self.dc_store[dc_act][2], 2) if dc_act else num('0.00', 2)
+        dc_cap = num(self.dc_store[dc_act][1], 2) if dc_act else num('0.00', 2)
         dc_vol = dc_length * dc_cap
         hwdp_length = num(self.hwdp_entry.get_text(), 1)
         hwdp_act = num(self.hwdp_box.get_active(), 3)
-        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2)
-        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2)
+        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2) if hwdp_act else num('0.00', 2)
+        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if hwdp_act else num('0.00', 2)
         hwdp_vol = hwdp_length * hwdp_cap
 
         if self.tap_chbutton.get_active():
