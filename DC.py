@@ -11,7 +11,7 @@ c.execute('CREATE TABLE IF NOT EXISTS add_dc(Name text, Capacity text, CE_Capaci
 
 
 # noinspection PyUnusedLocal
-class Add_DC:
+class AddDC:
     
     def __init__(self):
         #Add dc Dialog box

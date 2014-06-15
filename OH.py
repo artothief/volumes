@@ -8,7 +8,7 @@ def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
     #Pipe / OH
     if dp_length > csg_shoe:
         dp_oh_vol = (oh_cap - dp_ce_cap) * (dp_length - csg_shoe)
-        
+        print dp_length - csg_shoe
     else:
         dp_oh_vol = Decimal('0.00')
 
@@ -16,14 +16,37 @@ def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
     return dp_oh_vol
 
 
-def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
-    #HWDP / OH
-    if dp_length < csg_shoe and dp_length + hwdp_length >= csg_shoe:
-        hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * ((dp_length + hwdp_length) - csg_shoe)
-        
+def dp2_oh(csg_shoe, oh_cap, dp_length, dp2_length, dp2_ce_cap):
+    #dp2 / OH
+    if dp_length < csg_shoe and dp_length + dp2_length >= csg_shoe:
+        dp2_oh_vol = (oh_cap - dp2_ce_cap) * ((dp_length + dp2_length) - csg_shoe)
+        print (dp_length + dp2_length) - csg_shoe
+
     elif dp_length > csg_shoe:
-        hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * hwdp_length
+        dp2_oh_vol = (oh_cap - dp2_ce_cap) * dp2_length
+        if dp2_length != Decimal('0.00'):
+            print dp2_length
+        else:
+            pass
+    else:
+        dp2_oh_vol = Decimal('0.00')
+
+    print 'Pipe #2/OH = ' + str(dp2_oh_vol)
+    return dp2_oh_vol
+
+
+def hwdp_oh(csg_shoe, oh_cap, pipe_length, hwdp_length, hwdp_ce_cap):
+    #HWDP / OH
+    if pipe_length < csg_shoe and pipe_length + hwdp_length >= csg_shoe:
+        hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * ((pipe_length + hwdp_length) - csg_shoe)
+        print (pipe_length + hwdp_length) - csg_shoe
         
+    elif pipe_length > csg_shoe:
+        hwdp_oh_vol = (oh_cap - hwdp_ce_cap) * hwdp_length
+        if hwdp_length != Decimal('0.00'):
+            print hwdp_length
+        else:
+            pass
     else:
         hwdp_oh_vol = Decimal('0.00')
 
@@ -31,16 +54,19 @@ def hwdp_oh(csg_shoe, oh_cap, dp_length, hwdp_length, hwdp_ce_cap):
     return hwdp_oh_vol
 
 
-def dc_oh(csg_shoe, oh_cap, dp_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
+def dc_oh(csg_shoe, oh_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
     #DC / OH
-    if dp_length + hwdp_length <= csg_shoe and bit_depth > csg_shoe:
+    if pipe_length + hwdp_length <= csg_shoe and pipe_length + hwdp_length + dc_length > csg_shoe:
         dc_oh_vol = (oh_cap - dc_ce_cap) * (bit_depth - csg_shoe)
+        print bit_depth - csg_shoe
         
-    elif dp_length + hwdp_length > csg_shoe and bit_depth > dp_length + hwdp_length:
+    elif pipe_length + hwdp_length > csg_shoe and bit_depth > pipe_length + hwdp_length:
         dc_oh_vol = (oh_cap - dc_ce_cap) * dc_length
+        print dc_length
         
     elif dc_length > csg_shoe:
         dc_oh_vol = (oh_cap - dc_ce_cap) * dc_length
+        print dc_length
          
     else:
         dc_oh_vol = Decimal('0.00')

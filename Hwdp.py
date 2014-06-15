@@ -10,7 +10,7 @@ c.execute('CREATE TABLE IF NOT EXISTS add_hwdp(Name text, Capacity text, CE_Capa
 
 
 # noinspection PyUnusedLocal,PyUnusedLocal
-class Add_HWDP:
+class AddHWDP:
 
     def __init__(self):
         #Add HWDP Dialog
