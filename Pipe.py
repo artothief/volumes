@@ -22,6 +22,7 @@ class AddDP:
         self.dp_cap_entry = self.builder.get_object('dp_cap_entry')
         self.dp_ce_cap_entry = self.builder.get_object('dp_ce_cap_entry')
         self.dp_store = self.builder.get_object('dp_store')
+
         for row in c.execute('SELECT * FROM add_dp'):
             self.dp_store.append(row)
         self.dp_tv = self.builder.get_object('dp_tv')

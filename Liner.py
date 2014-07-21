@@ -31,16 +31,17 @@ def dp2_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap):
     elif (dp_length < pbr and dp_length + dp2_length > pbr and
           dp_length + dp2_length < liner_shoe):
         dp2_liner_vol = (liner_cap - dp2_ce_cap) * ((dp_length + dp2_length) - pbr)
-        print dp_length + dp2_length - pbr
+        print (dp_length + dp2_length) - pbr
 
     elif (dp_length > pbr and dp_length < liner_shoe and
-          dp_length + dp2_length > liner_shoe):
+          dp_length + dp2_length >= liner_shoe):
         dp2_liner_vol = (liner_cap - dp2_ce_cap) * (liner_shoe - dp_length)
         print liner_shoe - dp_length
 
-    elif dp2_length >= pbr and dp2_length >= liner_shoe and dp2_length > 0:
-        dp2_liner_vol = (liner_cap - dp2_ce_cap) * dp2_length
-        print dp2_length
+    elif (dp_length < pbr and dp_length + dp2_length > pbr and
+          dp_length + dp2_length >= liner_shoe):
+        dp2_liner_vol = (liner_cap - dp2_ce_cap) * (liner_shoe - pbr)
+        print liner_shoe - pbr
 
     else:
         dp2_liner_vol = Decimal('0.00')
@@ -50,21 +51,19 @@ def dp2_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap):
 
 
 #HWDP /Liner volume
-def hwdp_liner(pbr, liner_shoe, liner_cap, pipe_length, hwdp_length, hwdp_ce_cap):
+def hwdp_liner(pbr, liner_shoe, liner_cap, above_hwdp, hwdp_length, hwdp_ce_cap):
 
-    if pipe_length >= pbr and pipe_length + hwdp_length <= liner_shoe:
+    if above_hwdp >= pbr and above_hwdp + hwdp_length <= liner_shoe:
         hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * hwdp_length
         print hwdp_length
 
-    elif (pipe_length < pbr and pipe_length + hwdp_length > pbr and
-          pipe_length + hwdp_length < liner_shoe):
-        hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * ((pipe_length + hwdp_length) - pbr)
-        print pipe_length + hwdp_length
+    elif above_hwdp < pbr and liner_shoe > above_hwdp + hwdp_length > pbr:
+        hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * ((above_hwdp + hwdp_length) - pbr)
+        print above_hwdp + hwdp_length
 
-    elif (pipe_length > pbr and pipe_length < liner_shoe and
-          pipe_length + hwdp_length > liner_shoe):
-        hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * (liner_shoe - pipe_length)
-        print liner_shoe - pipe_length
+    elif liner_shoe > above_hwdp > pbr and above_hwdp + hwdp_length > liner_shoe:
+        hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * (liner_shoe - above_hwdp)
+        print liner_shoe - above_hwdp
 
     elif hwdp_length >= pbr and hwdp_length >= liner_shoe and hwdp_length > 0:
         hwdp_liner_vol = (liner_cap - hwdp_ce_cap) * hwdp_length
@@ -78,20 +77,20 @@ def hwdp_liner(pbr, liner_shoe, liner_cap, pipe_length, hwdp_length, hwdp_ce_cap
 
 
 #DC /Liner volume
-def dc_liner(pbr, liner_shoe, liner_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
+def dc_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap, bit_depth):
 
-    if pipe_length + hwdp_length < pbr and bit_depth > pbr:
-        dc_liner_vol = (liner_cap - dc_ce_cap) * (bit_depth - pbr)
-        print bit_depth - pbr
+    if above_dc <= pbr and bit_depth > pbr and bit_depth >= liner_shoe:
+        dc_liner_vol = (liner_cap - dc_ce_cap) * (liner_shoe - pbr)
+        print liner_shoe - pbr
 
-    elif (pipe_length + hwdp_length > pbr and pipe_length + hwdp_length < liner_shoe and
+    elif (above_dc > pbr and above_dc < liner_shoe and
          bit_depth <= liner_shoe):
         dc_liner_vol = (liner_cap - dc_ce_cap) * dc_length
         print dc_length
 
-    elif pipe_length + hwdp_length < liner_shoe and bit_depth > liner_shoe:
-        dc_liner_vol = (liner_cap - dc_ce_cap) * (liner_shoe - (pipe_length + hwdp_length))
-        print liner_shoe - (pipe_length + hwdp_length)
+    elif above_dc < liner_shoe and bit_depth >= liner_shoe:
+        dc_liner_vol = (liner_cap - dc_ce_cap) * (liner_shoe - (above_dc))
+        print liner_shoe - (above_dc)
 
     else:
         dc_liner_vol = Decimal('0.00')

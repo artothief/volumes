@@ -285,8 +285,10 @@ class Volumes:
         mp_liner_cap = num(self.mp_linerstore[mp_liner_act][1], 2)
 
         # Drillstring length and volumes calculations
+        assert dp_length >= 0, "error"
         self.dp_length_label.set_text(str(dp_length))
-        pipe_length = dp_length + dp2_length
+        above_hwdp = dp_length + dp2_length
+        above_dc = above_hwdp + hwdp_length
         string = dp_vol + dp2_vol + hwdp_vol + dc_vol
         self.vol_label.set_markup('<b>' + str(round(string, 1)) + ' Litres</b>')
         str_strokes = string / mp_liner_cap
@@ -295,8 +297,8 @@ class Volumes:
         # Riser volume calculation
         riser_volume = dp_riser(seabed, riser_cap, dp_length, dp_ce_cap) +\
                        dp2_riser(seabed, riser_cap, dp_length,  dp2_length,  dp2_ce_cap) +\
-                       hwdp_riser(seabed, riser_cap, pipe_length, hwdp_length, hwdp_ce_cap) +\
-                       dc_riser(seabed, riser_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
+                       hwdp_riser(seabed, riser_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
+                       dc_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
         self.riser_vol_label.set_text(str(round(riser_volume, 1)) + ' Litres')
         riser_strokes = riser_volume / mp_liner_cap
         self.riser_stroke_label.set_text(str(int(riser_strokes)) + ' Strokes')
@@ -307,9 +309,9 @@ class Volumes:
                   dp2_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
                           pbr, csg_cap, dp_length, dp2_length, dp2_ce_cap) +\
                   hwdp_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
-                           pbr, csg_cap, pipe_length, hwdp_length, hwdp_ce_cap) +\
+                           pbr, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
                   dc_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
-                         pbr, csg_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
+                         pbr, csg_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
         self.shoe_btms_up_label.set_text(str(round(csg_vol, 1)) + ' Litres')
         csg_strokes = csg_vol / mp_liner_cap
         self.shoe_strokes_label.set_text(str(int(csg_strokes)) + ' Strokes')
@@ -318,8 +320,8 @@ class Volumes:
         liner_volume = Decimal('0.00') if not self.liner_chbutton.get_active() else \
                        dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap) +\
                        dp2_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap) +\
-                       hwdp_liner(pbr, liner_shoe, liner_cap, pipe_length, hwdp_length, hwdp_ce_cap) +\
-                       dc_liner(pbr, liner_shoe, liner_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
+                       hwdp_liner(pbr, liner_shoe, liner_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
+                       dc_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
 
         # Open hole volume calculation
         oh_volume = dp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
@@ -327,9 +329,9 @@ class Volumes:
                     dp2_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
                            oh_cap, dp_length, dp2_length, dp2_ce_cap) +\
                     hwdp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
-                            oh_cap, pipe_length, hwdp_length, hwdp_ce_cap) +\
+                            oh_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
                     dc_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
-                          oh_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth)
+                          oh_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
         self.oh_vol_label.set_text(str(round(oh_volume, 1)) + ' Litres')
         oh_strokes = oh_volume / mp_liner_cap
         self.oh_strokes_label.set_text(str(int(oh_strokes)) + ' Strokes')

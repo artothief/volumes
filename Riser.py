@@ -26,7 +26,7 @@ def dp2_riser(seabed, riser_cap, dp_length, dp2_length, dp2_ce_cap):
     if dp_length >= seabed:
         riser_dp2_vol = Decimal('0.00')
 
-    elif dp_length < seabed and dp_length +  dp2_length > seabed:
+    elif dp_length < seabed <= dp_length + dp2_length:
         riser_dp2_vol = (riser_cap - dp2_ce_cap) * (seabed - dp_length)
         print seabed - dp_length
     else:
@@ -41,14 +41,14 @@ def dp2_riser(seabed, riser_cap, dp_length, dp2_length, dp2_ce_cap):
 
 
 # HWDP / Riser volume
-def hwdp_riser(seabed, riser_cap, pipe_length, hwdp_length, hwdp_ce_cap):
+def hwdp_riser(seabed, riser_cap, above_hwdp, hwdp_length, hwdp_ce_cap):
 
-    if pipe_length >= seabed:
+    if above_hwdp >= seabed:
         riser_hwdp_vol = Decimal('0.00')
 
-    elif pipe_length < seabed and pipe_length + hwdp_length > seabed:
-        riser_hwdp_vol = (riser_cap - hwdp_ce_cap) * (seabed - pipe_length)
-        print seabed - pipe_length
+    elif above_hwdp < seabed <= above_hwdp + hwdp_length:
+        riser_hwdp_vol = (riser_cap - hwdp_ce_cap) * (seabed - above_hwdp)
+        print seabed - above_hwdp
     else:
         riser_hwdp_vol = (riser_cap - hwdp_ce_cap) * hwdp_length
         if hwdp_length != Decimal('0.00'):
@@ -61,18 +61,20 @@ def hwdp_riser(seabed, riser_cap, pipe_length, hwdp_length, hwdp_ce_cap):
 
 
 # DC / Riser volume
-def dc_riser(seabed, riser_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
+def dc_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap, bit_depth):
 
-    if bit_depth <= seabed and dc_length > 0:
-        riser_dc_vol = (riser_cap - dc_ce_cap) * (bit_depth - (hwdp_length + pipe_length))
-        print bit_depth - (hwdp_length + pipe_length)
-
-    elif pipe_length + hwdp_length < seabed and bit_depth > seabed:
-        riser_dc_vol = (riser_cap - dc_ce_cap) * (seabed - (pipe_length + hwdp_length))
-        print seabed - (pipe_length + hwdp_length)
-
-    else:
+    if above_dc >= seabed:
         riser_dc_vol = Decimal('0.00')
+
+    elif above_dc < seabed <= above_dc + dc_length:
+        riser_dc_vol = (riser_cap - dc_ce_cap) * (seabed - above_dc)
+        print seabed - above_dc
+    else:
+        riser_dc_vol = (riser_cap - dc_ce_cap) * dc_length
+        if dc_length != Decimal('0.00'):
+            print dc_length
+        else:
+            pass
 
     print 'DC/Riser = ' + str(riser_dc_vol)
     return riser_dc_vol

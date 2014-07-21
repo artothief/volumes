@@ -10,7 +10,7 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
         pipe_csg_vol = (csg_cap - dp_ce_cap) * (csg_shoe - seabed)
         print csg_shoe - seabed
 
-    elif dp_length > seabed and dp_length < csg_shoe:
+    elif seabed > dp_length < csg_shoe:
         pipe_csg_vol = (csg_cap - dp_ce_cap) * (dp_length - seabed)
         print dp_length - seabed
 
@@ -22,25 +22,25 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 
 
 #Pipe #2 / Csg volume
-def dp2_csg(seabed, csg_shoe, csg_cap, dp_length, dp2_length, dp2_ce_cap):
+def dp2_csg(seabed, csg_shoe, csg_cap, above_dp, dp2_length, dp2_ce_cap):
 
-    if dp_length >= seabed and dp_length + dp2_length <= csg_shoe and dp2_length > 0:
+    if above_dp >= seabed and above_dp + dp2_length <= csg_shoe and dp2_length > 0:
         dp2_csg_vol = (csg_cap - dp2_ce_cap) * dp2_length
         print dp2_length
 
-    elif (dp_length < seabed and dp_length + dp2_length > seabed and
-dp_length + dp2_length < csg_shoe):
-        dp2_csg_vol = (csg_cap - dp2_ce_cap) * ((dp_length + dp2_length) - seabed)
-        print (dp_length + dp2_length) - seabed
+    elif (above_dp < seabed and above_dp + dp2_length > seabed and
+above_dp + dp2_length < csg_shoe):
+        dp2_csg_vol = (csg_cap - dp2_ce_cap) * ((above_dp + dp2_length) - seabed)
+        print (above_dp + dp2_length) - seabed
 
-    elif (dp_length > seabed and dp_length < csg_shoe and
-dp_length + dp2_length > csg_shoe):
-        dp2_csg_vol = (csg_cap - dp2_ce_cap) * (csg_shoe - dp_length)
-        print csg_shoe - dp_length
+    elif (above_dp > seabed and above_dp < csg_shoe and
+above_dp + dp2_length > csg_shoe):
+        dp2_csg_vol = (csg_cap - dp2_ce_cap) * (csg_shoe - above_dp)
+        print csg_shoe - above_dp
 
-    elif dp2_length >= seabed and dp2_length >= csg_shoe and dp2_length > 0:
-        dp2_csg_vol = (csg_cap - dp2_ce_cap) * dp2_length
-        print dp2_length
+    elif above_dp <= seabed and above_dp + dp2_length >= csg_shoe:
+        dp2_csg_vol = (csg_cap - dp2_ce_cap) * (csg_shoe - seabed)
+        print csg_shoe - seabed
 
     else:
         dp2_csg_vol = Decimal('0.00')
@@ -50,21 +50,21 @@ dp_length + dp2_length > csg_shoe):
 
 
 #HWDP / Csg volume
-def hwdp_csg(seabed, csg_shoe, csg_cap, pipe_length, hwdp_length, hwdp_ce_cap):
+def hwdp_csg(seabed, csg_shoe, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap):
 
-    if pipe_length >= seabed and pipe_length + hwdp_length <= csg_shoe and hwdp_length > 0:
+    if above_hwdp >= seabed and above_hwdp + hwdp_length <= csg_shoe and hwdp_length > 0:
         hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * hwdp_length
         print hwdp_length
 
-    elif (pipe_length < seabed and pipe_length + hwdp_length > seabed and
-          pipe_length + hwdp_length < csg_shoe):
-        hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * ((pipe_length + hwdp_length) - seabed)
-        print (pipe_length + hwdp_length) - seabed
+    elif (above_hwdp < seabed and above_hwdp + hwdp_length > seabed and
+          above_hwdp + hwdp_length < csg_shoe):
+        hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * ((above_hwdp + hwdp_length) - seabed)
+        print (above_hwdp + hwdp_length) - seabed
 
-    elif (pipe_length > seabed and pipe_length < csg_shoe and
-          pipe_length + hwdp_length > csg_shoe):
-        hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * (csg_shoe - pipe_length)
-        print csg_shoe - pipe_length
+    elif (above_hwdp > seabed and above_hwdp < csg_shoe and
+          above_hwdp + hwdp_length > csg_shoe):
+        hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * (csg_shoe - above_hwdp)
+        print csg_shoe - above_hwdp
 
     elif hwdp_length >= seabed and hwdp_length >= csg_shoe and hwdp_length > 0:
         hwdp_csg_vol = (csg_cap - hwdp_ce_cap) * hwdp_length
@@ -78,20 +78,20 @@ def hwdp_csg(seabed, csg_shoe, csg_cap, pipe_length, hwdp_length, hwdp_ce_cap):
 
 
 #DC / Csg volume
-def dc_csg(seabed, csg_shoe, csg_cap, pipe_length, hwdp_length, dc_length, dc_ce_cap, bit_depth):
+def dc_csg(seabed, csg_shoe, csg_cap, above_dc, dc_length, dc_ce_cap, bit_depth):
 
-    if pipe_length + hwdp_length < seabed and bit_depth > seabed and dc_length > 0:
+    if above_dc <= seabed and bit_depth > seabed and bit_depth <= csg_shoe and dc_length > 0:
         dc_csg_vol = (csg_cap - dc_ce_cap) * (bit_depth - csg_shoe)
         print bit_depth - csg_shoe
 
-    elif (pipe_length + hwdp_length > seabed and pipe_length + hwdp_length < csg_shoe and
-        bit_depth <= csg_shoe):
+    elif (above_dc > seabed and above_dc < csg_shoe and
+        bit_depth >= csg_shoe):
         dc_csg_vol = (csg_cap - dc_ce_cap) * dc_length
         print dc_length
 
-    elif pipe_length + hwdp_length < csg_shoe and bit_depth > csg_shoe:
-        dc_csg_vol = (csg_cap - dc_ce_cap) * (csg_shoe - (pipe_length + hwdp_length))
-        print csg_shoe - (pipe_length + hwdp_length)
+    elif above_dc < csg_shoe and bit_depth > csg_shoe:
+        dc_csg_vol = (csg_cap - dc_ce_cap) * (csg_shoe - (above_dc))
+        print csg_shoe - (above_dc)
 
     else:
         dc_csg_vol = Decimal('0.00')
