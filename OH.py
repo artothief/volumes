@@ -15,6 +15,7 @@ def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
     print 'Dp/OH = ' + str(dp_oh_vol)
     return dp_oh_vol
 
+
 # Tubular / OH volume
 def tub_oh(csg_shoe, oh_cap, above_tub, tub_length, tub_ce_cap):
 
@@ -35,6 +36,3 @@ def tub_oh(csg_shoe, oh_cap, above_tub, tub_length, tub_ce_cap):
 
     print 'Tubular/OH = ' + str(tub_oh_vol)
     return tub_oh_vol
-
-
-

@@ -253,15 +253,14 @@ class Volumes:
         bit_depth = num(self.bit_depth_entry.get_text(), 1)
         dc_length = num(self.dc_entry.get_text(), 1)
         dc_act = num(self.dc_box.get_active(), 3)
-        dc_ce_cap = num(self.dc_store[dc_act][2], 2) if dc_act else num('0.00', 2)
-        dc_cap = num(self.dc_store[dc_act][1], 2) if dc_act else num('0.00', 2)
+        dc_ce_cap = num(self.dc_store[dc_act][2], 2) if dc_act >= 0 else num('0.00', 2)
+        dc_cap = num(self.dc_store[dc_act][1], 2) if dc_act >= 0 else num('0.00', 2)
         dc_vol = dc_length * dc_cap
         hwdp_length = num(self.hwdp_entry.get_text(), 1)
         hwdp_act = num(self.hwdp_box.get_active(), 3)
-        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2) if hwdp_act else num('0.00', 2)
-        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if hwdp_act else num('0.00', 2)
+        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2) if hwdp_act >= 0 else num('0.00', 2)
+        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if hwdp_act >= 0 else num('0.00', 2)
         hwdp_vol = hwdp_length * hwdp_cap
-
         if self.tap_chbutton.get_active() and self.dp2_box.get_active() >= 0:
             dp2_length = num(self.dp2_entry.get_text(), 1)
             dp2_act = num(self.dp2_box.get_active(), 3)
@@ -285,6 +284,11 @@ class Volumes:
         mp_liner_cap = num(self.mp_linerstore[mp_liner_act][1], 2)
 
         # Drillstring length and volumes calculations
+        print 'DP vol: ' + str(dp_vol)
+        print 'DP2 vol: ' + str(dp2_vol)
+        print 'HWDP vol: ' + str(hwdp_vol)
+        print 'DC vol: ' + str(dc_vol)
+
         assert dp_length >= 0, "error"
         self.dp_length_label.set_text(str(dp_length))
         above_hwdp = dp_length + dp2_length
