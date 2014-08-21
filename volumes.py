@@ -296,9 +296,10 @@ class Volumes:
 
         # Riser volume calculation
         riser_volume = dp_riser(seabed, riser_cap, dp_length, dp_ce_cap) +\
-                       dp2_riser(seabed, riser_cap, dp_length,  dp2_length,  dp2_ce_cap) +\
-                       hwdp_riser(seabed, riser_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
-                       dc_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
+                       tub_riser(seabed, riser_cap, dp_length,  dp2_length,  dp2_ce_cap) +\
+                       tub_riser(seabed, riser_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
+                       tub_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap)
+
         self.riser_vol_label.set_text(str(round(riser_volume, 1)) + ' Litres')
         riser_strokes = riser_volume / mp_liner_cap
         self.riser_stroke_label.set_text(str(int(riser_strokes)) + ' Strokes')
@@ -306,12 +307,12 @@ class Volumes:
         # Casing volume calculation
         csg_vol = dp_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
                          pbr, csg_cap, dp_length, dp_ce_cap) +\
-                  dp2_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
                           pbr, csg_cap, dp_length, dp2_length, dp2_ce_cap) +\
-                  hwdp_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
                            pbr, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
-                  dc_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
-                         pbr, csg_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
+                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                         pbr, csg_cap, above_dc, dc_length, dc_ce_cap)
         self.shoe_btms_up_label.set_text(str(round(csg_vol, 1)) + ' Litres')
         csg_strokes = csg_vol / mp_liner_cap
         self.shoe_strokes_label.set_text(str(int(csg_strokes)) + ' Strokes')
@@ -319,19 +320,19 @@ class Volumes:
         # Liner volume calculation
         liner_volume = Decimal('0.00') if not self.liner_chbutton.get_active() else \
                        dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap) +\
-                       dp2_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap) +\
-                       hwdp_liner(pbr, liner_shoe, liner_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
-                       dc_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
+                       tub_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap) +\
+                       tub_liner(pbr, liner_shoe, liner_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
+                       tub_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap)
 
         # Open hole volume calculation
         oh_volume = dp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
                           oh_cap, dp_length, dp_ce_cap) +\
-                    dp2_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
                            oh_cap, dp_length, dp2_length, dp2_ce_cap) +\
-                    hwdp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
                             oh_cap, above_hwdp, hwdp_length, hwdp_ce_cap) +\
-                    dc_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
-                          oh_cap, above_dc, dc_length, dc_ce_cap, bit_depth)
+                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                          oh_cap, above_dc, dc_length, dc_ce_cap)
         self.oh_vol_label.set_text(str(round(oh_volume, 1)) + ' Litres')
         oh_strokes = oh_volume / mp_liner_cap
         self.oh_strokes_label.set_text(str(int(oh_strokes)) + ' Strokes')
