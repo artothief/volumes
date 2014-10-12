@@ -64,7 +64,7 @@ class Volumes:
             print x
         except Exception as e:
             x = []
-            print e
+            print e, 'Ok, if first time using app'
 
         try:
             c.execute('SELECT com FROM combos')
@@ -72,7 +72,7 @@ class Volumes:
             print y
         except Exception as e:
             y = []
-            print e
+            print e, 'Ok, if first time using app'
 
         def st(entry, dig):
             if x and x[dig] != '0.00':
@@ -84,7 +84,7 @@ class Volumes:
             try:
                 combo.set_active(y[dig])
             except Exception as er:
-                print er
+                print er, 'Ok, if first time using app '
 
         #making important labels bold
         bold1 = builder.get_object('bold1')
