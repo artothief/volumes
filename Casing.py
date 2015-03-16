@@ -7,7 +7,7 @@ from decimal import *
 def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 
     if csg_cap < dp_ce_cap:
-        print 'Tubular is bigger than casing/hole'
+        print 'Tubular is bigger than casing'
 
     if 0 < dp_length >= csg_shoe:
         pipe_csg_vol = (csg_cap - dp_ce_cap) * (csg_shoe - seabed)
@@ -27,8 +27,8 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 #Tubular / Csg volume
 def tub_csg(seabed, csg_shoe, csg_cap, above_tub, tub_length, tub_ce_cap):
     
-    if csg_cap > tub_ce_cap:
-        print 'Tubular is bigger than casing/hole'
+    if csg_cap < tub_ce_cap:
+        print 'Tubular is bigger than casing'
 
     total_tub = above_tub + tub_length
     if above_tub >= seabed and total_tub <= csg_shoe and tub_length > 0:

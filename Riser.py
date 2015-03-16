@@ -6,6 +6,9 @@ from decimal import *
 #Pipe / Riser volume
 def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
 
+    if riser_cap < tub_ce_cap:
+        print 'Tubular is bigger than riser'
+
     if 0 < dp_length >= seabed:
         riser_dp_vol = (riser_cap - dp_ce_cap) * seabed
         print seabed
@@ -22,6 +25,9 @@ def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
 
 
 def tub_riser(seabed, riser_cap, above_tub, tub_length, tub_ce_cap):
+
+    if riser_cap < tub_ce_cap:
+        print 'Tubular is bigger than riser'
 
     if above_tub >= seabed:
         riser_tub_vol = Decimal('0.00')
