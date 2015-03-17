@@ -6,7 +6,7 @@ from decimal import *
 #Pipe/Liner volume
 def dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap):
 
-    if liner_cap < tub_ce_cap:
+    if liner_cap < dp_ce_cap:
         print 'Tubular is bigger than liner'
 
     if 0 < dp_length >= liner_shoe:

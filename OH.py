@@ -5,7 +5,7 @@ from decimal import *
 
 def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
         
-    if oh_cap < tub_ce_cap:
+    if oh_cap < dp_ce_cap:
         print 'Tubular is bigger than open hole'
 
     #Pipe / OH
