@@ -16,7 +16,6 @@ class AddTub:
     def __init__(self, tub):
         # Add tub Dialog box
         self.tub = tub
-        print self.tub
         self.builder = Gtk.Builder()
         self.builder.add_from_file('add_tub.glade')
         self.builder.connect_signals(self)

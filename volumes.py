@@ -10,11 +10,7 @@ sqlite3.register_converter('decimal', Decimal)
 conn = sqlite3.connect("input.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
 c = conn.cursor()
 
-from Riser import *
-from Casing import *
-from Liner import *
-from OH import *
-
+from Annulus import *
 import Tubulars
 
 
