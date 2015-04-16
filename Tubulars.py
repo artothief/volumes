@@ -14,7 +14,7 @@ c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name text, Capacity text, CE_Capaci
 class AddTub:
     
     def __init__(self, tub):
-        #Add tub Dialog box
+        # Add tub Dialog box
         self.tub = tub
         print self.tub
         self.builder = Gtk.Builder()

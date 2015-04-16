@@ -3,12 +3,12 @@ __author__ = 'artothief'
 from decimal import *
 
 
+# Pipe / OH
 def dp_oh(csg_shoe, oh_cap, dp_length, dp_ce_cap):
         
     if oh_cap < dp_ce_cap:
         print 'Tubular is bigger than open hole'
 
-    #Pipe / OH
     if 0 < dp_length > csg_shoe:
         dp_oh_vol = (oh_cap - dp_ce_cap) * (dp_length - csg_shoe)
         print dp_length - csg_shoe

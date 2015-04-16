@@ -3,7 +3,7 @@ __author__ = 'artothief'
 from decimal import *
 
 
-#Pipe / Csg volume
+# Pipe / Csg volume
 def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
 
     if csg_cap < dp_ce_cap:
@@ -24,7 +24,7 @@ def dp_csg(seabed, csg_shoe, csg_cap, dp_length, dp_ce_cap):
     return pipe_csg_vol
 
 
-#Tubular / Csg volume
+# Tubular / Csg volume
 def tub_csg(seabed, csg_shoe, csg_cap, above_tub, tub_length, tub_ce_cap):
     
     if csg_cap < tub_ce_cap:

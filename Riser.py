@@ -3,7 +3,7 @@ __author__ = 'artothief'
 from decimal import *
 
 
-#Pipe / Riser volume
+# Pipe / Riser volume
 def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
 
     if riser_cap < dp_ce_cap:
@@ -24,6 +24,7 @@ def dp_riser(seabed, riser_cap, dp_length, dp_ce_cap):
     return riser_dp_vol
 
 
+# Tubular / Riser volume
 def tub_riser(seabed, riser_cap, above_tub, tub_length, tub_ce_cap):
 
     if riser_cap < tub_ce_cap:

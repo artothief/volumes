@@ -87,7 +87,7 @@ class Volumes:
             except Exception as er:
                 print er, 'Ok, if first time using app '
 
-        #making important labels bold
+        # making important labels bold
         bold1 = builder.get_object('bold1')
         bold1.set_markup('<b>String Volume :</b>')
         bold2 = builder.get_object('bold2')
@@ -97,7 +97,7 @@ class Volumes:
         bold4 = builder.get_object('bold4')
         bold4.set_markup('<b>Btms Up Strokes :</b>')
 
-        #bit depth, casing, riser and open hole info
+        # bit depth, casing, riser and open hole info
         self.seabed_entry = builder.get_object('seabed_entry')
         st(self.seabed_entry, 0)
         self.bit_depth_label = builder.get_object('bit_depth_label')
@@ -127,7 +127,7 @@ class Volumes:
         self.btms_up_vol_label = builder.get_object('btms_up_vol_label')
         self.btms_up_strokes_label = builder.get_object('btms_up_strokes_label')
 
-        #tubular info
+        # tubular info
         self.dp_store = self.dp.tub_store
         self.dp_box = builder.get_object('dp_box')
         self.dp_box.set_model(self.dp_store)
@@ -165,7 +165,7 @@ class Volumes:
 
         self.window.show_all()
 
-        #Load image and hide liner related stuff for unchecked box
+        # Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
         self.image.set_from_file('rig_riser.png')
         self.pbr_label.hide()
@@ -242,7 +242,7 @@ class Volumes:
         c.execute('CREATE TABLE IF NOT EXISTS  entries(ent TEXT)')
         c.execute('CREATE TABLE IF NOT EXISTS combos(com INTEGER)')
 
-        #get active comboboxes and liststores, entry's first to meet dependencies
+        # get active comboboxes and liststores, entry's first to meet dependencies
         seabed = num(self.seabed_entry.get_text(), 1)
         riser_cap = Decimal('187.77')
         liner_cap = num(self.liner_cap_entry.get_text(), 1)

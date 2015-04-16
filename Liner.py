@@ -3,7 +3,7 @@ __author__ = 'artothief'
 from decimal import *
 
 
-#Pipe/Liner volume
+# Pipe/Liner volume
 def dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap):
 
     if liner_cap < dp_ce_cap:
