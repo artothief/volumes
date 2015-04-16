@@ -14,10 +14,8 @@ from Riser import *
 from Casing import *
 from Liner import *
 from OH import *
-import Hwdp
-import Pipe
-import Pipe2
-import DC
+
+import Tubulars
 
 
 def num(entry, choice):
@@ -53,10 +51,10 @@ class Volumes:
         builder.connect_signals(self)
         self.window = builder.get_object('window1')
 
-        self.hwdp = Hwdp.AddHWDP()
-        self.dp = Pipe.AddDP()
-        self.dp2 = Pipe2.AddDP2()
-        self.dc = DC.AddDC()
+        self.hwdp = Tubulars.AddTub('HWDP')
+        self.dp = Tubulars.AddTub('DP')
+        self.dp2 = Tubulars.AddTub('DP2')
+        self.dc = Tubulars.AddTub('DC')
 
         try:
             c.execute('SELECT ent FROM entries')
@@ -75,7 +73,10 @@ class Volumes:
             print e, 'Ok, if first time using app'
 
         def st(entry, dig):
-            if x and x[dig] != '0.00':
+            if len(x) - 1 < dig:
+                entry.set_text('0.00')
+
+            elif x and x[dig] != '0.00':
                 entry.set_text(x[dig])
             else:
                 pass
@@ -86,7 +87,7 @@ class Volumes:
             except Exception as er:
                 print er, 'Ok, if first time using app '
 
-        #making important labels bold
+        # making important labels bold
         bold1 = builder.get_object('bold1')
         bold1.set_markup('<b>String Volume :</b>')
         bold2 = builder.get_object('bold2')
@@ -96,7 +97,7 @@ class Volumes:
         bold4 = builder.get_object('bold4')
         bold4.set_markup('<b>Btms Up Strokes :</b>')
 
-        #bit depth, casing, riser and open hole info
+        # bit depth, casing, riser and open hole info
         self.seabed_entry = builder.get_object('seabed_entry')
         st(self.seabed_entry, 0)
         self.bit_depth_label = builder.get_object('bit_depth_label')
@@ -126,28 +127,28 @@ class Volumes:
         self.btms_up_vol_label = builder.get_object('btms_up_vol_label')
         self.btms_up_strokes_label = builder.get_object('btms_up_strokes_label')
 
-        #tubular info
-        self.dp_store = self.dp.dp_store
+        # tubular info
+        self.dp_store = self.dp.tub_store
         self.dp_box = builder.get_object('dp_box')
         self.dp_box.set_model(self.dp_store)
         sd(self.dp_box, 3)
         self.dp2_entry = builder.get_object('dp2_entry')
         st(self.dp2_entry, 9)
         self.dp2_entry_label = builder.get_object('dp2_entry_label')
-        self.dp2_store = self.dp2.dp2_store
+        self.dp2_store = self.dp2.tub_store
         self.dp2_box = builder.get_object('dp2_box')
         self.dp2_box.set_model(self.dp2_store)
         sd(self.dp2_box, 2)
         self.dp2_box_label = builder.get_object('dp2_box_label')
         self.hwdp_entry = builder.get_object('hwdp_length_entry')
         st(self.hwdp_entry, 8)
-        self.hwdp_store = self.hwdp.hwdp_store
+        self.hwdp_store = self.hwdp.tub_store
         self.hwdp_box = builder.get_object('hwdp_box')
         self.hwdp_box.set_model(self.hwdp_store)
         sd(self.hwdp_box, 1)
         self.dc_entry = builder.get_object('dc_length_entry')
         st(self.dc_entry, 7)
-        self.dc_store = self.dc.dc_store
+        self.dc_store = self.dc.tub_store
         self.dc_box = builder.get_object('dc_box')
         self.dc_box.set_model(self.dc_store)
         sd(self.dc_box, 0)
@@ -164,7 +165,7 @@ class Volumes:
 
         self.window.show_all()
 
-        #Load image and hide liner related stuff for unchecked box
+        # Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
         self.image.set_from_file('rig_riser.png')
         self.pbr_label.hide()
@@ -179,20 +180,20 @@ class Volumes:
         self.dp2_entry_label.hide()
 
     def on_add_pipe_activate(self, *args):
-        self.dp.add_dp.run()
-        self.dp.add_dp.hide()
+        self.dp.add_tub.run()
+        self.dp.add_tub.hide()
 
     def on_add_pipe2_activate(self, *args):
-        self.dp2.add_dp2.run()
-        self.dp2.add_dp2.hide()
+        self.dp2.add_tub.run()
+        self.dp2.add_tub.hide()
 
     def on_add_hwdp_activate(self, *args):
-        self.hwdp.add_hwdp.run()
-        self.hwdp.add_hwdp.hide()
+        self.hwdp.add_tub.run()
+        self.hwdp.add_tub.hide()
 
     def on_add_dc_activate(self, *args):
-        self.dc.add_dc.run()
-        self.dc.add_dc.hide()
+        self.dc.add_tub.run()
+        self.dc.add_tub.hide()
 
     # noinspection PyMethodMayBeStatic
     def on_window1_delete_event(self, *args):
@@ -240,7 +241,8 @@ class Volumes:
         c.execute('DROP TABLE IF EXISTS combos')
         c.execute('CREATE TABLE IF NOT EXISTS  entries(ent TEXT)')
         c.execute('CREATE TABLE IF NOT EXISTS combos(com INTEGER)')
-        #get active comboboxes and liststores, entry's first to meet dependencies
+
+        # get active comboboxes and liststores, entry's first to meet dependencies
         seabed = num(self.seabed_entry.get_text(), 1)
         riser_cap = Decimal('187.77')
         liner_cap = num(self.liner_cap_entry.get_text(), 1)
@@ -253,19 +255,21 @@ class Volumes:
         bit_depth = num(self.bit_depth_entry.get_text(), 1)
         dc_length = num(self.dc_entry.get_text(), 1)
         dc_act = num(self.dc_box.get_active(), 3)
-        dc_ce_cap = num(self.dc_store[dc_act][2], 2) if dc_act >= 0 else num('0.00', 2)
-        dc_cap = num(self.dc_store[dc_act][1], 2) if dc_act >= 0 else num('0.00', 2)
+        dc_ce_cap = num(self.dc_store[dc_act][2], 2) if self.dc_store[dc_act][2] else num('0.00', 2)
+        dc_cap = num(self.dc_store[dc_act][1], 2) if self.dc_store[dc_act][1] else num('0.00', 2)
         dc_vol = dc_length * dc_cap
         hwdp_length = num(self.hwdp_entry.get_text(), 1)
         hwdp_act = num(self.hwdp_box.get_active(), 3)
-        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2) if hwdp_act >= 0 else num('0.00', 2)
-        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if hwdp_act >= 0 else num('0.00', 2)
+        hwdp_cap = num(self.hwdp_store[hwdp_act][1], 2) if self.hwdp_store[hwdp_act][1] else num('0.00', 2)
+        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2], 2) if self.hwdp_store[hwdp_act][2] else num('0.00', 2)
         hwdp_vol = hwdp_length * hwdp_cap
+
+        # Check tapered checkbutton, set dp2 values accordingly
         if self.tap_chbutton.get_active() and self.dp2_box.get_active() >= 0:
             dp2_length = num(self.dp2_entry.get_text(), 1)
             dp2_act = num(self.dp2_box.get_active(), 3)
-            dp2_cap = num(self.dp2_store[dp2_act][1], 2)
-            dp2_ce_cap = num(self.dp2_store[dp2_act][2], 2)
+            dp2_cap = num(self.dp2_store[dp2_act][1], 2) if self.dp2_store[dp2_act][1] else num('0.00', 2)
+            dp2_ce_cap = num(self.dp2_store[dp2_act][2], 2) if self.dp2_store[dp2_act][2] else num('0.00', 2)
         else:
             dp2_length = num('0.00', 1)
             dp2_act = num('0.00', 3)
