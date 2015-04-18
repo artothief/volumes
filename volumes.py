@@ -51,7 +51,8 @@ class Volumes:
         self.dp = Tubulars.AddTub('DP')
         self.dp2 = Tubulars.AddTub('DP2')
         self.dc = Tubulars.AddTub('DC')
-
+        self.mp_liner = Tubulars.AddTub('MP')
+        self.open_hole = Tubulars.AddTub('OH')
         try:
             c.execute('SELECT ent FROM entries')
             x = [record[0] for record in c.fetchall()]
@@ -117,9 +118,10 @@ class Volumes:
         self.pbr_label = builder.get_object('pbr_label')
         self.pbr_entry = builder.get_object('pbr_entry')
         st(self.pbr_entry, 4)
+        self.oh_store = self.open_hole.tub_store
         self.oh_box = builder.get_object('oh_box')
+        self.oh_box.set_model(self.oh_store)
         sd(self.oh_box, 4)
-        self.oh_store = builder.get_object('liststore2')
         self.oh_vol_label = builder.get_object('oh_vol_label')
         self.oh_strokes_label = builder.get_object('oh_stroke_label')
         self.btms_up_vol_label = builder.get_object('btms_up_vol_label')
@@ -153,9 +155,10 @@ class Volumes:
         self.dp_length_label = builder.get_object('dp_length_label')
         self.vol_label = builder.get_object('str_vol_label')
         self.stroke_label = builder.get_object('str_stroke_label')
+        self.mp_linerstore = self.mp_liner.tub_store
         self.mp_liner_box = builder.get_object('liner_box')
+        self.mp_liner_box.set_model(self.mp_linerstore)
         sd(self.mp_liner_box, 5)
-        self.mp_linerstore = builder.get_object('liststore1')
         self.riser_vol_label = builder.get_object('riser_btms_up_label')
         self.riser_stroke_label = builder.get_object('riser_strokes_label')
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
@@ -192,6 +195,14 @@ class Volumes:
     def on_add_dc_activate(self, *args):
         self.dc.add_tub.run()
         self.dc.add_tub.hide()
+
+    def on_add_mp_liner_activate(self, *args):
+        self.mp_liner.add_tub.run()
+        self.mp_liner.add_tub.hide()
+
+    def on_add_open_hole_activate(self, *args):
+        self.open_hole.add_tub.run()
+        self.open_hole.add_tub.hide()
 
     def on_ok_button_clicked(self, *args):
         self.error_dialog.hide()
