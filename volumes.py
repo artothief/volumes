@@ -47,6 +47,7 @@ class Volumes:
         self.window = builder.get_object('window1')
         self.error_dialog = builder.get_object('error_dialog')
         self.error_label = builder.get_object('error_text')
+        self.values = builder.get_object('value_dialog')
         self.hwdp = Tubulars.AddTub('HWDP')
         self.dp = Tubulars.AddTub('DP')
         self.dp2 = Tubulars.AddTub('DP2')
@@ -85,14 +86,14 @@ class Volumes:
                 print er, 'Ok, if first time using app '
 
         # making important labels bold
-        bold1 = builder.get_object('bold1')
-        bold1.set_markup('<b>String Volume :</b>')
-        bold2 = builder.get_object('bold2')
-        bold2.set_markup('<b>String Strokes :</b>')
-        bold3 = builder.get_object('bold3')
-        bold3.set_markup('<b>Btms Up Volume :</b>')
-        bold4 = builder.get_object('bold4')
-        bold4.set_markup('<b>Btms Up Strokes :</b>')
+        self.bold1 = builder.get_object('bold1')
+        self.bold1.set_markup('<b>String Volume :</b>')
+        self.bold2 = builder.get_object('bold2')
+        self.bold2.set_markup('<b>String Strokes :</b>')
+        self.bold3 = builder.get_object('bold3')
+        self.bold3.set_markup('<b>Btms Up Volume :</b>')
+        self.bold4 = builder.get_object('bold4')
+        self.bold4.set_markup('<b>Btms Up Strokes :</b>')
 
         # bit depth, casing, riser and open hole info
         self.seabed_entry = builder.get_object('seabed_entry')
@@ -164,6 +165,28 @@ class Volumes:
         self.shoe_strokes_label = builder.get_object('shoe_strokes_label')
         self.shoe_btms_up_label = builder.get_object('shoe_btms_up_label')
 
+        #Values checkbuttons and labels
+        self.string_vol_cb = builder.get_object('string_vol_cb')
+        self.string_stk_cb = builder.get_object('string_stk_cb')
+        self.riser_vol_cb = builder.get_object('riser_vol_cb')
+        self.riser_stk_cb = builder.get_object('riser_stk_cb')
+        self.csg_vol_cb = builder.get_object('csg_vol_cb')
+        self.csg_stk_cb = builder.get_object('csg_stk_cb')
+        self.liner_vol_cb = builder.get_object('liner_vol_cb')
+        self.liner_stk_cb = builder.get_object('liner_stk_cb')
+        self.oh_vol_cb = builder.get_object('oh_vol_cb')
+        self.oh_stk_cb = builder.get_object('oh_stk_cb')
+        self.btms_vol_cb = builder.get_object('btms_vol_cb')
+        self.btms_stk_cb = builder.get_object('btms_stk_cb')
+        self.label11 = builder.get_object('label11')
+        self.label20 = builder.get_object('label20')
+        self.label21 = builder.get_object('label21')
+        self.label22 = builder.get_object('label22')
+        self.label18 = builder.get_object('label18')
+        self.label19 = builder.get_object('label19')
+        self.label11 = builder.get_object('label11')
+        self.label11 = builder.get_object('label11')
+
         self.window.show_all()
 
         # Load image and hide liner related stuff for unchecked box
@@ -179,6 +202,103 @@ class Volumes:
         self.dp2_box_label.hide()
         self.dp2_entry.hide()
         self.dp2_entry_label.hide()
+
+    #Check user inputted selection for values, hide unselected
+    def on_string_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.bold1.show()
+            self.vol_label.show()
+        else:
+            self.bold1.hide()
+            self.vol_label.hide()
+
+    def on_string_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.bold2.show()
+            self.stroke_label.show()
+        else:
+            self.bold2.hide()
+            self.stroke_label.hide()
+
+    def on_riser_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.label11.show()
+            self.riser_vol_label.show()
+        else:
+            self.label11.hide()
+            self.riser_vol_label.hide()
+
+    def on_riser_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.label20.show()
+            self.riser_stroke_label.show()
+        else:
+            self.label20.hide()
+            self.riser_stroke_label.hide()
+
+    def on_csg_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.label21.show()
+            self.shoe_btms_up_label.show()
+        else:
+            self.label21.hide()
+            self.shoe_btms_up_label.hide()
+
+    def on_csg_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.label22.show()
+            self.shoe_strokes_label.show()
+        else:
+            self.label22.hide()
+            self.shoe_strokes_label.hide()
+
+    def on_liner_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.label20.show()
+            self.riser_stroke_label.show()
+        else:
+            self.label20.hide()
+            self.riser_stroke_label.hide()
+
+    def on_liner_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.label20.show()
+            self.riser_stroke_label.show()
+        else:
+            self.label20.hide()
+            self.riser_stroke_label.hide()
+
+    def on_oh_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.label18.show()
+            self.oh_vol_label.show()
+        else:
+            self.label18.hide()
+            self.oh_vol_label.hide()
+
+    def on_oh_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.label19.show()
+            self.oh_strokes_label.show()
+        else:
+            self.label19.hide()
+            self.oh_strokes_label.hide()
+
+    def on_btms_vol_cb_toggled(self, button):
+        if button.get_active():
+            self.bold3.show()
+            self.btms_up_vol_label.show()
+        else:
+            self.bold3.hide()
+            self.btms_up_vol_label.hide()
+
+    def on_btms_stk_cb_toggled(self, button):
+        if button.get_active():
+            self.bold4.show()
+            self.btms_up_strokes_label.show()
+        else:
+            self.bold4.hide()
+            self.btms_up_strokes_label.hide()
 
     def on_add_pipe_activate(self, *args):
         self.dp.add_tub.run()
@@ -206,6 +326,12 @@ class Volumes:
 
     def on_ok_button_clicked(self, *args):
         self.error_dialog.hide()
+
+    def on_values_activate(self, *args):
+        self.values.show()
+
+    def on_value_close_button_clicked(self, *args):
+        self.values.hide()
 
     def on_window1_delete_event(self, *args):
         Gtk.main_quit()
