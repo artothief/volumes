@@ -32,6 +32,11 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-missing-image</property>
   </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Well Volumes Calculator (MW)</property>
@@ -280,8 +285,8 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="pbr_label">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
                     <property name="margin_top">26</property>
                     <property name="label" translatable="yes">PBR</property>
                   </object>
@@ -293,8 +298,8 @@
                 </child>
                 <child>
                   <object class="GtkEntry" id="pbr_entry">
-                    <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="no_show_all">True</property>
                     <property name="width_chars">6</property>
                   </object>
                   <packing>
@@ -307,6 +312,7 @@
                   <object class="GtkLabel" id="csg_shoe_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
                     <property name="margin_top">105</property>
                     <property name="label" translatable="yes">Csg Shoe</property>
                     <property name="width_chars">8</property>
@@ -321,7 +327,7 @@
                   <object class="GtkEntry" id="csg_shoe_entry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
+                    <property name="no_show_all">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">8</property>
                     <property name="input_purpose">number</property>
@@ -334,8 +340,8 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="liner_shoe_label">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
                     <property name="margin_top">105</property>
                     <property name="label" translatable="yes">Liner shoe</property>
                     <property name="width_chars">8</property>
@@ -348,8 +354,8 @@
                 </child>
                 <child>
                   <object class="GtkEntry" id="liner_shoe_entry">
-                    <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="no_show_all">True</property>
                     <property name="width_chars">8</property>
                     <property name="input_purpose">number</property>
                   </object>
@@ -426,7 +432,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Pump liner size</property>
-                        <property name="width_chars">8</property>
+                        <property name="width_chars">19</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -441,6 +447,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Open hole size</property>
+                        <property name="width_chars">19</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -505,8 +512,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="liner_cap_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Liner Capacity</property>
                       </object>
@@ -695,8 +702,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="bold1">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">7</property>
                         <property name="margin_top">7</property>
@@ -711,8 +718,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="str_vol_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="valign">center</property>
                         <property name="margin_top">7</property>
                         <property name="margin_bottom">7</property>
@@ -734,7 +741,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">25</property>
+                        <property name="top_attach">29</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -770,8 +777,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="bold2">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="valign">center</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
@@ -785,8 +792,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="str_stroke_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="valign">center</property>
                         <property name="margin_bottom">7</property>
                       </object>
@@ -799,68 +806,69 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="label18">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">OH/String Volume :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">21</property>
+                        <property name="top_attach">25</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="label19">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">OH/String Strokes :</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">22</property>
+                        <property name="top_attach">26</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="oh_vol_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">21</property>
+                        <property name="top_attach">25</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="oh_stroke_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">22</property>
+                        <property name="top_attach">26</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="label11">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="halign">center</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Riser/String Volume :</property>
+                        <property name="ellipsize">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -871,12 +879,13 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="label20">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="halign">center</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Riser/String Strokes :</property>
+                        <property name="ellipsize">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -887,8 +896,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="riser_btms_up_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
@@ -900,8 +909,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="riser_strokes_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
@@ -926,8 +935,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="label21">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Csg/String Volume:</property>
@@ -941,8 +950,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="label22">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Csg/String Strokes :</property>
@@ -956,8 +965,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="shoe_btms_up_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
@@ -969,8 +978,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="shoe_strokes_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
@@ -982,62 +991,62 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="bold3">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">23</property>
+                        <property name="top_attach">27</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="bold4">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">24</property>
+                        <property name="top_attach">28</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="btms_up_vol_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">23</property>
+                        <property name="top_attach">27</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="btms_up_strokes_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">24</property>
+                        <property name="top_attach">28</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkEntry" id="liner_cap_entry">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="width_chars">8</property>
                         <property name="input_purpose">number</property>
@@ -1074,7 +1083,7 @@
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">25</property>
+                        <property name="top_attach">29</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -1099,8 +1108,8 @@
                     </child>
                     <child>
                       <object class="GtkEntry" id="dp2_entry">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="width_chars">8</property>
                       </object>
@@ -1113,8 +1122,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="dp2_box_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Pipe #2</property>
                       </object>
@@ -1127,8 +1136,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="dp2_entry_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Length Pipe #2</property>
                       </object>
@@ -1141,8 +1150,8 @@
                     </child>
                     <child>
                       <object class="GtkComboBox" id="dp2_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="active">2</property>
@@ -1213,6 +1222,111 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="top_attach">4</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label17">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Liner/String Volume:</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">21</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label23">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Liner/String Strokes:</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">22</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label24">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Csg+Liner/String Vol:</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">23</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label25">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                        <property name="margin_bottom">7</property>
+                        <property name="label" translatable="yes">Csg+Liner/String Stk:</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">24</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="liner_vol_label">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                        <property name="margin_bottom">7</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">21</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="liner_stk_label">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">22</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="csg_liner_vol_label">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">23</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="csg_liner_stk_label">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">24</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -1319,11 +1433,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkImage" id="image8">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
   <object class="GtkDialog" id="value_dialog">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
@@ -1374,7 +1483,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="xalign">0</property>
-                <property name="active">True</property>
                 <property name="draw_indicator">True</property>
                 <signal name="toggled" handler="on_string_vol_cb_toggled" swapped="no"/>
               </object>
@@ -1392,7 +1500,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="xalign">0</property>
-                <property name="active">True</property>
                 <property name="draw_indicator">True</property>
                 <signal name="toggled" handler="on_string_stk_cb_toggled" swapped="no"/>
               </object>
@@ -1529,7 +1636,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="xalign">0</property>
-                <property name="active">True</property>
                 <property name="draw_indicator">True</property>
                 <signal name="toggled" handler="on_btms_vol_cb_toggled" swapped="no"/>
               </object>
@@ -1564,13 +1670,71 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="xalign">0</property>
-                <property name="active">True</property>
                 <property name="draw_indicator">True</property>
                 <signal name="toggled" handler="on_btms_stk_cb_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">5</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="csg_liner_vol_cb">
+                <property name="label" translatable="yes">Csg+Liner Volume</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="xalign">0</property>
+                <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="on_csg_liner_vol_cb_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">6</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="csg_liner_stk_cb">
+                <property name="label" translatable="yes">Csg+Liner Strokes</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="xalign">0</property>
+                <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="on_csg_liner_stk_cb_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">7</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label26">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">6</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label27">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="angle">0.01</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">7</property>
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
