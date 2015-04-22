@@ -35,6 +35,7 @@ class Volumes:
         builder.connect_signals(self)
         self.window = builder.get_object('window1')
         self.error_dialog = builder.get_object('error_dialog')
+        self.filechooser_dialog = builder.get_object('filechooserdialog')
         self.error_label = builder.get_object('error_text')
         self.values = builder.get_object('value_dialog')
         self.hwdp = Tubulars.AddTub('HWDP')
@@ -48,31 +49,36 @@ class Volumes:
         self.image = builder.get_object('image1')
         self.image.set_from_file('rig_riser.png')
 
-        try:
-            c.execute('SELECT ent FROM entries')
-            x = [record[0] for record in c.fetchall()]
-            print x
-        except Exception as e:
-            x = []
-            print e, 'Ok, if first time using app! Entries retrieve table from db'
+        def get_db():
+            try:
+                c.execute('SELECT ent FROM entries')
+                x = [record[0] for record in c.fetchall()]
+                print x
+            except Exception as e:
+                x = []
+                print e, 'Ok, if first time using app! Entries retrieve table from db'
 
-        try:
-            c.execute('SELECT com FROM combos')
-            y = [record[0] for record in c.fetchall()]
-            print y
-        except Exception as e:
-            y = []
-            print e, 'Ok, if first time using app! Combos retrieve table from db'
+            try:
+                c.execute('SELECT com FROM combos')
+                y = [record[0] for record in c.fetchall()]
+                print y
+            except Exception as e:
+                y = []
+                print e, 'Ok, if first time using app! Combos retrieve table from db'
 
-        try:
-            c.execute('SELECT cb FROM checkbuttons')
-            z = [record[0] for record in c.fetchall()]
-            print z
-        except Exception as e:
-            z = []
-            print e, 'Ok, if first time using app! Checkboxes retrieve table from db'
+            try:
+                c.execute('SELECT cb FROM checkbuttons')
+                z = [record[0] for record in c.fetchall()]
+                print z
+            except Exception as e:
+                z = []
+                print e, 'Ok, if first time using app! Checkboxes retrieve table from db'
+            return x, y, z
+
+        self.load = get_db()
 
         def sc(cbtn, dig):
+            z = self.load[2]
             try:
                 if z[dig] == 1:
                     cbtn.set_active(True)
@@ -83,6 +89,7 @@ class Volumes:
                 print r, 'Ok, if first time using app! Checkboxes set active'
 
         def st(ety, dig):
+            x = self.load[0]
             if len(x) - 1 < dig:
                 ety.set_text('0.00')
 
@@ -92,10 +99,14 @@ class Volumes:
                 pass
 
         def sd(cmb, dig):
+            y = self.load[1]
             try:
                 cmb.set_active(y[dig])
             except Exception as er:
                 print er, 'Ok, if first time using app! Combo set active'
+
+        # Buttons
+        self.filechooser_button = builder.get_object('filechooser_button')
 
         # making important labels bold
         self.bold1 = builder.get_object('bold1')
@@ -242,6 +253,7 @@ class Volumes:
         self.window.show_all()
         self.window.resize(1, 1)
 
+    # All button handlers
     def on_string_vol_cb_toggled(self, button):
         if button.get_active():
             self.bold1.show()
@@ -377,6 +389,30 @@ class Volumes:
     def on_add_open_hole_activate(self, *args):
         self.open_hole.add_tub.run()
         self.open_hole.add_tub.hide()
+
+    def on_open_database_activate(self, *args):
+        self.filechooser_button.set_label('Open')
+        self.filechooser_dialog.set_action(0)
+        self.filechooser_dialog.run()
+        self.filechooser_dialog.hide()
+
+    def on_export_database_activate(self, *args):
+        self.filechooser_button.set_label('Export As')
+        self.filechooser_dialog.set_action(1)
+        self.filechooser_dialog.set_current_name('YourDatabase.db')
+        self.filechooser_dialog.run()
+        self.filechooser_dialog.hide()
+
+    def on_filechooser_button_clicked(self, *args):
+        x = str(self.filechooser_dialog.get_action())
+        if 'SAVE' in x:
+            print 'Save'
+        elif 'OPEN' in x:
+            print 'open'
+        else:
+            print 'Fail'
+
+        self.filechooser_dialog.hide()
 
     def on_ok_button_clicked(self, *args):
         self.error_dialog.hide()
