@@ -3,19 +3,20 @@ __author__ = 'artothief'
 from gi.repository import Gtk
 import sqlite3
 
-conn = sqlite3.connect('input.db')
-c = conn.cursor()
-c.execute('CREATE TABLE IF NOT EXISTS add_DP(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_DP2(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_HWDP(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_MP(Name text, Capacity text)')
-c.execute('CREATE TABLE IF NOT EXISTS add_OH(Name text, Capacity text)')
-
 
 class AddTub:
     
-    def __init__(self, tub):
+    def __init__(self, tub, db):
+        
+        self.conn = sqlite3.connect(db)
+        self.c = self.conn.cursor()
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_DP(Name text, Capacity text, CE_Capacity)')
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_DP2(Name text, Capacity text, CE_Capacity)')
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_HWDP(Name text, Capacity text, CE_Capacity)')
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name text, Capacity text, CE_Capacity)')
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_MP(Name text, Capacity text)')
+        self.c.execute('CREATE TABLE IF NOT EXISTS add_OH(Name text, Capacity text)')
+        
         # Add tub Dialog box
         self.tub = tub
         self.builder = Gtk.Builder()
@@ -32,7 +33,7 @@ class AddTub:
         self.tub_tv = self.builder.get_object('tub_tv')
 
         if 'OH' != self.tub != 'MP':
-            for row in c.execute('SELECT * FROM add_' + self.tub):
+            for row in self.c.execute('SELECT * FROM add_' + self.tub):
                 self.tub_store.append(row)
 
             self.tub_tv.set_model(self.tub_store)
@@ -50,7 +51,7 @@ class AddTub:
             self.tub_ce_cap_entry.hide()
             self.ce_cap_label.hide()
 
-            for row in c.execute('SELECT * FROM add_' + self.tub):
+            for row in self.c.execute('SELECT * FROM add_' + self.tub):
                     self.tub_store.append(row)
 
             self.tub_tv.set_model(self.tub_store)
@@ -68,9 +69,9 @@ class AddTub:
             pipe_name = self.tub_name_entry.get_text()
             pipe_cap = self.tub_cap_entry.get_text()
             pipe_ce_cap = self.tub_ce_cap_entry.get_text()
-            c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity, CE_Capacity)
+            self.c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity, CE_Capacity)
                               VALUES(?,?,?)''', (pipe_name, pipe_cap, pipe_ce_cap))
-            conn.commit()
+            self.conn.commit()
             self.tub_name_entry.set_text('')
             self.tub_cap_entry.set_text('')
             self.tub_ce_cap_entry.set_text('')
@@ -79,17 +80,17 @@ class AddTub:
         else:
             pipe_name = self.tub_name_entry.get_text()
             pipe_cap = self.tub_cap_entry.get_text()
-            c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity)
+            self.c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity)
                               VALUES(?,?)''', (pipe_name, pipe_cap))
-            conn.commit()
+            self.conn.commit()
             self.tub_name_entry.set_text('')
             self.tub_cap_entry.set_text('')
             self.tub_store.append([pipe_name, pipe_cap])
             self.add_tub.hide()
 
     def on_rem_tub_btn_clicked(self, *args):
-        c.execute('DELETE FROM add_' + self.tub + ' WHERE Name=?', (pipe_rem,))
-        conn.commit()
+        self.c.execute('DELETE FROM add_' + self.tub + ' WHERE Name=?', (pipe_rem,))
+        self.conn.commit()
         self.tub_store.remove(treeiter)
         self.add_tub.hide()
 
