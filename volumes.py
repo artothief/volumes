@@ -1,7 +1,9 @@
 __author__ = 'artothief'
 
 from gi.repository import Gtk
-from decimal import *
+from decimal import Decimal
+import os
+import glob
 import sqlite3
 
 sqlite3.register_adapter(Decimal, lambda x: str(x))
@@ -36,7 +38,18 @@ class Volumes:
         self.filechooser_dialog = builder.get_object('filechooserdialog')
         self.error_label = builder.get_object('error_text')
         self.values = builder.get_object('value_dialog')
-        self.database = 'input.db'
+        self.title = ''
+
+        if not os.path.exists('databases'):
+            os.makedirs('databases')
+        try:
+            self.database = max(glob.iglob('databases/*.db'), key=os.path.getmtime)
+
+        except ValueError as a:
+            self.database = 'databases/MyDatabase.db'
+            print a, 'No databases in folder'
+
+
         self.hwdp = Tubulars.AddTub('HWDP', self.database)
         self.dp = Tubulars.AddTub('DP', self.database)
         self.dp2 = Tubulars.AddTub('DP2', self.database)
@@ -50,6 +63,7 @@ class Volumes:
 
         # Buttons
         self.filechooser_button = builder.get_object('filechooser_button')
+        self.autosave = builder.get_object('autosave')
 
         # making important labels bold
         self.bold1 = builder.get_object('bold1')
@@ -133,6 +147,23 @@ class Volumes:
         self.tap_chbutton = builder.get_object('tap_chbutton')
         self.csg_liner_vol_cb = builder.get_object('csg_liner_vol_cb')
         self.csg_liner_stk_cb = builder.get_object('csg_liner_stk_cb')
+
+        # List of labels for database purposes
+        self.label_list = [self.oh_vol_label,
+                           self.oh_strokes_label,
+                           self.btms_up_vol_label,
+                           self.btms_up_strokes_label,
+                           self.dp_length_label,
+                           self.vol_label,
+                           self.stroke_label,
+                           self.riser_vol_label,
+                           self.riser_stroke_label,
+                           self.shoe_strokes_label,
+                           self.shoe_btms_up_label,
+                           self.liner_vol_label,
+                           self.liner_stk_label,
+                           self.csg_liner_vol_label,
+                           self.csg_liner_stk_label]
 
         # List of combo boxes for database purposes
         self.combo_list = [self.oh_box,
@@ -277,6 +308,12 @@ class Volumes:
                 except Exception as er:
                     print er, 'Ok, if first time using app! Combo set active'
 
+            for label in self.label_list:
+                label.set_text(' ')
+
+            self.title = str(self.database).split('/')[-1][:-3]
+            self.window.set_title(self.title)
+
     # All button handlers
     def on_string_vol_cb_toggled(self, button):
         if button.get_active():
@@ -285,6 +322,7 @@ class Volumes:
         else:
             self.bold1.hide()
             self.vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_string_stk_cb_toggled(self, button):
         if button.get_active():
@@ -293,6 +331,7 @@ class Volumes:
         else:
             self.bold2.hide()
             self.stroke_label.hide()
+        self.window.resize(1, 1)
 
     def on_riser_vol_cb_toggled(self, button):
         if button.get_active():
@@ -301,6 +340,7 @@ class Volumes:
         else:
             self.label11.hide()
             self.riser_vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_riser_stk_cb_toggled(self, button):
         if button.get_active():
@@ -309,6 +349,7 @@ class Volumes:
         else:
             self.label20.hide()
             self.riser_stroke_label.hide()
+        self.window.resize(1, 1)
 
     def on_csg_vol_cb_toggled(self, button):
         if button.get_active():
@@ -317,6 +358,7 @@ class Volumes:
         else:
             self.label21.hide()
             self.shoe_btms_up_label.hide()
+        self.window.resize(1, 1)
 
     def on_csg_stk_cb_toggled(self, button):
         if button.get_active():
@@ -325,6 +367,7 @@ class Volumes:
         else:
             self.label22.hide()
             self.shoe_strokes_label.hide()
+        self.window.resize(1, 1)
 
     def on_liner_vol_cb_toggled(self, button):
         if button.get_active():
@@ -333,6 +376,7 @@ class Volumes:
         else:
             self.label17.hide()
             self.liner_vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_liner_stk_cb_toggled(self, button):
         if button.get_active():
@@ -341,6 +385,7 @@ class Volumes:
         else:
             self.label23.hide()
             self.liner_stk_label.hide()
+        self.window.resize(1, 1)
 
     def on_csg_liner_vol_cb_toggled(self, button):
         if button.get_active():
@@ -349,6 +394,7 @@ class Volumes:
         else:
             self.label24.hide()
             self.csg_liner_vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_csg_liner_stk_cb_toggled(self, button):
         if button.get_active():
@@ -357,6 +403,7 @@ class Volumes:
         else:
             self.label25.hide()
             self.csg_liner_stk_label.hide()
+        self.window.resize(1, 1)
 
     def on_oh_vol_cb_toggled(self, button):
         if button.get_active():
@@ -365,6 +412,7 @@ class Volumes:
         else:
             self.label18.hide()
             self.oh_vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_oh_stk_cb_toggled(self, button):
         if button.get_active():
@@ -373,6 +421,7 @@ class Volumes:
         else:
             self.label19.hide()
             self.oh_strokes_label.hide()
+        self.window.resize(1, 1)
 
     def on_btms_vol_cb_toggled(self, button):
         if button.get_active():
@@ -381,6 +430,7 @@ class Volumes:
         else:
             self.bold3.hide()
             self.btms_up_vol_label.hide()
+        self.window.resize(1, 1)
 
     def on_btms_stk_cb_toggled(self, button):
         if button.get_active():
@@ -389,6 +439,7 @@ class Volumes:
         else:
             self.bold4.hide()
             self.btms_up_strokes_label.hide()
+        self.window.resize(1, 1)
 
     def on_add_pipe_activate(self, *args):
         self.dp.add_tub.run()
@@ -415,26 +466,33 @@ class Volumes:
         self.open_hole.add_tub.hide()
 
     def on_open_database_activate(self, *args):
+        self.filechooser_dialog.set_current_folder('databases/')
         self.filechooser_button.set_label('Open')
         self.filechooser_dialog.set_action(0)
         self.filechooser_dialog.run()
         self.filechooser_dialog.hide()
 
-    def on_export_database_activate(self, *args):
-        self.filechooser_button.set_label('Export As')
+    def on_save_activate(self, *args):
+        self.save_db(self.database)
+        print('save')
+
+    def on_save_as_activate(self, *args):
+        self.filechooser_dialog.set_current_folder('databases/')
+        self.filechooser_button.set_label('Save As')
         self.filechooser_dialog.set_action(1)
-        self.filechooser_dialog.set_current_name('YourDatabase.db')
+        self.filechooser_dialog.set_current_name(self.title + '.db')
         self.filechooser_dialog.run()
         self.filechooser_dialog.hide()
 
     def on_filechooser_button_clicked(self, *args):
         x = str(self.filechooser_dialog.get_action())
         if 'SAVE' in x:
-            print 'Save'
+            self.database = self.filechooser_dialog.get_filename()
+            self.save_db(self.database)
+            print('save')
         elif 'OPEN' in x:
             self.database = self.filechooser_dialog.get_filename()
             self.populate(self.load_db(self.database))
-
             print 'open'
         else:
             print 'Fail'
@@ -452,8 +510,11 @@ class Volumes:
         self.values.hide()
 
     def on_window1_delete_event(self, *args):
-        self.save_db(self.database)
-        SELF.SAVE_DB(DEFAULT)
+        if self.autosave.get_active():
+            self.save_db(self.database)
+            print('Close with Save')
+        else:
+            print 'Close Without Save '
         Gtk.main_quit()
 
     def on_liner_chbutton_toggled(self, button):
@@ -558,7 +619,7 @@ class Volumes:
         self.vol_label.set_markup('<b>' + str(round(string, 1)) + ' Litres</b>')
         try:
             str_strokes = string / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             str_strokes = Decimal('0.00')
 
         self.stroke_label.set_markup('<b>' + str(int(str_strokes)) + ' Strokes</b>')
@@ -577,7 +638,7 @@ class Volumes:
         self.riser_vol_label.set_text(str(round(riser_volume, 1)) + ' Litres')
         try:
             riser_strokes = riser_volume / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             riser_strokes = Decimal('0.00')
 
         self.riser_stroke_label.set_text(str(int(riser_strokes)) + ' Strokes')
@@ -600,7 +661,7 @@ class Volumes:
         self.shoe_btms_up_label.set_text(str(round(csg_vol, 1)) + ' Litres')
         try:
             csg_strokes = csg_vol / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             csg_strokes = Decimal('0.00')
 
         self.shoe_strokes_label.set_text(str(int(csg_strokes)) + ' Strokes')
@@ -620,7 +681,7 @@ class Volumes:
         self.liner_vol_label.set_text(str(round(liner_vol, 1)) + ' Litres')
         try:
             liner_strokes = liner_vol / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             liner_strokes = Decimal('0.00')
 
         self.liner_stk_label.set_text(str(int(liner_strokes)) + ' Strokes')
@@ -649,7 +710,7 @@ class Volumes:
         self.oh_vol_label.set_text(str(round(oh_volume, 1)) + ' Litres')
         try:
             oh_strokes = oh_volume / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             oh_strokes = Decimal('0.00')
 
         self.oh_strokes_label.set_text(str(int(oh_strokes)) + ' Strokes')
@@ -659,7 +720,7 @@ class Volumes:
         self.btms_up_vol_label.set_markup('<b>' + str(round(btms_up_vol, 1)) + ' Litres</b>')
         try:
             btms_up_strokes = btms_up_vol / mp_liner_cap
-        except InvalidOperation:
+        except (InvalidOperation, DivisionByZero):
             btms_up_strokes = Decimal('0.00')
         self.btms_up_strokes_label.set_markup('<b>' + str(int(btms_up_strokes)) + ' Strokes</b>')
 

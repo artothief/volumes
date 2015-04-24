@@ -92,11 +92,6 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-missing-image</property>
   </object>
-  <object class="GtkImage" id="image9">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Well Volumes Calculator (MW)</property>
@@ -116,7 +111,7 @@
               <object class="GtkMenuItem" id="file">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_File</property>
+                <property name="label" translatable="yes">_Database</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menu1">
@@ -142,22 +137,22 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem3">
+                      <object class="GtkImageMenuItem" id="save">
                         <property name="label">gtk-save</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_save_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="export_database">
-                        <property name="label">Export Database</property>
+                      <object class="GtkImageMenuItem" id="saveas">
+                        <property name="label">gtk-save-as</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="image">image9</property>
-                        <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_export_database_activate" swapped="no"/>
+                        <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_save_as_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -167,12 +162,13 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem5">
+                      <object class="GtkImageMenuItem" id="quit">
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_window1_delete_event" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -217,6 +213,15 @@
                         <property name="image">image8</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_values_activate" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="autosave">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Save On Close</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
                       </object>
                     </child>
                   </object>
@@ -524,7 +529,6 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="active">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext1"/>
                           <attributes>
@@ -638,7 +642,6 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="active">2</property>
                         <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext3"/>
@@ -688,7 +691,6 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="active">1</property>
                         <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext5"/>
@@ -710,7 +712,6 @@
                         <property name="can_focus">False</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">20</property>
-                        <property name="active">1</property>
                         <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext6"/>
@@ -1216,7 +1217,6 @@
                         <property name="no_show_all">True</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
-                        <property name="active">2</property>
                         <property name="active_id">0</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext4"/>
