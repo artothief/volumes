@@ -49,10 +49,8 @@ class Volumes:
             self.database = 'databases/MyDatabase.db'
             print a, 'No databases in folder'
 
-
         self.hwdp = Tubulars.AddTub('HWDP', self.database)
         self.dp = Tubulars.AddTub('DP', self.database)
-        self.dp2 = Tubulars.AddTub('DP2', self.database)
         self.dc = Tubulars.AddTub('DC', self.database)
         self.mp_liner = Tubulars.AddTub('MP', self.database)
         self.open_hole = Tubulars.AddTub('OH', self.database)
@@ -202,7 +200,8 @@ class Volumes:
                         self.liner_chbutton,
                         self.tap_chbutton,
                         self.csg_liner_vol_cb,
-                        self.csg_liner_stk_cb]
+                        self.csg_liner_stk_cb,
+                        self.autosave]
 
         self.populate(self.load_db(self.database))
         self.window.show_all()
@@ -211,13 +210,16 @@ class Volumes:
     def load_db(self, database):
 
             self.dp = Tubulars.AddTub('DP', database)
-            self.dp2 = Tubulars.AddTub('DP2', database)
             self.hwdp = Tubulars.AddTub('HWDP', database)
             self.dc = Tubulars.AddTub('DC', database)
             self.mp_liner = Tubulars.AddTub('MP', database)
             self.open_hole = Tubulars.AddTub('OH', database)
             conn = sqlite3.connect(database, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
             c = conn.cursor()
+
+            c.execute('CREATE TABLE IF NOT EXISTS checkbuttons(id INTEGER PRIMARY KEY, cb BOOLEAN)')
+            c.execute('CREATE TABLE IF NOT EXISTS combos(id INTEGER PRIMARY KEY, com INTEGER)')
+            c.execute('CREATE TABLE IF NOT EXISTS  entries(id INTEGER PRIMARY KEY, ent TEXT)')
 
             try:
                 c.execute('SELECT ent FROM entries')
@@ -245,74 +247,67 @@ class Volumes:
             return x, y, z
 
     def save_db(self, database):
-            conn = sqlite3.connect(database, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+            conn = sqlite3.connect(database)
             c = conn.cursor()
-            c.execute('DROP TABLE IF EXISTS checkbuttons')
-            c.execute('CREATE TABLE IF NOT EXISTS checkbuttons(cb BOOLEAN)')
 
             for d in self.cb_list:
-                c.execute('INSERT INTO checkbuttons(cb) VALUES (?)', (d.get_active(),))
+                c.execute('UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ?', (d.get_active(), self.cb_list.index(d)))
+                c.execute('INSERT OR  IGNORE INTO checkbuttons(id, cb)  VALUES (?, ?)', (self.cb_list.index(d), d.get_active()))
 
-            c.execute('DROP TABLE IF EXISTS combos')
-            c.execute('CREATE TABLE IF NOT EXISTS combos(com INTEGER)')
+            for d in self.combo_list:
+                c.execute('UPDATE OR IGNORE combos SET com = ? WHERE id = ?', (d.get_active(), self.combo_list.index(d)))
+                c.execute('INSERT OR  IGNORE INTO combos(id, com)  VALUES (?, ?)', (self.combo_list.index(d), d.get_active()))
 
-            for a in self.combo_list:
-                c.execute('INSERT INTO combos(com) VALUES (?)', (a.get_active(),))
-
-            c.execute('DROP TABLE IF EXISTS entries')
-            c.execute('CREATE TABLE IF NOT EXISTS  entries(ent TEXT)')
-
-            for e in self.entry_list:
-                c.execute('INSERT INTO entries(ent) VALUES (?)', (e.get_text(),))
+            for d in self.entry_list:
+                c.execute('UPDATE OR IGNORE entries SET ent = ? WHERE id = ?', (d.get_text(), self.entry_list.index(d)))
+                c.execute('INSERT OR  IGNORE INTO entries(id, ent)  VALUES (?, ?)', (self.entry_list.index(d), d.get_text()))
             conn.commit()
             return
 
     def populate(self, database):
+        liststore_list = [self.open_hole.tub_store,
+                          self.dp.tub_store,
+                          self.dp.tub_store,
+                          self.hwdp.tub_store,
+                          self.dc.tub_store,
+                          self.mp_liner.tub_store]
+        store_set = zip(self.combo_list, liststore_list)
+        for cl in store_set:
+            cl[0].set_model(cl[1])
 
-            liststore_list = [self.open_hole.tub_store,
-                              self.dp.tub_store,
-                              self.dp2.tub_store,
-                              self.hwdp.tub_store,
-                              self.dc.tub_store,
-                              self.mp_liner.tub_store]
-
-            store_set = zip(self.combo_list, liststore_list)
-            for cl in store_set:
-                cl[0].set_model(cl[1])
-
-            for index, cb in enumerate(self.cb_list):
-                z = database[2]
-                try:
-                    if z[index] == 1:
-                        cb.set_active(True)
-                    else:
-                        cb.set_active(False)
-
-                except Exception as r:
-                    print r, 'Ok, if first time using app! Checkboxes set active'
-
-            for index, entry in enumerate(self.entry_list):
-                x = database[0]
-                if len(x) - 1 < index:
-                    entry.set_text('0.00')
-
-                elif x and x[index] != '0.00':
-                    entry.set_text(x[index])
+        for index, cb in enumerate(self.cb_list):
+            z = database[2]
+            try:
+                if z[index] == 1:
+                    cb.set_active(True)
                 else:
-                    pass
+                    cb.set_active(False)
 
-            for index, combo in enumerate(self.combo_list):
-                y = database[1]
-                try:
-                    combo.set_active(y[index])
-                except Exception as er:
-                    print er, 'Ok, if first time using app! Combo set active'
+            except Exception as r:
+                print r, 'Ok, if first time using app! Checkboxes set active'
 
-            for label in self.label_list:
-                label.set_text(' ')
+        for index, entry in enumerate(self.entry_list):
+            x = database[0]
+            if len(x) - 1 < index:
+                entry.set_text('0.00')
 
-            self.title = str(self.database).split('/')[-1][:-3]
-            self.window.set_title(self.title)
+            elif x and x[index] != '0.00':
+                entry.set_text(x[index])
+            else:
+                pass
+
+        for index, combo in enumerate(self.combo_list):
+            y = database[1]
+            try:
+                combo.set_active(y[index])
+            except Exception as er:
+                print er, 'Ok, if first time using app! Combo set active'
+
+        for label in self.label_list:
+            label.set_text(' ')
+
+        self.title = str(self.database).split('/')[-1][:-3]
+        self.window.set_title(self.title)
 
     # All button handlers
     def on_string_vol_cb_toggled(self, button):
@@ -445,10 +440,6 @@ class Volumes:
         self.dp.add_tub.run()
         self.dp.add_tub.hide()
 
-    def on_add_pipe2_activate(self, *args):
-        self.dp2.add_tub.run()
-        self.dp2.add_tub.hide()
-
     def on_add_hwdp_activate(self, *args):
         self.hwdp.add_tub.run()
         self.hwdp.add_tub.hide()
@@ -514,6 +505,11 @@ class Volumes:
             self.save_db(self.database)
             print('Close with Save')
         else:
+            conn = sqlite3.connect(self.database)
+            c = conn.cursor()
+            c.execute("UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ?", (self.autosave.get_active(), 16))
+            conn.commit()
+            c.close()
             print 'Close Without Save '
         Gtk.main_quit()
 
@@ -582,8 +578,8 @@ class Volumes:
         if self.tap_chbutton.get_active() and self.dp2_box.get_active() >= 0:
             dp2_length = num(self.dp2_entry.get_text())
             dp2_act = self.dp2_box.get_active()
-            dp2_cap = num(self.dp2.tub_store[dp2_act][1]) if dp2_act >= 0 else Decimal('0.00')
-            dp2_ce_cap = num(self.dp2.tub_store[dp2_act][2]) if dp2_act >= 0 else Decimal('0.00')
+            dp2_cap = num(self.dp.tub_store[dp2_act][1]) if dp2_act >= 0 else Decimal('0.00')
+            dp2_ce_cap = num(self.dp.tub_store[dp2_act][2]) if dp2_act >= 0 else Decimal('0.00')
         else:
             dp2_length = num('0.00')
             dp2_cap = num('0.00')

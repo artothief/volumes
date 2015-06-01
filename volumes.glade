@@ -72,11 +72,6 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-missing-image</property>
   </object>
-  <object class="GtkImage" id="image5">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -151,6 +146,7 @@
                         <property name="label">gtk-save-as</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_save_as_activate" swapped="no"/>
                       </object>
@@ -221,7 +217,6 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Save On Close</property>
                         <property name="use_underline">True</property>
-                        <property name="active">True</property>
                       </object>
                     </child>
                   </object>
@@ -246,16 +241,6 @@
                         <property name="image">image2</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_add_pipe_activate" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="add_pipe2">
-                        <property name="label" translatable="yes">Add/Remove Pipe #2</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="image">image5</property>
-                        <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_add_pipe2_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>

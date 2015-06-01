@@ -11,7 +11,6 @@ class AddTub:
         self.conn = sqlite3.connect(db)
         self.c = self.conn.cursor()
         self.c.execute('CREATE TABLE IF NOT EXISTS add_DP(Name text, Capacity text, CE_Capacity)')
-        self.c.execute('CREATE TABLE IF NOT EXISTS add_DP2(Name text, Capacity text, CE_Capacity)')
         self.c.execute('CREATE TABLE IF NOT EXISTS add_HWDP(Name text, Capacity text, CE_Capacity)')
         self.c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name text, Capacity text, CE_Capacity)')
         self.c.execute('CREATE TABLE IF NOT EXISTS add_MP(Name text, Capacity text)')
@@ -76,7 +75,6 @@ class AddTub:
             self.tub_cap_entry.set_text('')
             self.tub_ce_cap_entry.set_text('')
             self.tub_store.append([pipe_name, pipe_cap, pipe_ce_cap])
-            self.add_tub.hide()
         else:
             pipe_name = self.tub_name_entry.get_text()
             pipe_cap = self.tub_cap_entry.get_text()
@@ -86,13 +84,11 @@ class AddTub:
             self.tub_name_entry.set_text('')
             self.tub_cap_entry.set_text('')
             self.tub_store.append([pipe_name, pipe_cap])
-            self.add_tub.hide()
 
     def on_rem_tub_btn_clicked(self, *args):
         self.c.execute('DELETE FROM add_' + self.tub + ' WHERE Name=?', (pipe_rem,))
         self.conn.commit()
         self.tub_store.remove(treeiter)
-        self.add_tub.hide()
 
     # noinspection PyMethodMayBeStatic
     def on_tub_selection_changed(self, selection):
