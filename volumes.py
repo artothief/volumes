@@ -47,7 +47,7 @@ class Volumes:
 
         except ValueError as a:
             self.database = 'databases/MyDatabase.db'
-            print a, 'No databases in folder'
+            print(a, 'No databases in folder')
 
         self.hwdp = Tubulars.AddTub('HWDP', self.database)
         self.dp = Tubulars.AddTub('DP', self.database)
@@ -224,26 +224,26 @@ class Volumes:
             try:
                 c.execute('SELECT ent FROM entries')
                 x = [record[0] for record in c.fetchall()]
-                print x
+                print(x)
             except Exception as e:
                 x = []
-                print e, 'Ok, if first time using app! Entries retrieve table from db'
+                print(e, 'Ok, if first time using app! Entries retrieve table from db')
 
             try:
                 c.execute('SELECT com FROM combos')
                 y = [record[0] for record in c.fetchall()]
-                print y
+                print(y)
             except Exception as e:
                 y = []
-                print e, 'Ok, if first time using app! Combos retrieve table from db'
+                print(e, 'Ok, if first time using app! Combos retrieve table from db')
 
             try:
                 c.execute('SELECT cb FROM checkbuttons')
                 z = [record[0] for record in c.fetchall()]
-                print z
+                print(z)
             except Exception as e:
                 z = []
-                print e, 'Ok, if first time using app! Checkboxes retrieve table from db'
+                print(e, 'Ok, if first time using app! Checkboxes retrieve table from db')
             return x, y, z
 
     def save_db(self, database):
@@ -284,7 +284,7 @@ class Volumes:
                     cb.set_active(False)
 
             except Exception as r:
-                print r, 'Ok, if first time using app! Checkboxes set active'
+                print(r, 'Ok, if first time using app! Checkboxes set active')
 
         for index, entry in enumerate(self.entry_list):
             x = database[0]
@@ -301,7 +301,7 @@ class Volumes:
             try:
                 combo.set_active(y[index])
             except Exception as er:
-                print er, 'Ok, if first time using app! Combo set active'
+                print(er, 'Ok, if first time using app! Combo set active')
 
         for label in self.label_list:
             label.set_text(' ')
@@ -484,9 +484,9 @@ class Volumes:
         elif 'OPEN' in x:
             self.database = self.filechooser_dialog.get_filename()
             self.populate(self.load_db(self.database))
-            print 'open'
+            print('open')
         else:
-            print 'Fail'
+            print('Fail')
 
         self.filechooser_dialog.hide()
 
@@ -510,7 +510,7 @@ class Volumes:
             c.execute("UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ?", (self.autosave.get_active(), 16))
             conn.commit()
             c.close()
-            print 'Close Without Save '
+            print('Close Without Save ')
         Gtk.main_quit()
 
     def on_liner_chbutton_toggled(self, button):
@@ -560,7 +560,8 @@ class Volumes:
         pbr = num(self.pbr_entry.get_text())
         csg_cap = num(self.csg_cap_entry.get_text())
         csg_shoe = num(self.csg_shoe_entry.get_text())
-        if self.liner_chbutton.get_active():
+        liner = self.liner_chbutton.get_active()
+        if liner:
             csg_shoe = pbr
         bit_depth = num(self.bit_depth_entry.get_text())
         dc_length = num(self.dc_entry.get_text())
@@ -603,10 +604,10 @@ class Volumes:
             raise AssertionError('eee')
 
         # Drillstring length and volumes calculations
-        print 'DP vol: ' + str(dp_vol)
-        print 'DP2 vol: ' + str(dp2_vol)
-        print 'HWDP vol: ' + str(hwdp_vol)
-        print 'DC vol: ' + str(dc_vol) + '\n------------------------------'
+        print('DP vol: ' + str(dp_vol))
+        print('DP2 vol: ' + str(dp2_vol))
+        print('HWDP vol: ' + str(hwdp_vol))
+        print('DC vol: ' + str(dc_vol) + '\n------------------------------')
 
         self.dp_length_label.set_text(str(dp_length))
         above_hwdp = dp_length + dp2_length
@@ -626,7 +627,7 @@ class Volumes:
                        tub_riser(seabed, riser_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
                        tub_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
-        if riser_volume <= 0 > bit_depth:
+        if riser_cap > 0 > riser_volume:
             self.error_dialog.set_markup('Tubular is bigger than Riser or Riser Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Riser or Riser Capacity not entered!')
@@ -640,16 +641,16 @@ class Volumes:
         self.riser_stroke_label.set_text(str(int(riser_strokes)) + ' Strokes')
 
         # Casing volume calculation
-        csg_vol = dp_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+        csg_vol = dp_csg(seabed, csg_shoe if not liner else
                          pbr, csg_cap, dp_length, dp_ce_cap) +\
-                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                  tub_csg(seabed, csg_shoe if not liner else
                           pbr, csg_cap, dp_length, dp2_length, dp2_ce_cap, 'DP2') +\
-                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                  tub_csg(seabed, csg_shoe if not liner else
                            pbr, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
-                  tub_csg(seabed, csg_shoe if not self.liner_chbutton.get_active() else
+                  tub_csg(seabed, csg_shoe if not liner else
                          pbr, csg_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
-        if csg_vol <= 0 and bit_depth > seabed:
+        if csg_vol < 0 < csg_cap and bit_depth > seabed:
             self.error_dialog.set_markup('Tubular is bigger than Casing or Casing Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Casing or Casing Capacity not entered!')
@@ -663,13 +664,13 @@ class Volumes:
         self.shoe_strokes_label.set_text(str(int(csg_strokes)) + ' Strokes')
 
         # Liner volume calculation
-        liner_vol = Decimal('0.00') if not self.liner_chbutton.get_active() else \
+        liner_vol = Decimal('0.00') if not liner else \
                        dp_liner(pbr, liner_shoe, liner_cap, dp_length, dp_ce_cap) +\
                        tub_liner(pbr, liner_shoe, liner_cap, dp_length, dp2_length, dp2_ce_cap, 'DP2') +\
                        tub_liner(pbr, liner_shoe, liner_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
                        tub_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
-        if liner_vol <= 0 and self.liner_chbutton.get_active() and bit_depth > pbr:
+        if liner_vol <= 0 and liner and bit_depth > pbr:
             self.error_dialog.set_markup('Tubular is bigger than Liner or Liner Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Liner or Liner Capacity not entered!')
@@ -689,13 +690,13 @@ class Volumes:
         self.csg_liner_stk_label.set_text(str(int(csg_liner_stk)) + ' Strokes')
 
         # Open hole volume calculation
-        oh_volume = dp_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+        oh_volume = dp_oh(seabed, csg_shoe if not liner else liner_shoe,
                           oh_cap, dp_length, dp_ce_cap) +\
-                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                    tub_oh(seabed, csg_shoe if not liner else liner_shoe,
                            oh_cap, dp_length, dp2_length, dp2_ce_cap, 'DP2') +\
-                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                    tub_oh(seabed, csg_shoe if not liner else liner_shoe,
                             oh_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
-                    tub_oh(csg_shoe if not self.liner_chbutton.get_active() else liner_shoe,
+                    tub_oh(seabed, csg_shoe if not liner else liner_shoe,
                           oh_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if oh_volume < 0 and bit_depth > csg_shoe:
