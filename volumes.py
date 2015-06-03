@@ -4,14 +4,14 @@ from gi.repository import Gtk
 from decimal import Decimal
 import os
 import glob
-import sqlite3
+from database import *
 
 sqlite3.register_adapter(Decimal, lambda x: str(x))
 sqlite3.register_converter('decimal', Decimal)
 
 
 from Annulus import *
-import Tubulars
+from Tubulars import *
 
 
 def num(value):
@@ -49,11 +49,11 @@ class Volumes:
             self.database = 'databases/MyDatabase.db'
             print(a, 'No databases in folder')
 
-        self.hwdp = Tubulars.AddTub('HWDP', self.database)
-        self.dp = Tubulars.AddTub('DP', self.database)
-        self.dc = Tubulars.AddTub('DC', self.database)
-        self.mp_liner = Tubulars.AddTub('MP', self.database)
-        self.open_hole = Tubulars.AddTub('OH', self.database)
+        self.hwdp_store = Gtk.ListStore(str, str, str)
+        self.dp_store = Gtk.ListStore(str, str, str)
+        self.dc_store = Gtk.ListStore(str, str, str)
+        self.mp_liner_store = Gtk.ListStore(str, str)
+        self.open_hole_store = Gtk.ListStore(str, str)
 
         # Load image and hide liner related stuff for unchecked box
         self.image = builder.get_object('image1')
@@ -164,12 +164,12 @@ class Volumes:
                            self.csg_liner_stk_label]
 
         # List of combo boxes for database purposes
-        self.combo_list = [self.oh_box,
-                           self.dp_box,
+        self.combo_list = [self.dp_box,
                            self.dp2_box,
                            self.hwdp_box,
                            self.dc_box,
-                           self.mp_liner_box]
+                           self.mp_liner_box,
+                           self.oh_box]
 
         # List of entries for database purposes
         self.entry_list = [self.seabed_entry,
@@ -203,75 +203,20 @@ class Volumes:
                         self.csg_liner_stk_cb,
                         self.autosave]
 
-        self.populate(self.load_db(self.database))
+        self.liststore = [self.dp_store,
+                          self.dp_store,
+                          self.hwdp_store,
+                          self.dc_store,
+                          self.mp_liner_store,
+                          self.open_hole_store]
+
+        self.populate(load_db(self.database, self.liststore))
         self.window.show_all()
         self.window.resize(1, 1)
 
-    def load_db(self, database):
-
-            self.dp = Tubulars.AddTub('DP', database)
-            self.hwdp = Tubulars.AddTub('HWDP', database)
-            self.dc = Tubulars.AddTub('DC', database)
-            self.mp_liner = Tubulars.AddTub('MP', database)
-            self.open_hole = Tubulars.AddTub('OH', database)
-            conn = sqlite3.connect(database, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-            c = conn.cursor()
-
-            c.execute('CREATE TABLE IF NOT EXISTS checkbuttons(id INTEGER PRIMARY KEY, cb BOOLEAN)')
-            c.execute('CREATE TABLE IF NOT EXISTS combos(id INTEGER PRIMARY KEY, com INTEGER)')
-            c.execute('CREATE TABLE IF NOT EXISTS  entries(id INTEGER PRIMARY KEY, ent TEXT)')
-
-            try:
-                c.execute('SELECT ent FROM entries')
-                x = [record[0] for record in c.fetchall()]
-                print(x)
-            except Exception as e:
-                x = []
-                print(e, 'Ok, if first time using app! Entries retrieve table from db')
-
-            try:
-                c.execute('SELECT com FROM combos')
-                y = [record[0] for record in c.fetchall()]
-                print(y)
-            except Exception as e:
-                y = []
-                print(e, 'Ok, if first time using app! Combos retrieve table from db')
-
-            try:
-                c.execute('SELECT cb FROM checkbuttons')
-                z = [record[0] for record in c.fetchall()]
-                print(z)
-            except Exception as e:
-                z = []
-                print(e, 'Ok, if first time using app! Checkboxes retrieve table from db')
-            return x, y, z
-
-    def save_db(self, database):
-            conn = sqlite3.connect(database)
-            c = conn.cursor()
-
-            for d in self.cb_list:
-                c.execute('UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ?', (d.get_active(), self.cb_list.index(d)))
-                c.execute('INSERT OR  IGNORE INTO checkbuttons(id, cb)  VALUES (?, ?)', (self.cb_list.index(d), d.get_active()))
-
-            for d in self.combo_list:
-                c.execute('UPDATE OR IGNORE combos SET com = ? WHERE id = ?', (d.get_active(), self.combo_list.index(d)))
-                c.execute('INSERT OR  IGNORE INTO combos(id, com)  VALUES (?, ?)', (self.combo_list.index(d), d.get_active()))
-
-            for d in self.entry_list:
-                c.execute('UPDATE OR IGNORE entries SET ent = ? WHERE id = ?', (d.get_text(), self.entry_list.index(d)))
-                c.execute('INSERT OR  IGNORE INTO entries(id, ent)  VALUES (?, ?)', (self.entry_list.index(d), d.get_text()))
-            conn.commit()
-            return
-
     def populate(self, database):
-        liststore_list = [self.open_hole.tub_store,
-                          self.dp.tub_store,
-                          self.dp.tub_store,
-                          self.hwdp.tub_store,
-                          self.dc.tub_store,
-                          self.mp_liner.tub_store]
-        store_set = zip(self.combo_list, liststore_list)
+
+        store_set = zip(self.combo_list, self.liststore)
         for cl in store_set:
             cl[0].set_model(cl[1])
 
@@ -437,24 +382,24 @@ class Volumes:
         self.window.resize(1, 1)
 
     def on_add_pipe_activate(self, *args):
-        self.dp.add_tub.run()
-        self.dp.add_tub.hide()
+        AddTub('DP', self.dp_store, self.window).add_tub.run()
+        AddTub('DP', self.dp_store, self.window).add_tub.hide()
 
     def on_add_hwdp_activate(self, *args):
-        self.hwdp.add_tub.run()
-        self.hwdp.add_tub.hide()
+        AddTub('HWDP', self.hwdp_store, self.window).add_tub.run()
+        AddTub('HWDP', self.hwdp_store, self.window).add_tub.hide()
 
     def on_add_dc_activate(self, *args):
-        self.dc.add_tub.run()
-        self.dc.add_tub.hide()
+        AddTub('DC', self.dc_store, self.window).add_tub.run()
+        AddTub('DC', self.dc_store, self.window).add_tub.hide()
 
     def on_add_mp_liner_activate(self, *args):
-        self.mp_liner.add_tub.run()
-        self.mp_liner.add_tub.hide()
+        AddTub('MP', self.mp_liner_store, self.window).add_tub.run()
+        AddTub('MP', self.mp_liner_store, self.window).add_tub.hide()
 
     def on_add_open_hole_activate(self, *args):
-        self.open_hole.add_tub.run()
-        self.open_hole.add_tub.hide()
+        AddTub('OH', self.open_hole_store, self.window).add_tub.run()
+        AddTub('OH', self.open_hole_store, self.window).add_tub.hide()
 
     def on_open_database_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
@@ -464,7 +409,7 @@ class Volumes:
         self.filechooser_dialog.hide()
 
     def on_save_activate(self, *args):
-        self.save_db(self.database)
+        save_db(self.database, self.liststore, self.cb_list, self.combo_list, self.entry_list)
         print('save')
 
     def on_save_as_activate(self, *args):
@@ -479,11 +424,11 @@ class Volumes:
         x = str(self.filechooser_dialog.get_action())
         if 'SAVE' in x:
             self.database = self.filechooser_dialog.get_filename()
-            self.save_db(self.database)
+            save_db(self.database, self.liststore, self.cb_list, self.combo_list, self.entry_list)
             print('save')
         elif 'OPEN' in x:
             self.database = self.filechooser_dialog.get_filename()
-            self.populate(self.load_db(self.database))
+            self.populate(load_db(self.database, self.liststore))
             print('open')
         else:
             print('Fail')
@@ -502,14 +447,10 @@ class Volumes:
 
     def on_window1_delete_event(self, *args):
         if self.autosave.get_active():
-            self.save_db(self.database)
+            save_db(self.database, self.liststore, self.cb_list, self.combo_list, self.entry_list)
             print('Close with Save')
         else:
-            conn = sqlite3.connect(self.database)
-            c = conn.cursor()
-            c.execute("UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ?", (self.autosave.get_active(), 16))
-            conn.commit()
-            c.close()
+            update_entry(self.database, self.autosave.get_active())
             print('Close Without Save ')
         Gtk.main_quit()
 
@@ -566,21 +507,21 @@ class Volumes:
         bit_depth = num(self.bit_depth_entry.get_text())
         dc_length = num(self.dc_entry.get_text())
         dc_act = self.dc_box.get_active()
-        dc_ce_cap = num(self.dc.tub_store[dc_act][2]) if dc_act >= 0 else Decimal('0.00')
-        dc_cap = num(self.dc.tub_store[dc_act][1]) if dc_act >= 0 else Decimal('0.00')
+        dc_ce_cap = num(self.dc_store[dc_act][2]) if dc_act >= 0 else Decimal('0.00')
+        dc_cap = num(self.dc_store[dc_act][1]) if dc_act >= 0 else Decimal('0.00')
         dc_vol = dc_length * dc_cap
         hwdp_length = num(self.hwdp_entry.get_text())
         hwdp_act = self.hwdp_box.get_active()
-        hwdp_cap = num(self.hwdp.tub_store[hwdp_act][1]) if hwdp_act >= 0 else Decimal('0.00')
-        hwdp_ce_cap = num(self.hwdp.tub_store[hwdp_act][2]) if hwdp_act >= 0 else Decimal('0.00')
+        hwdp_cap = num(self.hwdp_store[hwdp_act][1]) if hwdp_act >= 0 else Decimal('0.00')
+        hwdp_ce_cap = num(self.hwdp_store[hwdp_act][2]) if hwdp_act >= 0 else Decimal('0.00')
         hwdp_vol = hwdp_length * hwdp_cap
 
         # Check tapered checkbutton, set dp2 values accordingly
         if self.tap_chbutton.get_active() and self.dp2_box.get_active() >= 0:
             dp2_length = num(self.dp2_entry.get_text())
             dp2_act = self.dp2_box.get_active()
-            dp2_cap = num(self.dp.tub_store[dp2_act][1]) if dp2_act >= 0 else Decimal('0.00')
-            dp2_ce_cap = num(self.dp.tub_store[dp2_act][2]) if dp2_act >= 0 else Decimal('0.00')
+            dp2_cap = num(self.dp_store[dp2_act][1]) if dp2_act >= 0 else Decimal('0.00')
+            dp2_ce_cap = num(self.dp_store[dp2_act][2]) if dp2_act >= 0 else Decimal('0.00')
         else:
             dp2_length = num('0.00')
             dp2_cap = num('0.00')
@@ -590,13 +531,13 @@ class Volumes:
 
         dp_length = Decimal(bit_depth - (dp2_length + hwdp_length + dc_length))
         dp_act = self.dp_box.get_active()
-        dp_cap = num(self.dp.tub_store[dp_act][1]) if dp_act >= 0 else Decimal('0.00')
-        dp_ce_cap = num(self.dp.tub_store[dp_act][2]) if dp_act >= 0 else Decimal('0.00')
+        dp_cap = num(self.dp_store[dp_act][1]) if dp_act >= 0 else Decimal('0.00')
+        dp_ce_cap = num(self.dp_store[dp_act][2]) if dp_act >= 0 else Decimal('0.00')
         dp_vol = dp_length * dp_cap
         oh_act = self.oh_box.get_active()
-        oh_cap = num(self.open_hole.tub_store[oh_act][1]) if oh_act >= 0 else Decimal('0.00')
+        oh_cap = num(self.open_hole_store[oh_act][1]) if oh_act >= 0 else Decimal('0.00')
         mp_liner_act = self.mp_liner_box.get_active()
-        mp_liner_cap = num(self.mp_liner.tub_store[mp_liner_act][1]) if mp_liner_act >= 0 else Decimal('0.00')
+        mp_liner_cap = num(self.mp_liner_store[mp_liner_act][1]) if mp_liner_act >= 0 else Decimal('0.00')
 
         if dp_length < 0:
             self.error_dialog.set_markup('<b>Drillstring length calculation error, check your numbers!</b>')
@@ -646,9 +587,9 @@ class Volumes:
                   tub_csg(seabed, csg_shoe if not liner else
                           pbr, csg_cap, dp_length, dp2_length, dp2_ce_cap, 'DP2') +\
                   tub_csg(seabed, csg_shoe if not liner else
-                           pbr, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
+                          pbr, csg_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
                   tub_csg(seabed, csg_shoe if not liner else
-                         pbr, csg_cap, above_dc, dc_length, dc_ce_cap, 'DC')
+                          pbr, csg_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if csg_vol < 0 < csg_cap and bit_depth > seabed:
             self.error_dialog.set_markup('Tubular is bigger than Casing or Casing Capacity not entered!')
@@ -695,9 +636,9 @@ class Volumes:
                     tub_oh(seabed, csg_shoe if not liner else liner_shoe,
                            oh_cap, dp_length, dp2_length, dp2_ce_cap, 'DP2') +\
                     tub_oh(seabed, csg_shoe if not liner else liner_shoe,
-                            oh_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
+                           oh_cap, above_hwdp, hwdp_length, hwdp_ce_cap, 'HWDP') +\
                     tub_oh(seabed, csg_shoe if not liner else liner_shoe,
-                          oh_cap, above_dc, dc_length, dc_ce_cap, 'DC')
+                           oh_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if oh_volume < 0 and bit_depth > csg_shoe:
             self.error_dialog.set_markup('Tubular is bigger than Open Hole or Open Hole not chosen!')

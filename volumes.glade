@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkFileFilter" id="filefilter1">
@@ -912,11 +912,9 @@
                       <object class="GtkLabel" id="label11">
                         <property name="can_focus">False</property>
                         <property name="no_show_all">True</property>
-                        <property name="halign">center</property>
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Riser/String Volume :</property>
-                        <property name="ellipsize">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -933,7 +931,6 @@
                         <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Riser/String Strokes :</property>
-                        <property name="ellipsize">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1172,6 +1169,7 @@
                       <object class="GtkLabel" id="dp2_box_label">
                         <property name="can_focus">False</property>
                         <property name="no_show_all">True</property>
+                        <property name="margin_right">7</property>
                         <property name="margin_bottom">7</property>
                         <property name="label" translatable="yes">Pipe #2</property>
                       </object>
