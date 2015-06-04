@@ -134,13 +134,13 @@ def delete_entry(database, table, pipe_rem):
     c.close()
     return
 
+
 def update_entry(database, value):
     conn = sqlite3.connect(database)
     c = conn.cursor()
     c.execute('UPDATE OR IGNORE checkbuttons SET cb = ? WHERE id = ? ', (value, 16))
     conn.commit()
     c.close()
-
     return
 
 

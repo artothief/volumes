@@ -39,7 +39,6 @@ class AddTub:
         else:
             self.tub_ce_cap_entry.hide()
             self.ce_cap_label.hide()
-
             self.tub_tv.set_model(self.liststore)
             renderer = Gtk.CellRendererText()
             column1 = Gtk.TreeViewColumn("Name", renderer, text=0)

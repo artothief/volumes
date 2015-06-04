@@ -214,6 +214,10 @@ class Volumes:
         self.window.show_all()
         self.window.resize(1, 1)
 
+    def clear_labels(self):
+        for label in self.label_list:
+            label.set_text('')
+
     def populate(self, database):
 
         store_set = zip(self.combo_list, self.liststore)
@@ -456,6 +460,7 @@ class Volumes:
 
     def on_liner_chbutton_toggled(self, button):
         if button.get_active():
+            self.clear_labels()
             self.csg_shoe_label.hide()
             self.csg_shoe_entry.hide()
             self.bit_depth_label.set_margin_top(43)
@@ -467,6 +472,7 @@ class Volumes:
             self.liner_cap_label.show()
             self.image.set_from_file('rig_liner.png')
         else:
+            self.clear_labels()
             self.image.set_from_file('rig_riser.png')
             self.csg_shoe_label.show()
             self.csg_shoe_entry.show()
@@ -480,11 +486,13 @@ class Volumes:
 
     def on_tap_chbutton_toggled(self, button):
         if button.get_active():
+            self.clear_labels()
             self.dp2_box.show()
             self.dp2_box_label.show()
             self.dp2_entry.show()
             self.dp2_entry_label.show()
         else:
+            self.clear_labels()
             self.dp2_box.hide()
             self.dp2_box_label.hide()
             self.dp2_entry.hide()
@@ -540,6 +548,7 @@ class Volumes:
         mp_liner_cap = num(self.mp_liner_store[mp_liner_act][1]) if mp_liner_act >= 0 else Decimal('0.00')
 
         if dp_length < 0:
+            self.clear_labels()
             self.error_dialog.set_markup('<b>Drillstring length calculation error, check your numbers!</b>')
             self.error_dialog.show()
             raise AssertionError('eee')
@@ -569,6 +578,7 @@ class Volumes:
                        tub_riser(seabed, riser_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if riser_cap > 0 > riser_volume:
+            self.clear_labels()
             self.error_dialog.set_markup('Tubular is bigger than Riser or Riser Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Riser or Riser Capacity not entered!')
@@ -592,6 +602,7 @@ class Volumes:
                           pbr, csg_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if csg_vol < 0 < csg_cap and bit_depth > seabed:
+            self.clear_labels()
             self.error_dialog.set_markup('Tubular is bigger than Casing or Casing Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Casing or Casing Capacity not entered!')
@@ -612,6 +623,7 @@ class Volumes:
                        tub_liner(pbr, liner_shoe, liner_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if liner_vol <= 0 and liner and bit_depth > pbr:
+            self.clear_labels()
             self.error_dialog.set_markup('Tubular is bigger than Liner or Liner Capacity not entered!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than Liner or Liner Capacity not entered!')
@@ -641,6 +653,7 @@ class Volumes:
                            oh_cap, above_dc, dc_length, dc_ce_cap, 'DC')
 
         if oh_volume < 0 and bit_depth > csg_shoe:
+            self.clear_labels()
             self.error_dialog.set_markup('Tubular is bigger than Open Hole or Open Hole not chosen!')
             self.error_dialog.show()
             raise AssertionError('Tubular is bigger than open hole')
