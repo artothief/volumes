@@ -8,6 +8,16 @@ def save_db(database, liststore, cb_list, combo_list, entry_list):
     conn = sqlite3.connect(database)
     c = conn.cursor()
 
+    c.execute('CREATE TABLE IF NOT EXISTS add_DP(Name VARCHAR UNIQUE , Capacity text, CE_Capacity)')
+    c.execute('CREATE TABLE IF NOT EXISTS add_HWDP(Name VARCHAR UNIQUE, Capacity text, CE_Capacity)')
+    c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name VARCHAR UNIQUE, Capacity text, CE_Capacity)')
+    c.execute('CREATE TABLE IF NOT EXISTS add_MP(Name VARCHAR UNIQUE, Capacity text)')
+    c.execute('CREATE TABLE IF NOT EXISTS add_OH(Name VARCHAR UNIQUE, Capacity text)')
+
+    c.execute('CREATE TABLE IF NOT EXISTS checkbuttons(id INTEGER PRIMARY KEY, cb BOOLEAN)')
+    c.execute('CREATE TABLE IF NOT EXISTS combos(id INTEGER PRIMARY KEY, com INTEGER)')
+    c.execute('CREATE TABLE IF NOT EXISTS entries(id INTEGER PRIMARY KEY ,ent TEXT)')
+
     for d in cb_list:
         ind = str(cb_list.index(d))
         value = d.get_active()
@@ -122,6 +132,7 @@ def load_db(database, liststore):
     except Exception as e:
         z = []
         print(e, 'Ok, if first time using app! Checkboxes retrieve table from db')
+        conn.commit()
         c.close()
     return x, y, z
 

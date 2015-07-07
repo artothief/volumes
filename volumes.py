@@ -405,6 +405,9 @@ class Volumes:
         AddTub('OH', self.open_hole_store, self.window).add_tub.run()
         AddTub('OH', self.open_hole_store, self.window).add_tub.hide()
 
+    def on_new_database_activate(self):
+        print('k')
+
     def on_open_database_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
         self.filechooser_button.set_label('Open')
@@ -427,11 +430,13 @@ class Volumes:
     def on_filechooser_button_clicked(self, *args):
         x = str(self.filechooser_dialog.get_action())
         if 'SAVE' in x:
-            self.database = self.filechooser_dialog.get_filename()
-            save_db(self.database, self.liststore, self.cb_list, self.combo_list, self.entry_list)
+            filename = self.filechooser_dialog.get_filename()
+            save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
             print('save')
         elif 'OPEN' in x:
             self.database = self.filechooser_dialog.get_filename()
+            for l in self.liststore:
+                l.clear()
             self.populate(load_db(self.database, self.liststore))
             print('open')
         else:
