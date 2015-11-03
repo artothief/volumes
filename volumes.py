@@ -421,12 +421,17 @@ class Volumes:
             return False
 
     def on_new_database_activate(self, *args):
-        x = glob.iglob('databases/*.db')
-        for i in x:
-            print(i)
+        self.filechooser_dialog.set_current_folder('databases/')
+        self.filechooser_dialog.set_title('New Database')
+        self.filechooser_button.set_label('New')
+        self.filechooser_dialog.set_action(1)
+        self.filechooser_dialog.run()
+        self.filechooser_dialog.hide()
+
 
     def on_open_database_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
+        self.filechooser_dialog.set_title('Open Database')
         self.filechooser_button.set_label('Open')
         self.filechooser_dialog.set_action(0)
         self.filechooser_dialog.run()
@@ -438,6 +443,7 @@ class Volumes:
 
     def on_save_as_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
+        self.filechooser_dialog.set_title('Save Database')
         self.filechooser_button.set_label('Save As')
         self.filechooser_dialog.set_action(1)
         self.filechooser_dialog.set_current_name(self.title + '.db')
@@ -445,12 +451,11 @@ class Volumes:
         self.filechooser_dialog.hide()
 
     def on_filechooser_button_clicked(self, *args):
-        x = str(self.filechooser_dialog.get_action())
-        if 'SAVE' in x:
+        x = str(self.filechooser_dialog.get_title())
+        print(x)
+        if 'Save' in x:
             filename = self.filechooser_dialog.get_filename()
-            print(filename[40:])
             existing = [x for x in glob.iglob('databases/*.db')]
-            print(existing)
             if str(filename[40:]) in existing:
                 if self.save_warning('Overwrite existing Database?'):
                     save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
@@ -461,7 +466,7 @@ class Volumes:
                 save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
                 print('save')
 
-        elif 'OPEN' in x:
+        elif 'Open' in x:
             if self.save_warning('Have you saved your current work?'):
                 self.database = self.filechooser_dialog.get_filename()
                 for l in self.liststore:
@@ -470,6 +475,24 @@ class Volumes:
                 print('open')
             else:
                 pass
+        elif 'New' in x:
+            filename = self.filechooser_dialog.get_filename()
+            existing = [x for x in glob.iglob('databases/*.db')]
+            if str(filename[40:]) in existing:
+                if self.save_warning('Overwrite existing Database?'):
+                    self.database = filename
+                    for l in self.liststore:
+                        l.clear()
+                    self.populate(load_db(self.database, self.liststore))
+                    print('New Database created')
+                else:
+                    pass
+            else:
+                self.database = filename
+                for l in self.liststore:
+                    l.clear()
+                self.populate(load_db(self.database, self.liststore))
+                print('New Database created:' + str(filename))
         else:
             print('Fail')
 
