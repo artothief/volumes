@@ -405,8 +405,25 @@ class Volumes:
         AddTub('OH', self.open_hole_store, self.window).add_tub.run()
         AddTub('OH', self.open_hole_store, self.window).add_tub.hide()
 
-    def on_new_database_activate(self):
-        print('k')
+    def save_warning(self, markup):
+        dialog = Gtk.MessageDialog(self.window, Gtk.MessageType.WARNING)
+        dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_markup(markup)
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            print("The OK button was clicked")
+            dialog.destroy()
+            return True
+        elif response == Gtk.ResponseType.CANCEL:
+            print("The Cancel button was clicked")
+            dialog.destroy()
+            return False
+
+    def on_new_database_activate(self, *args):
+        x = glob.iglob('databases/*.db')
+        for i in x:
+            print(i)
 
     def on_open_database_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
@@ -431,14 +448,28 @@ class Volumes:
         x = str(self.filechooser_dialog.get_action())
         if 'SAVE' in x:
             filename = self.filechooser_dialog.get_filename()
-            save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
-            print('save')
+            print(filename[40:])
+            existing = [x for x in glob.iglob('databases/*.db')]
+            print(existing)
+            if str(filename[40:]) in existing:
+                if self.save_warning('Overwrite existing Database?'):
+                    save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
+                    print('save')
+                else:
+                    print('cancel')
+            else:
+                save_db(filename, self.liststore, self.cb_list, self.combo_list, self.entry_list)
+                print('save')
+
         elif 'OPEN' in x:
-            self.database = self.filechooser_dialog.get_filename()
-            for l in self.liststore:
-                l.clear()
-            self.populate(load_db(self.database, self.liststore))
-            print('open')
+            if self.save_warning('Have you saved your current work?'):
+                self.database = self.filechooser_dialog.get_filename()
+                for l in self.liststore:
+                    l.clear()
+                self.populate(load_db(self.database, self.liststore))
+                print('open')
+            else:
+                pass
         else:
             print('Fail')
 
