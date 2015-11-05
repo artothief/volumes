@@ -405,6 +405,35 @@ class Volumes:
         AddTub('OH', self.open_hole_store, self.window).add_tub.run()
         AddTub('OH', self.open_hole_store, self.window).add_tub.hide()
 
+    def generic_filename(self):
+        generics = []
+        for item in glob.iglob('databases/*.db'):
+            if 'MyDatabase' in item[10:]:
+                generics.append(item[10:])
+            else:
+                continue
+
+        # Check if any generic filenames or un-numbered generic filename present
+
+        if not generics or 'MyDatabase.db' not in generics:
+            return 'MyDatabase.db'
+
+        elif len(generics) == 1 and 'MyDatabase.db' in generics:
+            return 'MyDatabase1.db'
+
+        # Sort generics list and find smallest available number if numbers are not consecutive
+        else:
+            generics.sort()
+            for x in range(1, len(generics)):
+                if str(x) != generics[x][10:-3]:
+                    return 'MyDatabase' + str(x) + '.db'
+                else:
+                    continue
+
+            # If numbers in generics are consecutive use next number
+            numb = max(generics)[10:-3]
+            return 'MyDatabase' + str(int(numb) + 1) + '.db'
+
     def save_warning(self, markup):
         dialog = Gtk.MessageDialog(self.window, Gtk.MessageType.WARNING)
         dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -422,6 +451,8 @@ class Volumes:
 
     def on_new_database_activate(self, *args):
         self.filechooser_dialog.set_current_folder('databases/')
+        file = self.generic_filename()
+        self.filechooser_dialog.set_current_name(file)
         self.filechooser_dialog.set_title('New Database')
         self.filechooser_button.set_label('New')
         self.filechooser_dialog.set_action(1)
