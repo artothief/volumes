@@ -1,41 +1,31 @@
 __author__ = 'artothief'
 
 from gi.repository import Gtk
-import sqlite3
-
-conn = sqlite3.connect('input.db')
-c = conn.cursor()
-c.execute('CREATE TABLE IF NOT EXISTS add_DP(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_DP2(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_HWDP(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_DC(Name text, Capacity text, CE_Capacity)')
-c.execute('CREATE TABLE IF NOT EXISTS add_MP(Name text, Capacity text)')
-c.execute('CREATE TABLE IF NOT EXISTS add_OH(Name text, Capacity text)')
 
 
 class AddTub:
     
-    def __init__(self, tub):
+    def __init__(self, tub, liststore, window):
+        
         # Add tub Dialog box
         self.tub = tub
         self.builder = Gtk.Builder()
         self.builder.add_from_file('add_tub.glade')
         self.builder.connect_signals(self)
         self.add_tub = self.builder.get_object('add_tub_dialog')
+        self.add_tub.set_transient_for(window)
         self.tub_name_entry = self.builder.get_object('tub_name_entry')
         self.tub_cap_entry = self.builder.get_object('tub_cap_entry')
         self.tub_ce_cap_entry = self.builder.get_object('tub_ce_cap_entry')
         self.ce_cap_label = self.builder.get_object('ce_cap_label')
         self.tub_label = self.builder.get_object('tub_label')
         self.tub_label.set_text('Add/Remove ' + self.tub)
-        self.tub_store = Gtk.ListStore(str, str, str) if 'OH' != self.tub != 'MP' else Gtk.ListStore(str, str)
         self.tub_tv = self.builder.get_object('tub_tv')
+        self.liststore = liststore
 
         if 'OH' != self.tub != 'MP':
-            for row in c.execute('SELECT * FROM add_' + self.tub):
-                self.tub_store.append(row)
 
-            self.tub_tv.set_model(self.tub_store)
+            self.tub_tv.set_model(self.liststore)
             renderer = Gtk.CellRendererText()
             column1 = Gtk.TreeViewColumn("Name", renderer, text=0)
             column2 = Gtk.TreeViewColumn("Capacity", renderer, text=1)
@@ -49,11 +39,7 @@ class AddTub:
         else:
             self.tub_ce_cap_entry.hide()
             self.ce_cap_label.hide()
-
-            for row in c.execute('SELECT * FROM add_' + self.tub):
-                    self.tub_store.append(row)
-
-            self.tub_tv.set_model(self.tub_store)
+            self.tub_tv.set_model(self.liststore)
             renderer = Gtk.CellRendererText()
             column1 = Gtk.TreeViewColumn("Name", renderer, text=0)
             column2 = Gtk.TreeViewColumn("Capacity", renderer, text=1)
@@ -68,29 +54,21 @@ class AddTub:
             pipe_name = self.tub_name_entry.get_text()
             pipe_cap = self.tub_cap_entry.get_text()
             pipe_ce_cap = self.tub_ce_cap_entry.get_text()
-            c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity, CE_Capacity)
-                              VALUES(?,?,?)''', (pipe_name, pipe_cap, pipe_ce_cap))
-            conn.commit()
             self.tub_name_entry.set_text('')
             self.tub_cap_entry.set_text('')
             self.tub_ce_cap_entry.set_text('')
-            self.tub_store.append([pipe_name, pipe_cap, pipe_ce_cap])
-            self.add_tub.hide()
+            self.liststore.append([pipe_name, pipe_cap, pipe_ce_cap])
         else:
             pipe_name = self.tub_name_entry.get_text()
             pipe_cap = self.tub_cap_entry.get_text()
-            c.execute('''INSERT INTO add_''' + self.tub + '''(Name, Capacity)
-                              VALUES(?,?)''', (pipe_name, pipe_cap))
-            conn.commit()
             self.tub_name_entry.set_text('')
             self.tub_cap_entry.set_text('')
-            self.tub_store.append([pipe_name, pipe_cap])
-            self.add_tub.hide()
+            self.liststore.append([pipe_name, pipe_cap])
 
     def on_rem_tub_btn_clicked(self, *args):
-        c.execute('DELETE FROM add_' + self.tub + ' WHERE Name=?', (pipe_rem,))
-        conn.commit()
-        self.tub_store.remove(treeiter)
+        self.liststore.remove(treeiter)
+
+    def on_add_tub_dialog_delete_event(self, *args):
         self.add_tub.hide()
 
     # noinspection PyMethodMayBeStatic
